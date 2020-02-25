@@ -4,29 +4,35 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width; initial-scale=1.0">
-<title>Sambun</title>
+<title>select</title>
 </head>
 <body>
     <ul>
         <li>
-            <h2>1</h2>
+            <h2>위나라</h2>
             <ul>
-                <li><input type="checkbox" name="s" data-name="ㅈㅅ1" data-color="적" data-country="위" data-type="검">적</li>
-                <li><input type="checkbox" name="s" data-name="ㅈㅅ2" data-color="청" data-country="위" data-type="창">청</li>
-                <li><input type="checkbox" name="s" data-name="ㅈㅅ3" data-color="적" data-country="위" data-type="특">적</li>
-                <li><input type="checkbox" name="s" data-name="ㅈㅅ4" data-color="적" data-country="위" data-type="책">적</li>
-                <li><input type="checkbox" name="s" data-name="ㅈㅅ5" data-color="황" data-country="위" data-type="검">황</li>
-                <li><input type="checkbox" name="s" data-name="ㅈㅅ6" data-color="적" data-country="위" data-type="창">적</li>
-                <li><input type="checkbox" name="s" data-name="ㅈㅅ7" data-color="적" data-country="위" data-type="특">적</li>
+                <li><label><input type="checkbox" name="s" data-name="장수1" data-color="청" data-type="검">장수1 - [청속성] - [검병]</label></li>
+                <li><label><input type="checkbox" name="s" data-name="장수2" data-color="적" data-type="창">장수2 - [적속성] - [창병]</label></li>
+                <li><label><input type="checkbox" name="s" data-name="장수3" data-color="청" data-type="특">장수3 - [청속성] - [특수병]</label></li>
+                <li><label><input type="checkbox" name="s" data-name="장수4" data-color="청" data-type="책">장수4 - [청속성] - [책략병]</label></li>
+                <li><label><input type="checkbox" name="s" data-name="장수5" data-color="황" data-type="검">장수5 - [황속성] - [검병]</label></li>
+                <li><label><input type="checkbox" name="s" data-name="장수6" data-color="청" data-type="창">장수6 - [청속성] - [창병]</label></li>
+                <li><label><input type="checkbox" name="s" data-name="장수7" data-color="적" data-type="책">장수7 - [적속성] - [책략병]</label></li>
+                <li><label><input type="checkbox" name="s" data-name="장수8" data-color="적" data-type="특">장수8 - [적속성] - [특수병]</label></li>
+                <li><label><input type="checkbox" name="s" data-name="장수9" data-color="청" data-type="특">장수9 - [청속성] - [특수병]</label></li>
+                <li><label><input type="checkbox" name="s" data-name="장수11" data-color="황" data-type="창">장수10 - [황속성] - [창병]</label></li>
+                <li><label><input type="checkbox" name="s" data-name="장수10" data-color="황" data-type="검">장수11 - [황속성] - [검병]</label></li>
+                <li><label><input type="checkbox" name="s" data-name="장수12" data-color="적" data-type="검">장수12 - [적속성] - [검병]</label></li>
+                <li><label><input type="checkbox" name="s" data-name="장수13" data-color="황" data-type="책">장수13 - [황속성] - [책략병]</label></li>
             </ul>
         </li>
     </ul>
 
     <div class="result">
-        <h3>ㅅㅌㄷ ㅈㅅ</h3>
+        <h3>장수선택</h3>
         <ul class="type1">
         </ul>
-        <h3>ㅍㅅㅎㄱ</h3>
+        <h3>편성효과</h3>
         <ul class="type2">
         </ul>
     </div>
@@ -34,13 +40,12 @@
     <script>
         class set{
             constructor(){
-                this.default_color_organiztion_txt = [
-                    '청 3개 효과',
-                    '청 4개 효과',
-                    '적 3개 효과',
-                    '적 4개 효과',
-                    '황 3개 효과',
-                    '황 4개 효과'
+                this.default_organiztion_txt = [
+                    '청속성 단결 : 모든 아군의 공격력 10% 증가',
+                    '적속성 단결 : 모든 아군의 치명타 확률 7% 증가',
+                    '황속성 단결 : 모든 아군의 체력 10% 증가',
+                    '강력한 의지 : 모든 아군의 물리방어력, 책략방어력 10% 증가',
+                    '완벽한 균형 : 모든 아군의 통솔력, 무력, 지력, 순발력이 10 증가'
                 ];
                 
                 this.select_Btn = document.querySelectorAll('input');
@@ -49,7 +54,7 @@
                 this.result_organization_txt = document.querySelector('.type2');
 
                 this.select_member = [];
-                this.select_color_organization = [];
+                this.select_organization = [];
 
                 this.current_select_member = undefined;
                 
@@ -86,13 +91,16 @@
                                 _self._add_Event();
                                 _self.select_member.push(selectTarget);
                             }else{
-                                alert('max 6');
+                                alert('6명의 장수만 선택가능합니다.');
                                 this.checked = false;
                             }
                         }else{
                             console.log('cancel');
+                            let _idx = _self.select_member.findIndex(function(item) {return item.name === selectTarget.name});
+                            _self.select_member.splice(_idx, 1);
+                            _self._del_Event();
                         }
-                    });    
+                    });
                 });
             }
 
@@ -100,62 +108,116 @@
                 this._add_color_check();
             }
 
-            _add_color_check(){
-                let result_txt = undefined;
+            _del_Event(){
+                this._del_color_check();
+            }
 
+            _add_color_check(){
                 switch(this.current_select_member.color){
                     case '청' :
                         this.color_blue++;
+                        if(this.color_blue >= 3){
+                            this._add_organization(this.default_organiztion_txt[0]);
+                        }
                         break;
+
                     case '적' :
                         this.color_red++;
+                        if(this.color_red >= 3){
+                            this._add_organization(this.default_organiztion_txt[1]);
+                        }
                         break;
+
                     case '황' :
                         this.color_yellow++;
-                        break;
+                        if(this.color_yellow >= 3){
+                            this._add_organization(this.default_organiztion_txt[2]);
+                        }
+                        break;   
                 }
 
-                if(this.color_blue >= 3){
-                    this._add_color_organization(this.default_color_organiztion_txt[0]);
-
-                    if(this.color_blue >= 4){
-                        this._add_color_organization(this.default_color_organiztion_txt[1]);
-                    }
-                }
-
-                if(this.color_red >= 3){
-                    this._add_color_organization(this.default_color_organiztion_txt[2]);
-
-                    if(this.color_red >= 4){
-                        this._add_color_organization(this.default_color_organiztion_txt[3]);
-                    }
+                if(this.color_blue >= 4 || this.color_red >= 4 || this.color_yellow >= 4){
+                    this._add_organization(this.default_organiztion_txt[3]);
                 }
                 
-                if(this.color_yellow >= 3){
-                    this._add_color_organization(this.default_color_organiztion_txt[4]);
-
-                    if(this.color_yellow >= 4){
-                        this._add_color_organization(this.default_color_organiztion_txt[5]);
-                    }
+                if(this.color_blue == 2 && this.color_red == 2 && this.color_yellow == 2){
+                    this._add_organization(this.default_organiztion_txt[4]);
                 }
             }
             
-            _add_color_organization(_txt){
-                let _idx = this.select_color_organization.indexOf(_txt);
+            _del_color_check(){
+                
+                if(this.color_blue == 4 || this.color_red == 4 || this.color_yellow == 4){
+                    this._del_organization(this.default_organiztion_txt[3]);
+                }
+                
+                if(this.color_blue == 2 || this.color_red == 2 || this.color_yellow == 2){
+                    this._del_organization(this.default_organiztion_txt[4]);
+                }
+                
+                switch(this.current_select_member.color){
+                    case '청' :
+                        if(this.color_blue >= 3){
+                            if(this.color_blue == 3){
+                                this._del_organization(this.default_organiztion_txt[0]);
+                            }
+
+                        }
+                        this.color_blue--;
+                        break;
+                    case '적' :
+                        if(this.color_red >= 3){
+                            if(this.color_red == 3){
+                                this._del_organization(this.default_organiztion_txt[1]);
+                            }
+                        }
+                        this.color_red--;
+                        break;
+                    case '황' :
+                        if(this.color_yellow >= 3){
+                            if(this.color_yellow == 3){
+                                this._del_organization(this.default_organiztion_txt[2]);
+                            }
+                        }
+                        this.color_yellow--;
+                        break;
+                }
+            }
+
+            _del_organization(_txt){
+                console.log(_txt);
+                let _idx = this.select_organization.indexOf(_txt);
+
+                if(_idx != -1){
+                    //console.log('있음 - 삭제완료');
+                    this.select_organization.splice(_idx, 1);
+                    //console.log(this.select_organization);
+                    this.result_organization_txt.querySelectorAll('li').forEach((_e)=>{
+                        if(_e.textContent == _txt){
+                            _e.remove();
+                        }
+                    });
+                }else{
+                    //console.log('없음 - 추가조건 아님');
+                }
+            }
+
+            _add_organization(_txt){
+                let _idx = this.select_organization.indexOf(_txt);
 
                 if(_idx == -1){
-                    console.log('없음 - 추가완료');
-                    this.select_color_organization.push(_txt);
-                    console.log(this.select_color_organization);
+                    //console.log('없음 - 추가완료');
+                    this.select_organization.push(_txt);
+                    //console.log(this.select_organization);
 
                     let _a = document.createElement('li'),
                         _a_t = document.createTextNode(_txt);
                         
                     _a.appendChild(_a_t);
                     this.result_organization_txt.appendChild(_a);
-                    console.log(_txt + ' 효과 적용');
+                    //console.log(_txt);
                 }else{
-                    console.log('이미 적용되어 있음');
+                    //console.log('이미 추가되어 있음');
                 }
             }
         }

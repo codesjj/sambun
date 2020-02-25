@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width; initial-scale=1.0">
+<title>Sambun</title>
+</head>
+<body>
+    <ul>
+        <li>
+            <h2>1</h2>
+            <ul>
+                <li><input type="checkbox" name="s" data-name="ㅈㅅ1" data-color="적" data-country="위" data-type="검">ㅈㅅ1</li>
+                <li><input type="checkbox" name="s" data-name="ㅈㅅ2" data-color="청" data-country="위" data-type="창">ㅈㅅ2</li>
+                <li><input type="checkbox" name="s" data-name="ㅈㅅ3" data-color="적" data-country="위" data-type="특">ㅈㅅ3</li>
+                <li><input type="checkbox" name="s" data-name="ㅈㅅ4" data-color="적" data-country="위" data-type="책">ㅈㅅ4</li>
+                <li><input type="checkbox" name="s" data-name="ㅈㅅ5" data-color="황" data-country="위" data-type="검">ㅈㅅ5</li>
+                <li><input type="checkbox" name="s" data-name="ㅈㅅ6" data-color="적" data-country="위" data-type="창">ㅈㅅ6</li>
+                <li><input type="checkbox" name="s" data-name="ㅈㅅ7" data-color="적" data-country="위" data-type="특">ㅈㅅ7</li>
+            </ul>
+        </li>
+    </ul>
+
+    <div class="result">
+        <h3>ㅅㅌㄷ ㅈㅅ</h3>
+        <ul class="type1">
+        </ul>
+        <h3>ㅍㅅㅎㄱ</h3>
+        <ul class="type2">
+        </ul>
+    </div>
+
+    <script>
+        class set{
+            constructor(){
+                this.default_color_organiztion = [
+                    '청 3개 효과',
+                    '청 4개 효과',
+                    '적 3개 효과',
+                    '적 4개 효과',
+                    '황 3개 효과',
+                    '황 4개 효과'
+                ]
+                this.select_Btn = document.querySelectorAll('input');
+                this.result_member = document.querySelector('.type1');
+                this.result_organization = document.querySelector('.type2');
+                this.c_select = [];
+                this.c_color_organization = [];
+                this.c_color_blue = 0;
+                this.c_color_red = 0;
+                this.c_color_yellow = 0;
+                this.c_country_w = 0;
+                this.c_country_c = 0;
+                this.c_country_o = 0;
+            }
+
+            mount(){
+                let _self = this;
+                this.select_Btn.forEach((_e)=>{
+                    _e.addEventListener('click', function(){
+                                
+                        let selectTarget = {
+                            name : this.getAttribute('data-name'),
+                            color : this.getAttribute('data-color'),
+                            country : this.getAttribute('data-country'),
+                            type : this.getAttribute('data-type')
+                        }
+                        
+                        if(this.checked) {
+                            if(_self.current_select.length <= 5){
+                                //console.log('push');
+                                _self.current_select.push(selectTarget);
+                                //console.log(_self.current_select);
+                            }else{
+                                alert('max 6');
+                                this.checked = false;
+                            }
+                        }else{
+                            let _idx = _self.current_select.findIndex(function(item) {return item.name === selectTarget.name});
+                            //console.log(_idx);
+                            _self.current_select.splice(_idx, 1);
+                            //console.log(_self.current_select);
+                        }
+                        _self._organization();
+                    });    
+                });
+            }
+
+            _organization(){         
+                this._color_check();
+            }
+
+            _color_check(){
+                let result_txt = undefined;       
+
+                this.current_select.forEach((_e)=>{
+                    switch(_e.color){
+                        case '청' :
+                            blue = blue + 1;
+                            break;
+                        case '적' :
+                            red = red + 1;
+                            break;
+                        case '황' :
+                            yellow = yellow + 1;
+                            break;
+                    }
+                });
+
+                if(blue >= 3){
+                    if(blue == 4){
+                        result_txt = this.default_color_organiztion[2]; 
+                    }else{
+                        result_txt = this.default_color_organiztion[1];
+                    }
+                }
+                
+                if(red >= 3){
+                    if(red == 4){
+                        result_txt = this.default_color_organiztion[4];
+                    }else{
+                        result_txt = this.default_color_organiztion[3];
+                    }
+                }
+                
+                if(yellow >= 3){
+                    if(yellow == 4){
+                        result_txt = this.default_color_organiztion[6];
+                    }else{
+                        result_txt = this.default_color_organiztion[5];
+                    }
+                }
+
+                console.log(this.current_color_organization);
+                console.log(this.current_color_organization.indexOf(result_txt));
+
+                if(result_txt != undefined){
+                    let _idx = this.current_color_organization.indexOf(result_txt);
+                    if(_idx == -1){
+                        console.log('추가');
+                        this._add_member('type2', result_txt);
+                    }else{
+                        console.log('중복');
+                    }
+                }
+            }
+
+            _add_member(_c, _t){
+                this.current_color_organization.push(_t);
+
+                let _a = document.createElement('li'),
+                    _a_t = document.createTextNode(_t);
+                    
+                    _a.appendChild(_a_t);
+
+                switch(_c){
+                    case 'type1' :
+                        this.result_member.appendChild(_a);
+                        break;
+                    case 'type2' :
+                        this.result_organization.appendChild(_a);
+                        break;
+                }
+            }
+        }
+
+        new set().mount();
+    </script>
+</body>
+</html>

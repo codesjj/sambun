@@ -11,13 +11,13 @@
         <li>
             <h2>1</h2>
             <ul>
-                <li><input type="checkbox" name="s" data-name="ㅈㅅ1" data-color="적" data-country="위" data-type="검">ㅈㅅ1</li>
-                <li><input type="checkbox" name="s" data-name="ㅈㅅ2" data-color="청" data-country="위" data-type="창">ㅈㅅ2</li>
-                <li><input type="checkbox" name="s" data-name="ㅈㅅ3" data-color="적" data-country="위" data-type="특">ㅈㅅ3</li>
-                <li><input type="checkbox" name="s" data-name="ㅈㅅ4" data-color="적" data-country="위" data-type="책">ㅈㅅ4</li>
-                <li><input type="checkbox" name="s" data-name="ㅈㅅ5" data-color="황" data-country="위" data-type="검">ㅈㅅ5</li>
-                <li><input type="checkbox" name="s" data-name="ㅈㅅ6" data-color="적" data-country="위" data-type="창">ㅈㅅ6</li>
-                <li><input type="checkbox" name="s" data-name="ㅈㅅ7" data-color="적" data-country="위" data-type="특">ㅈㅅ7</li>
+                <li><input type="checkbox" name="s" data-name="ㅈㅅ1" data-color="적" data-country="위" data-type="검">적</li>
+                <li><input type="checkbox" name="s" data-name="ㅈㅅ2" data-color="청" data-country="위" data-type="창">청</li>
+                <li><input type="checkbox" name="s" data-name="ㅈㅅ3" data-color="적" data-country="위" data-type="특">적</li>
+                <li><input type="checkbox" name="s" data-name="ㅈㅅ4" data-color="적" data-country="위" data-type="책">적</li>
+                <li><input type="checkbox" name="s" data-name="ㅈㅅ5" data-color="황" data-country="위" data-type="검">황</li>
+                <li><input type="checkbox" name="s" data-name="ㅈㅅ6" data-color="적" data-country="위" data-type="창">적</li>
+                <li><input type="checkbox" name="s" data-name="ㅈㅅ7" data-color="적" data-country="위" data-type="특">적</li>
             </ul>
         </li>
     </ul>
@@ -90,87 +90,18 @@
                                 this.checked = false;
                             }
                         }else{
-                            _self._del_color();
-                            let _idx = _self.select_member.findIndex(function(item) {return item.name === selectTarget.name});
-                            //console.log(_idx);
-                            _self.select_member.splice(_idx, 1);
-                            //console.log(_self.select_member);
+                            console.log('cancel');
                         }
-                        //_self._organization();
                     });    
                 });
             }
 
             _add_Event(){
-                this._add_color();
-                
-                // switch(this.current_select_member.country){
-                //     case '위' :
-                //         this.country_wei++;
-                //         break;
-                //     case '촉' :
-                //         this.country_shu++;
-                //         break;
-                //     case '오' :
-                //         this.country_wo++;
-                //         break;
-                // }
-                
-                // switch(this.current_select_member.type){
-                //     case '검' :
-                //         this.type_sword++;
-                //         break;
-                //     case '창' :
-                //         this.type_lance++;
-                //         break;
-                //     case '특' :
-                //         this.type_special++;
-                //         break;
-                //     case '책' :
-                //         this.type_deceit++;
-                //         break;
-                // }
-
-                // console.log('"""""""""""""');
-                // console.log('청 : ' +  this.color_blue);
-                // console.log('적 : ' +  this.color_red);
-                // console.log('황 : ' +  this.color_yellow);
+                this._add_color_check();
             }
 
-            _del_color(){
-                const current_color_organization = this._color_check();
-
-                switch(this.current_select_member.color){
-                    case '청' :
-                        this.color_blue--;
-                        break;
-                    case '적' :
-                        this.color_red--;
-                        break;
-                    case '황' :
-                        this.color_yellow--;
-                        break;
-                }
-
-                if(current_color_organization != undefined){
-                    let _idx = this.select_color_organization.indexOf(current_color_organization);
-
-                    if(_idx != -1){
-                        console.log('있음 - 삭제완료');
-                        this.select_color_organization.splice(_idx, 1);
-                        console.log(this.select_color_organization);
-                        this.result_organization_txt.querySelectorAll('li').forEach((_e, _i)=>{
-                            if(_e.textContent == current_color_organization){
-                                _e.remove();
-                            }
-                        });
-                    }else{
-                        console.log('없음 - 추가조건 아님');
-                    }
-                }
-            }
-
-            _add_color(){
+            _add_color_check(){
+                let result_txt = undefined;
 
                 switch(this.current_select_member.color){
                     case '청' :
@@ -184,59 +115,49 @@
                         break;
                 }
 
-                const new_color_organization = this._color_check();
-
-                if(new_color_organization != undefined){
-                    let _idx = this.select_color_organization.indexOf(new_color_organization);
-
-                    if(_idx == -1){
-                        console.log('없음 - 추가완료');
-                        this.select_color_organization.push(new_color_organization);
-                        console.log(this.select_color_organization);
-
-                        let _a = document.createElement('li'),
-                            _a_t = document.createTextNode(new_color_organization);
-                            
-                        _a.appendChild(_a_t);
-                        this.result_organization_txt.appendChild(_a);
-                            console.log(new_color_organization + ' 효과 적용');
-                    }else{
-                        console.log('있음 - 삭제조건 아님');
-                    }
-                }
-            }
-            
-            _color_check(){
-                let result_txt = undefined;
-                
                 if(this.color_blue >= 3){
+                    this._add_color_organization(this.default_color_organiztion_txt[0]);
+
                     if(this.color_blue >= 4){
-                        result_txt = this.default_color_organiztion_txt[2]; 
-                    }else{
-                        result_txt = this.default_color_organiztion_txt[1];
+                        this._add_color_organization(this.default_color_organiztion_txt[1]);
                     }
                 }
 
                 if(this.color_red >= 3){
+                    this._add_color_organization(this.default_color_organiztion_txt[2]);
+
                     if(this.color_red >= 4){
-                        result_txt = this.default_color_organiztion_txt[4];
-                    }else{
-                        result_txt = this.default_color_organiztion_txt[3];
+                        this._add_color_organization(this.default_color_organiztion_txt[3]);
                     }
                 }
-
+                
                 if(this.color_yellow >= 3){
+                    this._add_color_organization(this.default_color_organiztion_txt[4]);
+
                     if(this.color_yellow >= 4){
-                        result_txt = this.default_color_organiztion_txt[6];
-                    }else{
-                        result_txt = this.default_color_organiztion_txt[5];
+                        this._add_color_organization(this.default_color_organiztion_txt[5]);
                     }
                 }
-
-                return result_txt;
             }
+            
+            _add_color_organization(_txt){
+                let _idx = this.select_color_organization.indexOf(_txt);
 
+                if(_idx == -1){
+                    console.log('없음 - 추가완료');
+                    this.select_color_organization.push(_txt);
+                    console.log(this.select_color_organization);
 
+                    let _a = document.createElement('li'),
+                        _a_t = document.createTextNode(_txt);
+                        
+                    _a.appendChild(_a_t);
+                    this.result_organization_txt.appendChild(_a);
+                    console.log(_txt + ' 효과 적용');
+                }else{
+                    console.log('이미 적용되어 있음');
+                }
+            }
         }
 
 

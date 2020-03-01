@@ -5,54 +5,127 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width; initial-scale=1.0">
 <title>select</title>
+<style>
+    *{padding:0;margin:0}
+    ul, li{list-style: none}
+
+    .total{padding:20px;overflow:hidden}
+
+    .total>li{float:left;width:25%}
+    .total>li h2{margin:10px 10px 20px}
+    .total>li{padding:0 10px;border-right:1px dotted #999;box-sizing:border-box}
+    .total>li:last-child{border:0}
+    .total ul {overflow:hidden}
+    .total ul li{position:relative;float:left;width:80px}
+
+    .total ul li.red{border:2px solid red}
+    .total ul li.blue{border:2px solid blue}
+    .total ul li.yellow{border:2px solid rgb(228, 228, 40)}
+    .total ul li{margin:10px}
+    .total ul li input{position:absolute;top:0;left:0;width:0;height:0;opacity:0}
+    .total ul li label{display:block;padding:10px;box-sizing:border-box;color:#777;font-size:13px}
+    .total ul li label span{display:block;font-size:15px;color:#000;font-weight:bold}
+    .total ul li.red input:checked + label{background:red;color:#fff}
+    .total ul li.red input:checked + label span{color:#fff}
+    .total ul li.blue input:checked + label{background:blue;color:#fff}
+    .total ul li.blue input:checked + label span{color:#fff}
+    .total ul li.yellow input:checked + label{background:rgb(228, 228, 40);color:#000}
+    
+    .result{padding:20px;overflow:hidden}
+    .result .con{float:left;min-width:200px;margin-right:10px}
+    .result .con h3{margin-bottom:10px}
+    .result .con.first ul li{font-weight:bold}
+
+    @media screen and (max-width: 970px) {
+        .total>li{width:33.33%}
+        .total>li:nth-child(3n){border:0}
+    }
+
+    @media screen and (max-width: 744px) {
+        .total>li{width:50%}
+        .total>li:nth-child(2n){border:0}
+        .total>li:nth-child(3n){border-right:1px dotted #999}
+        .total>li:last-child{border:0}
+    }
+
+    @media screen and (max-width: 515px) {
+        .total>li{width:100%;border:0}
+        .total>li:nth-child(3n){border:0}
+    }
+</style>
 </head>
 <body>
-    <ul>
+    <ul class="total">
         <li>
             <h2>위나라</h2>
             <ul>
-                <li><label><input type="checkbox" name="s" data-name="장수1" data-color="청" data-country="위" data-type="검">장수1 - [청속성] - [검병]</label></li>
-                <li><label><input type="checkbox" name="s" data-name="장수2" data-color="적" data-country="위" data-type="창">장수2 - [적속성] - [창병]</label></li>
-                <li><label><input type="checkbox" name="s" data-name="장수3" data-color="청" data-country="위" data-type="특">장수3 - [청속성] - [특수병]</label></li>
-                <li><label><input type="checkbox" name="s" data-name="장수4" data-color="청" data-country="위" data-type="책">장수4 - [청속성] - [책략병]</label></li>
-                <li><label><input type="checkbox" name="s" data-name="장수5" data-color="황" data-country="위" data-type="검">장수5 - [황속성] - [검병]</label></li>
-                <li><label><input type="checkbox" name="s" data-name="장수6" data-color="청" data-country="위" data-type="창">장수6 - [청속성] - [창병]</label></li>
-                <li><label><input type="checkbox" name="s" data-name="장수7" data-color="적" data-country="위" data-type="책">장수7 - [적속성] - [책략병]</label></li>
-                <li><label><input type="checkbox" name="s" data-name="장수8" data-color="적" data-country="위" data-type="특">장수8 - [적속성] - [특수병]</label></li>
-                <li><label><input type="checkbox" name="s" data-name="장수9" data-color="청" data-country="위" data-type="특">장수9 - [청속성] - [특수병]</label></li>
-                <li><label><input type="checkbox" name="s" data-name="장수11" data-color="황" data-country="위" data-type="창">장수10 - [황속성] - [창병]</label></li>
-                <li><label><input type="checkbox" name="s" data-name="장수10" data-color="황" data-country="위" data-type="검">장수11 - [황속성] - [검병]</label></li>
-                <li><label><input type="checkbox" name="s" data-name="장수12" data-color="적" data-country="위" data-type="검">장수12 - [적속성] - [검병]</label></li>
-                <li><label><input type="checkbox" name="s" data-name="장수13" data-color="황" data-country="위" data-type="책">장수13 - [황속성] - [책략병]</label></li>
+                <li class="blue"><input type="checkbox" name="s" id="wei_1" data-name="가후" data-color="청" data-country="위" data-type="책"><label for="wei_1"><span>가후</span>[1슬롯]<br>[책략병]</label></li>
+                <li class="yellow"><input type="checkbox" name="s" id="wei_2" data-name="순욱" data-color="황" data-country="위" data-type="책"><label for="wei_2"><span>순욱</span>[2슬롯]<br>[책략병]</label></li>
+                <li class="red"><input type="checkbox" name="s" id="wei_3" data-name="장합" data-color="적" data-country="위" data-type="검"><label for="wei_3"><span>장합</span>[2슬롯]<br>[검병]</label></li>
+                <li class="blue"><input type="checkbox" name="s" id="wei_4" data-name="조조" data-color="청" data-country="위" data-type="검"><label for="wei_4"><span>조조</span>[2슬롯]<br>[검병]</label></li>
+                <li class="red"><input type="checkbox" name="s" id="wei_5" data-name="조창" data-color="적" data-country="위" data-type="창"><label for="wei_5"><span>조창</span>[2슬롯]<br>[창병]</label></li>
+                <li class="red"><input type="checkbox" name="s" id="wei_6" data-name="하후연" data-color="적" data-country="위" data-type="특"><label for="wei_6"><span>하후연</span>[2슬롯]<br>[특수병]</label></li>
+                <li class="yellow"><input type="checkbox" name="s" id="wei_7" data-name="하후돈" data-color="황" data-country="위" data-type="검"><label for="wei_7"><span>하후돈</span>[3슬롯]<br>[검병]</label></li>
+                <li class="yellow"><input type="checkbox" name="s" id="wei_8" data-name="곽가" data-color="황" data-country="위" data-type="책"><label for="wei_8"><span>곽가</span>[3슬롯]<br>[책략병]</label></li>
+                <li class="blue"><input type="checkbox" name="s" id="wei_9" data-name="허저" data-color="청" data-country="위" data-type="특"><label for="wei_9"><span>허저</span>[3슬롯]<br>[특수병]</label></li>
+            </ul>
+        </li>
+        <li>
+            <h2>촉나라</h2>
+            <ul>
+                <li class="blue"><input type="checkbox" name="s" id="shu_1" data-name="황월영" data-color="황" data-country="촉" data-type="책"><label for="shu_1"><span>황월영</span>[1슬롯]<br>[책략병]</label></li>
+                <li class="red"><input type="checkbox" name="s" id="shu_2" data-name="마초" data-color="적" data-country="촉" data-type="창"><label for="shu_2"><span>마초</span>[2슬롯]<br>[창병]</label></li>
+                <li class="blue"><input type="checkbox" name="s" id="shu_3" data-name="서서" data-color="청" data-country="촉" data-type="책"><label for="shu_3"><span>서서</span>[2슬롯]<br>[책략병]</label></li>
+                <li class="yellow"><input type="checkbox" name="s" id="shu_4" data-name="유비" data-color="황" data-country="촉" data-type="검"><label for="shu_4"><span>유비</span>[2슬롯]<br>[검병]</label></li>
+                <li class="blue"><input type="checkbox" name="s" id="shu_5" data-name="황충" data-color="황" data-country="촉" data-type="특"><label for="shu_5"><span>황충</span>[2슬롯]<br>[특수병]</label></li>
+                <li class="yellow"><input type="checkbox" name="s" id="shu_6" data-name="제갈량" data-color="황" data-country="촉" data-type="책"><label for="shu_6"><span>제갈량</span>[3슬롯]<br>[책략병]</label></li>
+                <li class="yellow"><input type="checkbox" name="s" id="shu_7" data-name="장비" data-color="황" data-country="촉" data-type="창"><label for="shu_7"><span>장비</span>[3슬롯]<br>[창병]</label></li>
+                <li class="red"><input type="checkbox" name="s" id="shu_8" data-name="관우" data-color="적" data-country="촉" data-type="창"><label for="shu_8"><span>관우</span>[3슬롯]<br>[창병]</label></li>
+                <li class="red"><input type="checkbox" name="s" id="shu_9" data-name="조운" data-color="적" data-country="촉" data-type="창"><label for="shu_9"><span>조운</span>[3슬롯]<br>[창병]</label></li>
             </ul>
         </li>
         <li>
             <h2>오나라</h2>
             <ul>
-                <li><label><input type="checkbox" name="s" data-name="장수1" data-color="청" data-country="오" data-type="검">장수1 - [청속성] - [검병]</label></li>
-                <li><label><input type="checkbox" name="s" data-name="장수2" data-color="적" data-country="오" data-type="창">장수2 - [적속성] - [창병]</label></li>
-                <li><label><input type="checkbox" name="s" data-name="장수3" data-color="청" data-country="오" data-type="특">장수3 - [청속성] - [특수병]</label></li>
-                <li><label><input type="checkbox" name="s" data-name="장수4" data-color="청" data-country="오" data-type="책">장수4 - [청속성] - [책략병]</label></li>
-                <li><label><input type="checkbox" name="s" data-name="장수5" data-color="황" data-country="오" data-type="검">장수5 - [황속성] - [검병]</label></li>
-                <li><label><input type="checkbox" name="s" data-name="장수6" data-color="청" data-country="오" data-type="창">장수6 - [청속성] - [창병]</label></li>
-                <li><label><input type="checkbox" name="s" data-name="장수7" data-color="적" data-country="오" data-type="책">장수7 - [적속성] - [책략병]</label></li>
-                <li><label><input type="checkbox" name="s" data-name="장수8" data-color="적" data-country="오" data-type="특">장수8 - [적속성] - [특수병]</label></li>
-                <li><label><input type="checkbox" name="s" data-name="장수9" data-color="청" data-country="오" data-type="특">장수9 - [청속성] - [특수병]</label></li>
-                <li><label><input type="checkbox" name="s" data-name="장수11" data-color="황" data-country="오" data-type="창">장수10 - [황속성] - [창병]</label></li>
-                <li><label><input type="checkbox" name="s" data-name="장수10" data-color="황" data-country="오" data-type="검">장수11 - [황속성] - [검병]</label></li>
-                <li><label><input type="checkbox" name="s" data-name="장수12" data-color="적" data-country="오" data-type="검">장수12 - [적속성] - [검병]</label></li>
-                <li><label><input type="checkbox" name="s" data-name="장수13" data-color="황" data-country="오" data-type="책">장수13 - [황속성] - [책략병]</label></li>
+                <li class="red"><input type="checkbox" name="s" id="wo_1" data-name="능통" data-color="적" data-country="오" data-type="책"><label for="wo_1"><span>능통</span>[1슬롯]<br>[책략병]</label></li>
+                <li class="blue"><input type="checkbox" name="s" id="wo_2" data-name="손상향" data-color="청" data-country="오" data-type="특"><label for="wo_2"><span>손상향</span>[1슬롯]<br>[특수병]</label></li>
+                <li class="yellow"><input type="checkbox" name="s" id="wo_3" data-name="소교" data-color="황" data-country="오" data-type="책"><label for="wo_3"><span>소교</span>[1슬롯]<br>[책략병]</label></li>
+                <li class="yellow"><input type="checkbox" name="s" id="wo_4" data-name="대교" data-color="황" data-country="오" data-type="책"><label for="wo_4"><span>대교</span>[2슬롯]<br>[책략병]</label></li>
+                <li class="red"><input type="checkbox" name="s" id="wo_5" data-name="손권" data-color="적" data-country="오" data-type="책"><label for="wo_5"><span>손권</span>[2슬롯]<br>[책략병]</label></li>
+                <li class="blue"><input type="checkbox" name="s" id="wo_6" data-name="여몽" data-color="청" data-country="오" data-type="특"><label for="wo_6"><span>여몽</span>[2슬롯]<br>[특수병]</label></li>
+                <li class="yellow"><input type="checkbox" name="s" id="wo_7" data-name="황개" data-color="황" data-country="오" data-type="특"><label for="wo_7"><span>황개</span>[2슬롯]<br>[특수병]</label></li>
+                <li class="yellow"><input type="checkbox" name="s" id="wo_8" data-name="감녕" data-color="황" data-country="오" data-type="특"><label for="wo_8"><span>감녕</span>[3슬롯]<br>[특수병]</label></li>
+                <li class="yellow"><input type="checkbox" name="s" id="wo_9" data-name="주유" data-color="황" data-country="오" data-type="책"><label for="wo_9"><span>주유</span>[3슬롯]<br>[책략병]</label></li>
+                <li class="blue"><input type="checkbox" name="s" id="wo_10" data-name="태사자" data-color="청" data-country="오" data-type="특"><label for="wo_10"><span>태사자</span>[3슬롯]<br>[특수병]</label></li>
+            </ul>
+        </li>
+        <li>
+            <h2>군웅</h2>
+            <ul>
+                    <li class="blue"><input type="checkbox" name="s" id="king_1" data-name="공손찬" data-color="청" data-country="군" data-type="창"><label for="king_1"><span>공손찬</span>[1슬롯]<br>[창병]</label></li>
+                    <li class="red"><input type="checkbox" name="s" id="king_2" data-name="안량" data-color="적" data-country="군" data-type="검"><label for="king_2"><span>안량</span>[1슬롯]<br>[검병]</label></li>
+                    <li class="red"><input type="checkbox" name="s" id="king_3" data-name="원소" data-color="적" data-country="군" data-type="검"><label for="king_3"><span>원소</span>[1슬롯]<br>[검병]</label></li>
+                    <li class="blue"><input type="checkbox" name="s" id="king_4" data-name="원술" data-color="청" data-country="군" data-type="책"><label for="king_4"><span>원술</span>[1슬롯]<br>[책략병]</label></li>
+                    <li class="red"><input type="checkbox" name="s" id="king_5" data-name="축융" data-color="적" data-country="군" data-type="특"><label for="king_5"><span>축융</span>[1슬롯]<br>[특수병]</label></li>
+                    <li class="blue"><input type="checkbox" name="s" id="king_6" data-name="문추" data-color="청" data-country="군" data-type="검"><label for="king_6"><span>문추</span>[2슬롯]<br>[검병]</label></li>
+                    <li class="blue"><input type="checkbox" name="s" id="king_7" data-name="장각" data-color="청" data-country="군" data-type="책"><label for="king_7"><span>장각</span>[2슬롯]<br>[책략병]</label></li>
+                    <li class="yellow"><input type="checkbox" name="s" id="king_8" data-name="여포" data-color="황" data-country="군" data-type="창"><label for="king_8"><span>여포</span>[3슬롯]<br>[창병]</label></li>
+                    <li class="red"><input type="checkbox" name="s" id="king_9" data-name="초선" data-color="적" data-country="군" data-type="책"><label for="king_9"><span>초선</span>[3슬롯]<br>[책략병]</label></li>
             </ul>
         </li>
     </ul>
 
     <div class="result">
-        <h3>장수선택</h3>
-        <ul class="type1">
-        </ul>
-        <h3>편성효과</h3>
-        <ul class="type2">
-        </ul>
+        <div class="con first">
+            <h3>장수선택</h3>
+            <ul class="type1">
+            </ul>
+        </div>
+        <div class="con">
+            <h3>편성효과</h3>
+            <ul class="type2">
+            </ul>
+        </div>
     </div>
 
     <script>
@@ -70,7 +143,13 @@
                     '[촉나라 편성] - 모든 아군의 물리 방어력, 책략 방어력 8% 증가',
                     '[오나라 편성] - 아군의 모든 기력 2초당 회복량 1 증가',
                     '[군웅 편성] - 모든 아군의 치명타 피해량 50% 증가',
-                    '[영웅집결] - 기력 소모 시 소모량의 5%를 다시 회복'
+                    '[영웅집결] - 기력 소모 시 소모량의 5%를 다시 회복',
+                    
+                    '[검병 편성] - 아군 모든 검병의 물리방어력 3% 증가',
+                    '[창병 편성] - 아군 모든 창병의 물리공격력 3% 증가',
+                    '[책략병 편성] - 아군 모든 칙략병의 책략공격력 3% 증가',
+                    '[특수병 편성] - 아군 모든 특수병의 공격속도 3% 증가',
+                    '[정예병 편성] - 아군 모든 정예병사의 통솔력이 10 증가'
                 ];
                 
                 this.select_Btn = document.querySelectorAll('input');
@@ -94,8 +173,8 @@
 
                 this.type_sword = 0;
                 this.type_lance = 0;
-                this.type_special = 0;
                 this.type_deceit = 0;
+                this.type_special = 0;
             }
 
             mount(){
@@ -114,16 +193,13 @@
 
                         if(this.checked) {
                             if(_self.select_member.length <= 5){
-                                _self.select_member.push(selectTarget);
                                 _self._add_Event();
                             }else{
                                 alert('6명의 장수만 선택가능합니다.');
                                 this.checked = false;
                             }
                         }else{
-                            console.log('cancel');
-                            let _idx = _self.select_member.findIndex(function(item) {return item.name === selectTarget.name});
-                            _self.select_member.splice(_idx, 1);
+                            //console.log('cancel');
                             _self._del_Event();
                         }
                     });
@@ -131,12 +207,17 @@
             }
 
             _add_Event(){
+                this._add_member();
                 this._add_color_check();
                 this._add_country_check();
+                this._add_type_check();
             }
 
             _del_Event(){
+                this._del_member();
                 this._del_color_check();
+                this._del_country_check();
+                this._del_type_check();
             }
 
             _add_color_check(){
@@ -245,11 +326,155 @@
                         break;
                 }
 
-                if(this.select_member.length == 6){
-                    if(this.color_blue >= 1 && this.color_red >= 1 && this.color_yellow >= 1 && this.country_king >= 1){
-                        this._add_organization(this.default_organiztion_txt[10]);
-                    }
+                if(this.country_wei >= 1 && this.country_shu >= 1 && this.country_wo >= 1 && this.country_king >= 1){
+                    this._add_organization(this.default_organiztion_txt[10]);
                 }
+            }
+            
+            _del_country_check(){
+                
+                switch(this.current_select_member.country){
+                    case '위' :
+                        if(this.country_wei == 4){
+                            this._del_organization(this.default_organiztion_txt[6]);
+                        }
+                        if(this.country_wei == 1){
+                            this._del_organization(this.default_organiztion_txt[10]);
+                        }
+                        this.country_wei--;
+                        break;
+                    case '촉' :
+                        if(this.country_shu == 4){
+                            this._del_organization(this.default_organiztion_txt[7]);
+                        }
+                        if(this.country_shu == 1){
+                            this._del_organization(this.default_organiztion_txt[10]);
+                        }
+                        this.country_shu--;
+                        break;
+                    case '오' :
+                        if(this.country_wo == 4){
+                            this._del_organization(this.default_organiztion_txt[8]);
+                        }
+                        if(this.country_wo == 1){
+                            this._del_organization(this.default_organiztion_txt[10]);
+                        }
+                        this.country_wo--;
+                        break;
+
+                    case '군' :
+                        if(this.country_king == 4){
+                            this._del_organization(this.default_organiztion_txt[9]);
+                        }
+                        if(this.country_king == 1){
+                            this._del_organization(this.default_organiztion_txt[10]);
+                        }
+                        this.country_king--;
+                        break;
+                }
+            }
+
+            _add_type_check(){
+                switch(this.current_select_member.type){
+                    case '검' :
+                        this.type_sword++;
+                        if(this.type_sword >= 3){
+                            this._add_organization(this.default_organiztion_txt[11]);
+                        }
+                        break;
+
+                    case '창' :
+                        this.type_lance++;
+                        if(this.type_lance >= 3){
+                            this._add_organization(this.default_organiztion_txt[12]);
+                        }
+                        break;
+
+                    case '책' :
+                        this.type_deceit++;
+                        if(this.type_deceit >= 3){
+                            this._add_organization(this.default_organiztion_txt[13]);
+                        }
+                        break;
+
+                    case '특' :
+                        this.type_special++;
+                        if(this.type_special >= 3){
+                            this._add_organization(this.default_organiztion_txt[14]);
+                        }
+                        break;
+
+                    case '정' :
+                        // this.country_king++;
+                        // if(this.country_king >= 4){
+                        //     this._add_organization(this.default_organiztion_txt[15]);
+                        // }
+                        break;
+                }
+
+                if(this.country_wei >= 1 && this.country_shu >= 1 && this.country_wo >= 1 && this.country_king >= 1){
+                    this._add_organization(this.default_organiztion_txt[10]);
+                }
+            }
+
+            _del_type_check(){
+                
+                switch(this.current_select_member.type){
+                    case '검' :
+                        if(this.type_sword == 3){
+                            this._del_organization(this.default_organiztion_txt[11]);
+                        }
+                        this.type_sword--;
+                        break;
+                    case '창' :
+                        if(this.type_lance == 3){
+                            this._del_organization(this.default_organiztion_txt[12]);
+                        }
+                        this.type_lance--;
+                        break;
+                    case '책' :
+                        if(this.type_deceit == 3){
+                            this._del_organization(this.default_organiztion_txt[13]);
+                        }
+                        this.type_deceit--;
+                        break;
+
+                    case '특' :
+                        if(this.type_special == 3){
+                            this._del_organization(this.default_organiztion_txt[14]);
+                        }
+                        this.type_special--;
+                        break;
+                        
+                    case '정' :
+                        // if(this.country_king == 4){
+                        //     this._del_organization(this.default_organiztion_txt[15]);
+                        // }
+                        // this.country_king--;
+                        break;
+                }
+            }
+
+            _add_member(){
+                let _name = this.current_select_member.name;
+                this.select_member.push(_name);
+
+                let _a = document.createElement('li'),
+                    _a_t = document.createTextNode(_name);
+                    
+                _a.appendChild(_a_t);
+                this.result_member_txt.appendChild(_a);
+            }
+
+            _del_member(){
+                let _name = this.current_select_member.name;
+                let _idx = this.select_member.findIndex(function(item) {return item.name === _name});
+                this.select_member.splice(_idx, 1);
+                this.result_member_txt.querySelectorAll('li').forEach((_e)=>{
+                    if(_e.textContent == _name){
+                        _e.remove();
+                    }
+                });
             }
             
             _add_organization(_txt){
@@ -272,7 +497,7 @@
             }
 
             _del_organization(_txt){
-                console.log(_txt);
+                //console.log(_txt);
                 let _idx = this.select_organization.indexOf(_txt);
 
                 if(_idx != -1){

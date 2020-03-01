@@ -32,7 +32,7 @@
     .total ul li.yellow input:checked + label{background:rgb(228, 228, 40);color:#000}
     
     .result{padding:20px;overflow:hidden}
-    .result .con{float:left;min-width:200px;margin-right:10px}
+    .result .con{float:left;min-width:200px;margin-top:20px;margin-right:10px}
     .result .con h3{margin-bottom:10px}
     .result .con.first ul li{font-weight:bold}
 
@@ -52,9 +52,24 @@
         .total>li{width:100%;border:0}
         .total>li:nth-child(3n){border:0}
     }
+
+    .info{padding:20px}
+    .info h1,
+    .info p,
+    .info span{font-size:12px}
+    .info h1{margin-bottom:5px}
+    .info span{display:block;margin-top:5px;color:#ccc;font-style:italic}
 </style>
 </head>
 <body>
+    <div class="info">
+        <h1>Version.01</h1>
+        <p>
+            - 편성효과(선택과 집중) 지워지지 않는 버그 존재.<br>
+            - 인물간 편성효과 미적용 상태.
+        </p>
+        <span>Last Update 2020.03.01</span>
+    </div>    
     <ul class="total">
         <li>
             <h2>위나라</h2>
@@ -102,15 +117,15 @@
         <li>
             <h2>군웅</h2>
             <ul>
-                    <li class="blue"><input type="checkbox" name="s" id="king_1" data-name="공손찬" data-color="청" data-country="군" data-type="창"><label for="king_1"><span>공손찬</span>[1슬롯]<br>[창병]</label></li>
-                    <li class="red"><input type="checkbox" name="s" id="king_2" data-name="안량" data-color="적" data-country="군" data-type="검"><label for="king_2"><span>안량</span>[1슬롯]<br>[검병]</label></li>
-                    <li class="red"><input type="checkbox" name="s" id="king_3" data-name="원소" data-color="적" data-country="군" data-type="검"><label for="king_3"><span>원소</span>[1슬롯]<br>[검병]</label></li>
-                    <li class="blue"><input type="checkbox" name="s" id="king_4" data-name="원술" data-color="청" data-country="군" data-type="책"><label for="king_4"><span>원술</span>[1슬롯]<br>[책략병]</label></li>
-                    <li class="red"><input type="checkbox" name="s" id="king_5" data-name="축융" data-color="적" data-country="군" data-type="특"><label for="king_5"><span>축융</span>[1슬롯]<br>[특수병]</label></li>
-                    <li class="blue"><input type="checkbox" name="s" id="king_6" data-name="문추" data-color="청" data-country="군" data-type="검"><label for="king_6"><span>문추</span>[2슬롯]<br>[검병]</label></li>
-                    <li class="blue"><input type="checkbox" name="s" id="king_7" data-name="장각" data-color="청" data-country="군" data-type="책"><label for="king_7"><span>장각</span>[2슬롯]<br>[책략병]</label></li>
-                    <li class="yellow"><input type="checkbox" name="s" id="king_8" data-name="여포" data-color="황" data-country="군" data-type="창"><label for="king_8"><span>여포</span>[3슬롯]<br>[창병]</label></li>
-                    <li class="red"><input type="checkbox" name="s" id="king_9" data-name="초선" data-color="적" data-country="군" data-type="책"><label for="king_9"><span>초선</span>[3슬롯]<br>[책략병]</label></li>
+                <li class="blue"><input type="checkbox" name="s" id="king_1" data-name="공손찬" data-color="청" data-country="군" data-type="창"><label for="king_1"><span>공손찬</span>[1슬롯]<br>[창병]</label></li>
+                <li class="red"><input type="checkbox" name="s" id="king_2" data-name="안량" data-color="적" data-country="군" data-type="검"><label for="king_2"><span>안량</span>[1슬롯]<br>[검병]</label></li>
+                <li class="red"><input type="checkbox" name="s" id="king_3" data-name="원소" data-color="적" data-country="군" data-type="검"><label for="king_3"><span>원소</span>[1슬롯]<br>[검병]</label></li>
+                <li class="blue"><input type="checkbox" name="s" id="king_4" data-name="원술" data-color="청" data-country="군" data-type="책"><label for="king_4"><span>원술</span>[1슬롯]<br>[책략병]</label></li>
+                <li class="red"><input type="checkbox" name="s" id="king_5" data-name="축융" data-color="적" data-country="군" data-type="특"><label for="king_5"><span>축융</span>[1슬롯]<br>[특수병]</label></li>
+                <li class="blue"><input type="checkbox" name="s" id="king_6" data-name="문추" data-color="청" data-country="군" data-type="검"><label for="king_6"><span>문추</span>[2슬롯]<br>[검병]</label></li>
+                <li class="blue"><input type="checkbox" name="s" id="king_7" data-name="장각" data-color="청" data-country="군" data-type="책"><label for="king_7"><span>장각</span>[2슬롯]<br>[책략병]</label></li>
+                <li class="yellow"><input type="checkbox" name="s" id="king_8" data-name="여포" data-color="황" data-country="군" data-type="창"><label for="king_8"><span>여포</span>[3슬롯]<br>[창병]</label></li>
+                <li class="red"><input type="checkbox" name="s" id="king_9" data-name="초선" data-color="적" data-country="군" data-type="책"><label for="king_9"><span>초선</span>[3슬롯]<br>[책략병]</label></li>
             </ul>
         </li>
     </ul>

@@ -32,9 +32,14 @@
     .total ul li.yellow input:checked + label{background:rgb(228, 228, 40);color:#000}
     
     .result{padding:20px;overflow:hidden}
-    .result .con{float:left;min-width:200px;margin-top:20px;margin-right:10px}
-    .result .con h3{margin-bottom:10px}
-    .result .con.first ul li{font-weight:bold}
+    .result .con{float:left;min-width:360px;margin-top:20px;margin-right:30px}
+    .result .con h3{padding-bottom:10px;border-bottom:1px solid #999;margin-bottom:10px}
+    .result .con ul li{font-size:15px}
+    .result .con.first {min-height:360px}
+    .result .con.first ul li{margin-bottom:10px;font-size:14px;color:#777}
+    .result .con.first ul li span{display:block;margin-bottom:3px;font-weight:bold;font-size:15px;color:#000}
+    .result .con.first h3{overflow:hidden}
+    .result .con.first h3 button{float:right;background:red;padding:5px;border:0;color:#fff;font-weight:bold}
 
     @media screen and (max-width: 970px) {
         .total>li{width:33.33%}
@@ -53,86 +58,99 @@
         .total>li:nth-child(3n){border:0}
     }
 
-    .info{padding:20px}
+    .info{padding:20px;overflow:hidden}
     .info h1,
     .info p,
     .info span{font-size:12px}
     .info h1{margin-bottom:5px}
     .info span{display:block;margin-top:5px;color:#ccc;font-style:italic}
+    .info .current,
+    .info .next{float:left;min-width:300px;margin-top:20px;margin-right:30px}
+    .info .next{color:#aaa}
 </style>
 </head>
 <body>
     <div class="info">
-        <h1>Version.01</h1>
-        <p>
-            - 편성효과(선택과 집중) 지워지지 않는 버그 존재.<br>
-            - 인물간 편성효과 미적용 상태.
-        </p>
-        <span>Last Update 2020.03.01</span>
+        <div class="current">
+            <h1>Version.01</h1>
+            <p>
+                - Chrome(크롬) 브라우저에 최적화 되어있습니다.<br>
+                &nbsp; 다른 브라우저에서는 제대로 보여지지 않을 수 있습니다.<br>
+                - 인물간 편성효과 미적용 상태.
+            </p>
+            <span>Last Update 2020.03.01</span>
+        </div>
+        <div class="next">
+            <h1>언젠가 update 예정</h1>
+            <p>
+                - 편성효과(선택과 집중) 지워지지 않는 버그 수정.<br>
+                - 인물간 편성효과 적용.
+            </p>
+        </div>
     </div>    
     <ul class="total">
         <li>
             <h2>위나라</h2>
             <ul>
-                <li class="blue"><input type="checkbox" name="s" id="wei_1" data-name="가후" data-color="청" data-country="위" data-type="책"><label for="wei_1"><span>가후</span>[1슬롯]<br>[책략병]</label></li>
-                <li class="yellow"><input type="checkbox" name="s" id="wei_2" data-name="순욱" data-color="황" data-country="위" data-type="책"><label for="wei_2"><span>순욱</span>[2슬롯]<br>[책략병]</label></li>
-                <li class="red"><input type="checkbox" name="s" id="wei_3" data-name="장합" data-color="적" data-country="위" data-type="검"><label for="wei_3"><span>장합</span>[2슬롯]<br>[검병]</label></li>
-                <li class="blue"><input type="checkbox" name="s" id="wei_4" data-name="조조" data-color="청" data-country="위" data-type="검"><label for="wei_4"><span>조조</span>[2슬롯]<br>[검병]</label></li>
-                <li class="red"><input type="checkbox" name="s" id="wei_5" data-name="조창" data-color="적" data-country="위" data-type="창"><label for="wei_5"><span>조창</span>[2슬롯]<br>[창병]</label></li>
-                <li class="red"><input type="checkbox" name="s" id="wei_6" data-name="하후연" data-color="적" data-country="위" data-type="특"><label for="wei_6"><span>하후연</span>[2슬롯]<br>[특수병]</label></li>
-                <li class="yellow"><input type="checkbox" name="s" id="wei_7" data-name="하후돈" data-color="황" data-country="위" data-type="검"><label for="wei_7"><span>하후돈</span>[3슬롯]<br>[검병]</label></li>
-                <li class="yellow"><input type="checkbox" name="s" id="wei_8" data-name="곽가" data-color="황" data-country="위" data-type="책"><label for="wei_8"><span>곽가</span>[3슬롯]<br>[책략병]</label></li>
-                <li class="blue"><input type="checkbox" name="s" id="wei_9" data-name="허저" data-color="청" data-country="위" data-type="특"><label for="wei_9"><span>허저</span>[3슬롯]<br>[특수병]</label></li>
+                <li class="blue"><input type="checkbox" name="s" id="wei_1" data-name="가후" data-info="[1슬롯 / 청속성 / 책략병 / 위나라]" data-color="청" data-country="위" data-type="책"><label for="wei_1"><span>가후</span>[1슬롯]<br>[책략병]</label></li>
+                <li class="yellow"><input type="checkbox" name="s" id="wei_2" data-name="순욱" data-info="[2슬롯 / 황속성 / 책략병 / 위나라]" data-color="황" data-country="위" data-type="책"><label for="wei_2"><span>순욱</span>[2슬롯]<br>[책략병]</label></li>
+                <li class="red"><input type="checkbox" name="s" id="wei_3" data-name="장합" data-info="[2슬롯 / 적속성 / 검병 / 위나라]" data-color="적" data-country="위" data-type="검"><label for="wei_3"><span>장합</span>[2슬롯]<br>[검병]</label></li>
+                <li class="blue"><input type="checkbox" name="s" id="wei_4" data-name="조조" data-info="[2슬롯 / 적속성 / 검병 / 위나라]" data-color="청" data-country="위" data-type="검"><label for="wei_4"><span>조조</span>[2슬롯]<br>[검병]</label></li>
+                <li class="red"><input type="checkbox" name="s" id="wei_5" data-name="조창" data-info="[2슬롯 / 적속성 / 창병 / 위나라]" data-color="적" data-country="위" data-type="창"><label for="wei_5"><span>조창</span>[2슬롯]<br>[창병]</label></li>
+                <li class="red"><input type="checkbox" name="s" id="wei_6" data-name="하후연" data-info="[2슬롯 / 적속성 / 특수병 / 위나라]" data-color="적" data-country="위" data-type="특"><label for="wei_6"><span>하후연</span>[2슬롯]<br>[특수병]</label></li>
+                <li class="yellow"><input type="checkbox" name="s" id="wei_7" data-name="하후돈" data-info="[3슬롯 / 황속성 / 검병 / 위나라]" data-color="황" data-country="위" data-type="검"><label for="wei_7"><span>하후돈</span>[3슬롯]<br>[검병]</label></li>
+                <li class="yellow"><input type="checkbox" name="s" id="wei_8" data-name="곽가" data-info="[3슬롯 / 황속성 / 책략병 / 위나라]" data-color="황" data-country="위" data-type="책"><label for="wei_8"><span>곽가</span>[3슬롯]<br>[책략병]</label></li>
+                <li class="blue"><input type="checkbox" name="s" id="wei_9" data-name="허저" data-info="[3슬롯 / 청속성 / 특수병 / 위나라]" data-color="청" data-country="위" data-type="특"><label for="wei_9"><span>허저</span>[3슬롯]<br>[특수병]</label></li>
             </ul>
         </li>
         <li>
             <h2>촉나라</h2>
             <ul>
-                <li class="blue"><input type="checkbox" name="s" id="shu_1" data-name="황월영" data-color="황" data-country="촉" data-type="책"><label for="shu_1"><span>황월영</span>[1슬롯]<br>[책략병]</label></li>
-                <li class="red"><input type="checkbox" name="s" id="shu_2" data-name="마초" data-color="적" data-country="촉" data-type="창"><label for="shu_2"><span>마초</span>[2슬롯]<br>[창병]</label></li>
-                <li class="blue"><input type="checkbox" name="s" id="shu_3" data-name="서서" data-color="청" data-country="촉" data-type="책"><label for="shu_3"><span>서서</span>[2슬롯]<br>[책략병]</label></li>
-                <li class="yellow"><input type="checkbox" name="s" id="shu_4" data-name="유비" data-color="황" data-country="촉" data-type="검"><label for="shu_4"><span>유비</span>[2슬롯]<br>[검병]</label></li>
-                <li class="blue"><input type="checkbox" name="s" id="shu_5" data-name="황충" data-color="황" data-country="촉" data-type="특"><label for="shu_5"><span>황충</span>[2슬롯]<br>[특수병]</label></li>
-                <li class="yellow"><input type="checkbox" name="s" id="shu_6" data-name="제갈량" data-color="황" data-country="촉" data-type="책"><label for="shu_6"><span>제갈량</span>[3슬롯]<br>[책략병]</label></li>
-                <li class="yellow"><input type="checkbox" name="s" id="shu_7" data-name="장비" data-color="황" data-country="촉" data-type="창"><label for="shu_7"><span>장비</span>[3슬롯]<br>[창병]</label></li>
-                <li class="red"><input type="checkbox" name="s" id="shu_8" data-name="관우" data-color="적" data-country="촉" data-type="창"><label for="shu_8"><span>관우</span>[3슬롯]<br>[창병]</label></li>
-                <li class="red"><input type="checkbox" name="s" id="shu_9" data-name="조운" data-color="적" data-country="촉" data-type="창"><label for="shu_9"><span>조운</span>[3슬롯]<br>[창병]</label></li>
+                <li class="blue"><input type="checkbox" name="s" id="shu_1" data-name="황월영" data-info="[1슬롯 / 청속성 / 책략병 / 촉나라]" data-color="청" data-country="촉" data-type="책"><label for="shu_1"><span>황월영</span>[1슬롯]<br>[책략병]</label></li>
+                <li class="red"><input type="checkbox" name="s" id="shu_2" data-name="마초" data-info="[2슬롯 / 적속성 / 창병 / 촉나라]" data-color="적" data-country="촉" data-type="창"><label for="shu_2"><span>마초</span>[2슬롯]<br>[창병]</label></li>
+                <li class="blue"><input type="checkbox" name="s" id="shu_3" data-name="서서" data-info="[2슬롯 / 청속성 / 책략병 / 촉나라]" data-color="청" data-country="촉" data-type="책"><label for="shu_3"><span>서서</span>[2슬롯]<br>[책략병]</label></li>
+                <li class="yellow"><input type="checkbox" name="s" id="shu_4" data-name="유비" data-info="[2슬롯 / 황속성 / 검병 / 촉나라]" data-color="황" data-country="촉" data-type="검"><label for="shu_4"><span>유비</span>[2슬롯]<br>[검병]</label></li>
+                <li class="blue"><input type="checkbox" name="s" id="shu_5" data-name="황충" data-info="[2슬롯 / 청속성 / 특수병 / 촉나라]" data-color="청" data-country="촉" data-type="특"><label for="shu_5"><span>황충</span>[2슬롯]<br>[특수병]</label></li>
+                <li class="yellow"><input type="checkbox" name="s" id="shu_6" data-name="제갈량" data-info="[3슬롯 / 황속성 / 책략병 / 촉나라]" data-color="황" data-country="촉" data-type="책"><label for="shu_6"><span>제갈량</span>[3슬롯]<br>[책략병]</label></li>
+                <li class="yellow"><input type="checkbox" name="s" id="shu_7" data-name="장비" data-info="[3슬롯 / 황속성 / 창병 / 촉나라]" data-color="황" data-country="촉" data-type="창"><label for="shu_7"><span>장비</span>[3슬롯]<br>[창병]</label></li>
+                <li class="red"><input type="checkbox" name="s" id="shu_8" data-name="관우" data-info="[3슬롯 / 적속성 / 창병 / 촉나라]" data-color="적" data-country="촉" data-type="창"><label for="shu_8"><span>관우</span>[3슬롯]<br>[창병]</label></li>
+                <li class="red"><input type="checkbox" name="s" id="shu_9" data-name="조운" data-info="[3슬롯 / 적속성 / 창병 / 촉나라]" data-color="적" data-country="촉" data-type="창"><label for="shu_9"><span>조운</span>[3슬롯]<br>[창병]</label></li>
             </ul>
         </li>
         <li>
             <h2>오나라</h2>
             <ul>
-                <li class="red"><input type="checkbox" name="s" id="wo_1" data-name="능통" data-color="적" data-country="오" data-type="책"><label for="wo_1"><span>능통</span>[1슬롯]<br>[책략병]</label></li>
-                <li class="blue"><input type="checkbox" name="s" id="wo_2" data-name="손상향" data-color="청" data-country="오" data-type="특"><label for="wo_2"><span>손상향</span>[1슬롯]<br>[특수병]</label></li>
-                <li class="yellow"><input type="checkbox" name="s" id="wo_3" data-name="소교" data-color="황" data-country="오" data-type="책"><label for="wo_3"><span>소교</span>[1슬롯]<br>[책략병]</label></li>
-                <li class="yellow"><input type="checkbox" name="s" id="wo_4" data-name="대교" data-color="황" data-country="오" data-type="책"><label for="wo_4"><span>대교</span>[2슬롯]<br>[책략병]</label></li>
-                <li class="red"><input type="checkbox" name="s" id="wo_5" data-name="손권" data-color="적" data-country="오" data-type="책"><label for="wo_5"><span>손권</span>[2슬롯]<br>[책략병]</label></li>
-                <li class="blue"><input type="checkbox" name="s" id="wo_6" data-name="여몽" data-color="청" data-country="오" data-type="특"><label for="wo_6"><span>여몽</span>[2슬롯]<br>[특수병]</label></li>
-                <li class="yellow"><input type="checkbox" name="s" id="wo_7" data-name="황개" data-color="황" data-country="오" data-type="특"><label for="wo_7"><span>황개</span>[2슬롯]<br>[특수병]</label></li>
-                <li class="yellow"><input type="checkbox" name="s" id="wo_8" data-name="감녕" data-color="황" data-country="오" data-type="특"><label for="wo_8"><span>감녕</span>[3슬롯]<br>[특수병]</label></li>
-                <li class="yellow"><input type="checkbox" name="s" id="wo_9" data-name="주유" data-color="황" data-country="오" data-type="책"><label for="wo_9"><span>주유</span>[3슬롯]<br>[책략병]</label></li>
-                <li class="blue"><input type="checkbox" name="s" id="wo_10" data-name="태사자" data-color="청" data-country="오" data-type="특"><label for="wo_10"><span>태사자</span>[3슬롯]<br>[특수병]</label></li>
+                <li class="red"><input type="checkbox" name="s" id="wo_1" data-name="능통" data-info="[1슬롯 / 적속성 / 책략병 / 오나라]" data-color="적" data-country="오" data-type="책"><label for="wo_1"><span>능통</span>[1슬롯]<br>[책략병]</label></li>
+                <li class="blue"><input type="checkbox" name="s" id="wo_2" data-name="손상향" data-info="[1슬롯 / 청속성 / 특수병 / 오나라]" data-color="청" data-country="오" data-type="특"><label for="wo_2"><span>손상향</span>[1슬롯]<br>[특수병]</label></li>
+                <li class="yellow"><input type="checkbox" name="s" id="wo_3" data-name="소교" data-info="[1슬롯 / 황속성 / 책략병 / 오나라]" data-color="황" data-country="오" data-type="책"><label for="wo_3"><span>소교</span>[1슬롯]<br>[책략병]</label></li>
+                <li class="yellow"><input type="checkbox" name="s" id="wo_4" data-name="대교" data-info="[2슬롯 / 황속성 / 책략병 / 오나라]" data-color="황" data-country="오" data-type="책"><label for="wo_4"><span>대교</span>[2슬롯]<br>[책략병]</label></li>
+                <li class="red"><input type="checkbox" name="s" id="wo_5" data-name="손권" data-info="[2슬롯 / 적속성 / 책략병 / 오나라]" data-color="적" data-country="오" data-type="책"><label for="wo_5"><span>손권</span>[2슬롯]<br>[책략병]</label></li>
+                <li class="blue"><input type="checkbox" name="s" id="wo_6" data-name="여몽" data-info="[2슬롯 / 청속성 / 특수병 / 오나라]" data-color="청" data-country="오" data-type="특"><label for="wo_6"><span>여몽</span>[2슬롯]<br>[특수병]</label></li>
+                <li class="yellow"><input type="checkbox" name="s" id="wo_7" data-name="황개" data-info="[2슬롯 / 황속성 / 특수병 / 오나라]" data-color="황" data-country="오" data-type="특"><label for="wo_7"><span>황개</span>[2슬롯]<br>[특수병]</label></li>
+                <li class="yellow"><input type="checkbox" name="s" id="wo_8" data-name="감녕" data-info="[3슬롯 / 황속성 / 특수병 / 오나라]" data-color="황" data-country="오" data-type="특"><label for="wo_8"><span>감녕</span>[3슬롯]<br>[특수병]</label></li>
+                <li class="yellow"><input type="checkbox" name="s" id="wo_9" data-name="주유" data-info="[3슬롯 / 황속성 / 책략병 / 오나라]" data-color="황" data-country="오" data-type="책"><label for="wo_9"><span>주유</span>[3슬롯]<br>[책략병]</label></li>
+                <li class="blue"><input type="checkbox" name="s" id="wo_10" data-name="태사자" data-info="[3슬롯 / 청속성 / 특수병 / 오나라]" data-color="청" data-country="오" data-type="특"><label for="wo_10"><span>태사자</span>[3슬롯]<br>[특수병]</label></li>
             </ul>
         </li>
         <li>
             <h2>군웅</h2>
             <ul>
-                <li class="blue"><input type="checkbox" name="s" id="king_1" data-name="공손찬" data-color="청" data-country="군" data-type="창"><label for="king_1"><span>공손찬</span>[1슬롯]<br>[창병]</label></li>
-                <li class="red"><input type="checkbox" name="s" id="king_2" data-name="안량" data-color="적" data-country="군" data-type="검"><label for="king_2"><span>안량</span>[1슬롯]<br>[검병]</label></li>
-                <li class="red"><input type="checkbox" name="s" id="king_3" data-name="원소" data-color="적" data-country="군" data-type="검"><label for="king_3"><span>원소</span>[1슬롯]<br>[검병]</label></li>
-                <li class="blue"><input type="checkbox" name="s" id="king_4" data-name="원술" data-color="청" data-country="군" data-type="책"><label for="king_4"><span>원술</span>[1슬롯]<br>[책략병]</label></li>
-                <li class="red"><input type="checkbox" name="s" id="king_5" data-name="축융" data-color="적" data-country="군" data-type="특"><label for="king_5"><span>축융</span>[1슬롯]<br>[특수병]</label></li>
-                <li class="blue"><input type="checkbox" name="s" id="king_6" data-name="문추" data-color="청" data-country="군" data-type="검"><label for="king_6"><span>문추</span>[2슬롯]<br>[검병]</label></li>
-                <li class="blue"><input type="checkbox" name="s" id="king_7" data-name="장각" data-color="청" data-country="군" data-type="책"><label for="king_7"><span>장각</span>[2슬롯]<br>[책략병]</label></li>
-                <li class="yellow"><input type="checkbox" name="s" id="king_8" data-name="여포" data-color="황" data-country="군" data-type="창"><label for="king_8"><span>여포</span>[3슬롯]<br>[창병]</label></li>
-                <li class="red"><input type="checkbox" name="s" id="king_9" data-name="초선" data-color="적" data-country="군" data-type="책"><label for="king_9"><span>초선</span>[3슬롯]<br>[책략병]</label></li>
+                <li class="blue"><input type="checkbox" name="s" id="king_1" data-name="공손찬" data-info="[1슬롯 / 청속성 / 창병 / 군웅]" data-color="청" data-country="군" data-type="창"><label for="king_1"><span>공손찬</span>[1슬롯]<br>[창병]</label></li>
+                <li class="red"><input type="checkbox" name="s" id="king_2" data-name="안량" data-info="[1슬롯 / 적속성 / 검병 / 군웅]" data-color="적" data-country="군" data-type="검"><label for="king_2"><span>안량</span>[1슬롯]<br>[검병]</label></li>
+                <li class="red"><input type="checkbox" name="s" id="king_3" data-name="원소" data-info="[1슬롯 / 적속성 / 검병 / 군웅]" data-color="적" data-country="군" data-type="검"><label for="king_3"><span>원소</span>[1슬롯]<br>[검병]</label></li>
+                <li class="blue"><input type="checkbox" name="s" id="king_4" data-name="원술" data-info="[1슬롯 / 청속성 / 책략병 / 군웅]" data-color="청" data-country="군" data-type="책"><label for="king_4"><span>원술</span>[1슬롯]<br>[책략병]</label></li>
+                <li class="red"><input type="checkbox" name="s" id="king_5" data-name="축융" data-info="[1슬롯 / 적속성 / 특수병 / 군웅]" data-color="적" data-country="군" data-type="특"><label for="king_5"><span>축융</span>[1슬롯]<br>[특수병]</label></li>
+                <li class="blue"><input type="checkbox" name="s" id="king_6" data-name="문추" data-info="[2슬롯 / 청속성 / 검병 / 군웅]" data-color="청" data-country="군" data-type="검"><label for="king_6"><span>문추</span>[2슬롯]<br>[검병]</label></li>
+                <li class="blue"><input type="checkbox" name="s" id="king_7" data-name="장각" data-info="[2슬롯 / 청속성 / 책략병 / 군웅]" data-color="청" data-country="군" data-type="책"><label for="king_7"><span>장각</span>[2슬롯]<br>[책략병]</label></li>
+                <li class="yellow"><input type="checkbox" name="s" id="king_8" data-name="여포" data-info="[3슬롯 / 황속성 / 창병 / 군웅]" data-color="황" data-country="군" data-type="창"><label for="king_8"><span>여포</span>[3슬롯]<br>[창병]</label></li>
+                <li class="red"><input type="checkbox" name="s" id="king_9" data-name="초선" data-info="[3슬롯 / 적속성 / 책략병 / 군웅]" data-color="적" data-country="군" data-type="책"><label for="king_9"><span>초선</span>[3슬롯]<br>[책략병]</label></li>
             </ul>
         </li>
     </ul>
 
     <div class="result">
         <div class="con first">
-            <h3>장수선택</h3>
+            <h3>장수선택 <button type="button" class="reset">Reset</button></h3>
             <ul class="type1">
             </ul>
         </div>
@@ -169,6 +187,8 @@
                 
                 this.select_Btn = document.querySelectorAll('input');
 
+                this.reset_Btn = document.querySelector('.reset');
+
                 this.result_member_txt = document.querySelector('.type1');
                 this.result_organization_txt = document.querySelector('.type2');
 
@@ -201,7 +221,8 @@
                             name : this.getAttribute('data-name'),
                             color : this.getAttribute('data-color'),
                             country : this.getAttribute('data-country'),
-                            type : this.getAttribute('data-type')
+                            type : this.getAttribute('data-type'),
+                            info : this.getAttribute('data-info')
                         }
                         
                         _self.current_select_member = selectTarget;
@@ -219,6 +240,11 @@
                         }
                     });
                 });
+
+                this.reset_Btn.addEventListener('click', function(){
+                    _self._reset();
+                })
+
             }
 
             _add_Event(){
@@ -275,6 +301,14 @@
             }
             
             _del_color_check(){
+                if(this.select_member.length != 6){
+                    this._del_organization(this.default_organiztion_txt[5]);
+                }else{
+                    if(this.color_blue != 0 || this.color_red != 0 || this.color_yellow != 0){
+                        this._del_organization(this.default_organiztion_txt[5]);
+                    }
+                }                
+                
                 if(this.color_blue == 2 || this.color_red == 2 || this.color_yellow == 2){
                     this._del_organization(this.default_organiztion_txt[4]);
                 }
@@ -472,12 +506,19 @@
 
             _add_member(){
                 let _name = this.current_select_member.name;
+                let _info = this.current_select_member.info;
+
                 this.select_member.push(_name);
 
                 let _a = document.createElement('li'),
-                    _a_t = document.createTextNode(_name);
+                    _a_n = document.createElement('span'),
+                    _a_n_t = document.createTextNode(_name),
+                    _b_t = document.createTextNode(_info);
                     
-                _a.appendChild(_a_t);
+                _a_n.appendChild(_a_n_t);
+                _a.appendChild(_a_n);
+                _a.appendChild(_b_t);
+
                 this.result_member_txt.appendChild(_a);
             }
 
@@ -486,7 +527,7 @@
                 let _idx = this.select_member.findIndex(function(item) {return item.name === _name});
                 this.select_member.splice(_idx, 1);
                 this.result_member_txt.querySelectorAll('li').forEach((_e)=>{
-                    if(_e.textContent == _name){
+                    if(_e.childNodes[0].textContent == _name){
                         _e.remove();
                     }
                 });
@@ -527,6 +568,36 @@
                 }else{
                     //console.log('없음 - 추가조건 아님');
                 }
+            }
+
+            _reset(){                
+                this.select_member = [];
+                this.select_organization = [];
+
+                this.current_select_member = undefined;
+                
+                this.color_blue = 0;
+                this.color_red = 0;
+                this.color_yellow = 0;
+
+                this.country_wei = 0;
+                this.country_shu = 0;
+                this.country_wo = 0;
+                this.country_king = 0;
+
+                this.type_sword = 0;
+                this.type_lance = 0;
+                this.type_deceit = 0;
+                this.type_special = 0;
+
+                this.result_member_txt.innerHTML = "";
+                this.result_organization_txt.innerHTML = "";
+
+                this.select_Btn.forEach((_e)=>{
+                    if(_e.checked){
+                        _e.checked = false;
+                    }
+                });
             }
         }
 

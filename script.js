@@ -1,21 +1,21 @@
 class set{
     constructor(){
-        var self = this;
+        let _self = this;
 
         $.getJSON("organization_info.json", function(data){
-            self.default_organiztion_txt = data;
+            _self.default_organiztion_txt = data;
         })
 
         $.getJSON("member_info.json", function(data){
-            self.default_member_info = data;
+            _self.default_member_info = data;
+        })
+
+        $.getJSON("love_cnt_info.json", function(data){
+            _self.default_love_cnt_info = data;
         })
 
         $.getJSON("love_info.json", function(data){
-            self.default_love_cnt_info = data;
-        })
-
-        $.getJSON("love_info.json", function(data){
-            self.default_love_info = data;
+            _self.default_love_info = data;
         })
 
         this.select_Btn = document.querySelectorAll('input');

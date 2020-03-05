@@ -5,23 +5,97 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width; initial-scale=1.0">
 <title>select</title>
-    <link rel="stylesheet" type="text/css" href="./css.css"/>
+<style>
+    *{padding:0;margin:0}
+    ul, li{list-style: none}
+
+    .info{padding:20px;overflow:hidden}
+    .info h1,
+    .info p,
+    .info span{font-size:12px}
+    .info h1{margin-bottom:5px}
+    .info span{display:block;margin-top:5px;color:#ccc;font-style:italic}
+    .info .current,
+    .info .next{float:left;min-width:300px;margin-top:20px;margin-right:30px}
+    .info .next{color:#aaa}
+    .info .reset{clear:both}
+    
+    .total{padding:20px;overflow:hidden}
+
+    .total>li{float:left;width:25%}
+    .total>li h2{margin:10px 10px 20px}
+    .total>li{padding:0 10px;border-right:1px dotted #999;box-sizing:border-box}
+    .total>li:last-child{border:0}
+    .total ul {overflow:hidden}
+    .total ul li{position:relative;float:left;width:80px}
+
+    .total ul li.red{border:2px solid red}
+    .total ul li.blue{border:2px solid blue}
+    .total ul li.yellow{border:2px solid rgb(228, 228, 40)}
+    .total ul li{margin:10px}
+    .total ul li input{position:absolute;top:0;left:0;width:0;height:0;opacity:0}
+    .total ul li label{display:block;padding:10px;box-sizing:border-box;color:#777;font-size:13px}
+    .total ul li label span{display:block;font-size:15px;color:#000;font-weight:bold}
+    .total ul li.red input:checked + label{background:red;color:#fff}
+    .total ul li.red input:checked + label span{color:#fff}
+    .total ul li.blue input:checked + label{background:blue;color:#fff}
+    .total ul li.blue input:checked + label span{color:#fff}
+    .total ul li.yellow input:checked + label{background:rgb(228, 228, 40);color:#000}
+    
+    .result{padding:20px;overflow:hidden}
+    .result .left{float:left;width:50%;padding-right:30px;box-sizing:border-box}
+    .result .right{float:right;width:50%}
+    .result .con{margin-top:20px}
+    .result .con h3{padding-bottom:10px;border-bottom:1px solid #999;margin-bottom:10px}
+    .result .con ul li{font-size:15px}
+    .result .con {min-height:230px}
+    .result .con .type1 li,
+    .result .con .type3 li{margin-bottom:10px;font-size:14px;color:#777}
+    .result .con .type1 li span,
+    .result .con .type3 li span{display:block;font-weight:bold;font-size:15px;color:#000}
+    .result .con.first h3{overflow:hidden}
+
+    button.reset{float:right;background:red;padding:5px;border:0;color:#fff;font-weight:bold}
+    
+    @media screen and (max-width: 970px) {
+        .total>li{width:33.33%}
+        .total>li:nth-child(3n){border:0}
+        .result .left,
+        .result .right{float:none;width:100%}
+        .result .left{padding-right:0}
+    }
+
+    @media screen and (max-width: 744px) {
+        .total>li{width:50%}
+        .total>li:nth-child(2n){border:0}
+        .total>li:nth-child(3n){border-right:1px dotted #999}
+        .total>li:last-child{border:0}
+    }
+
+    @media screen and (max-width: 515px) {
+        .total>li{width:100%;border:0}
+        .total>li:nth-child(3n){border:0}
+    }
+
+</style>
 </head>
 <body>
     <div class="info">
         <div class="current">
-            <h1>Version.02</h1>
+            <h1>Version.01</h1>
             <p>
                 - Chrome(크롬) 브라우저에 최적화 되어있습니다.<br>
                 &nbsp; 다른 브라우저에서는 제대로 보여지지 않을 수 있습니다.<br>
-                - 인물간 편성효과 적용완료.
+                - 인물간 편성효과 미적용 상태.
             </p>
             <span>Last Update 2020.03.01</span>
         </div>
         <div class="next">
             <h1>언젠가 update 예정</h1>
             <p>
-                
+                - 인물간 편성효과 적용 예정.<br>
+                - 고유스킬, 스킬 적용 예정<br>
+                - 사정거리 추가 예정
             </p>
         </div>
         <button type="button" class="reset js_reset">Reset</button>
@@ -124,12 +198,27 @@
                     '[오나라 편성] - 아군의 모든 기력 2초당 회복량 1 증가',
                     '[군웅 편성] - 모든 아군의 치명타 피해량 50% 증가',
                     '[영웅집결] - 기력 소모 시 소모량의 5%를 다시 회복',
-
+                    
                     '[검병 편성] - 아군 모든 검병의 물리방어력 3% 증가',
                     '[창병 편성] - 아군 모든 창병의 물리공격력 3% 증가',
-                    '[책략병 편성] - 아군 모든 책략병의 책략공격력 3% 증가',
+                    '[책략병 편성] - 아군 모든 칙략병의 책략공격력 3% 증가',
                     '[특수병 편성] - 아군 모든 특수병의 공격속도 3% 증가',
                     '[정예병 편성] - 아군 모든 정예병사의 통솔력이 10 증가',
+
+                    '[도원결의] - 유비, 관우, 장비의 체력이 15% 증가',
+                    '[상산 조자룡] - 아군 모든 정예병사의 통솔력이 10 증가',
+                    '[맹덕과 봉효] - 아군 모든 정예병사의 통솔력이 10 증가',
+                    '[오하아몽] - 아군 모든 정예병사의 통솔력이 10 증가',
+                    '[하북대장군] - 아군 모든 정예병사의 통솔력이 10 증가',
+                    '[강동이교] - 아군 모든 정예병사의 통솔력이 10 증가',
+                    '[담소자약] - 아군 모든 정예병사의 통솔력이 10 증가',
+                    '[하후형제] - 아군 모든 정예병사의 통솔력이 10 증가',
+                    '[수어지교] - 아군 모든 정예병사의 통솔력이 10 증가',
+                    '[왕좌지재] - 아군 모든 정예병사의 통솔력이 10 증가',
+                    '[오관참육창] - 아군 모든 정예병사의 통솔력이 10 증가',
+                    '[원가형제] - 아군 모든 정예병사의 통솔력이 10 증가',
+                    '[랑재녀모] - 아군 모든 정예병사의 통솔력이 10 증가',
+                    '[폐월과 봉선] - 아군 모든 정예병사의 통솔력이 10 증가'
                 ];
 
                 this.default_member_info = [
@@ -151,7 +240,6 @@
                         'color':"황",
                         'country':"위",
                         'd_type':"책",
-                        'love'  : ["왕좌지재"],
                         'skill' : '고유스킬 : 적용받는 디버프의 지속시간 90% 감소',
                         'point' : '스킬사용시 기력소모량 : 65',
                         'skill_b' : 'B 스킬 : 공격력의 200% 만큼 체력비율이 가장 낮은 아군 2명의 체력 회복',
@@ -176,7 +264,6 @@
                         'color':"청",
                         'country':"위",
                         'd_type':"검",
-                        'love'  : ["맹덕과 봉효", "왕좌지재", "오관참육창"],
                         'skill' : '고유스킬 : 디버프를 받으면, 50% 확률로 디버프를 건 상대도 디버프 적용',
                         'point' : '스킬사용시 기력소모량 : 55',
                         'skill_b' : 'B 스킬 : 공격력의 255%로 가장 가까운 적 2명 타격',
@@ -201,7 +288,6 @@
                         'color':"적",
                         'country':"위",
                         'd_type':"특",
-                        'love'  : ["하후형제"],
                         'skill' : '고유스킬 : 적을 죽이면 5초간 공격속도 50% 증가',
                         'point' : '스킬사용시 기력소모량 : 67',
                         'skill_b' : 'B 스킬 : 공격력의 220%로 가장 가까운 적 3명 타격 후 넉백',
@@ -214,7 +300,6 @@
                         'color':"황",
                         'country':"위",
                         'd_type':"검",
-                        'love'  : ["하후형제"],
                         'skill' : '고유스킬 : 공격 시 대상이 보호막을 보유하고 있으면 피해량 80% 증가',
                         'point' : '스킬사용시 기력소모량 : 52',
                         'skill_b' : 'B 스킬 : 공격력의 290%로 가장 가까운 적 1명 타격',
@@ -227,7 +312,6 @@
                         'color':"황",
                         'country':"위",
                         'd_type':"책",
-                        'love'  : ["맹덕과 봉효"],
                         'skill' : '고유스킬 : 버프 또는 디버프를 얻을 때마다, 치명타피해 8씩 누적 증가(최대 100)',
                         'point' : '스킬사용시 기력소모량 : 75',
                         'skill_b' : 'B 스킬 : 공격력의 160%로 모든 적 타격',
@@ -252,7 +336,6 @@
                         'color':"청",
                         'country':"촉",
                         'd_type':"책",
-                        'love'  : ["량재녀모"],
                         'skill' : '고유스킬 : 일반공격 10회 마다 또는 치명타 타격 시 피해량의 50%만큼 체력비율이 가장 낮은 아군 1명 회복',
                         'point' : '스킬사용시 기력소모량 : 65',
                         'skill_b' : 'B 스킬 : 공격력의 250%로 가까운 적 2명 타격',
@@ -289,7 +372,6 @@
                         'color':"황",
                         'country':"촉",
                         'd_type':"검",
-                        'love'  : ["도원결의","수어지교"],
                         'skill' : '고유스킬 : 피해를 받으면, 12% 확률로 공격자의 공격력 6초간 10% 감소',
                         'point' : '스킬사용시 기력소모량 : 63',
                         'skill_b' : 'B 스킬 : 시전자 최대 체력의 30% 만큼 가까운 아군 2명과 자신의 체력 회복',
@@ -314,7 +396,6 @@
                         'color':"황",
                         'country':"촉",
                         'd_type':"책",
-                        'love'  : ["수어지교","량재녀모"],
                         'skill' : '고유스킬 : 동일한 속성의 아군이 피해를 받으면 자신의 스킬피해량 0.5%씩 누적 증가(최대 60%)',
                         'point' : '스킬사용시 기력소모량 : 74',
                         'skill_b' : 'B 스킬 : 공격력의 190%로 모든 적 타격',
@@ -327,7 +408,6 @@
                         'color':"황",
                         'country':"촉",
                         'd_type':"창",
-                        'love'  : ["도원결의"],
                         'skill' : '고유스킬 : 치명타로 인한 추가 피해를 무시하며 치명타를 받으면 최대체력이 0.5%씩 누적 증가(최대 25%)',
                         'point' : '스킬사용시 기력소모량 : 68',
                         'skill_b' : 'B 스킬 : 공격력의 255%로 가장 가까운 적 1명과 그와 인접한 모든 적 타격 후 넉백',
@@ -340,7 +420,6 @@
                         'color':"적",
                         'country':"촉",
                         'd_type':"창",
-                        'love'  : ["도원결의","오관참육창"],
                         'skill' : '고유스킬 : 일반 공격 시, 대상의 물리방어력 4%씩 누적 감소 (최대 60%)',
                         'point' : '스킬사용시 기력소모량 : 50',
                         'skill_b' : 'B 스킬 : 공격력의 280%로 가장 가까운 적 1명 타격',
@@ -353,7 +432,6 @@
                         'color':"적",
                         'country':"촉",
                         'd_type':"창",
-                        'love'  : ["상산 조자룡"],
                         'skill' : '고유스킬 : 일반 공격 시, 대상이 가진 버프 중 1개를 동일하게 얻는다 (버프시간이 초기값으로 적용)',
                         'point' : '스킬사용시 기력소모량 : 56',
                         'skill_b' : 'B 스킬 : 공격력의 260%로 가장 가까운 적 2명 타격',
@@ -390,7 +468,6 @@
                         'color':"황",
                         'country':"오",
                         'd_type':"책",
-                        'love'  : ["강동이교"],
                         'skill' : '고유스킬 : 6초마다 물리방어력과 책략방어력의 합의 8%만큼 가장 가까운 아군 2명을 회복',
                         'point' : '스킬사용시 기력소모량 : 70',
                         'skill_b' : 'B 스킬 : 물리방어력과 책략방어력 합의 130% 만큼 모든 아군 체력 회복',
@@ -403,7 +480,6 @@
                         'color':"황",
                         'country':"오",
                         'd_type':"책",
-                        'love'  : ["강동이교"],
                         'skill' : '고유스킬 : 스킬 피해를 받으면, 공격력의 85% 만큼 체력비율이 가장 낮은 아군 1명 체력 회복',
                         'point' : '스킬사용시 기력소모량 : 50',
                         'skill_b' : 'B 스킬 : 공격력의 350% 만큼 체력비율이 가장 낮은 아군 1명의 체력 회복',
@@ -428,7 +504,6 @@
                         'color':"청",
                         'country':"오",
                         'd_type':"특",
-                        'love'  : ["오하아몽"],
                         'skill' : '고유스킬 : 5회 이상 일반 공격한 대상에게 주는 피해량 1.5배 증가',
                         'point' : '스킬사용시 기력소모량 : 67',
                         'skill_b' : 'B 스킬 : 공격력의 270%로 가장 먼 적 1명과 그와 인접한 모든 적 타격',
@@ -453,7 +528,6 @@
                         'color':"황",
                         'country':"오",
                         'd_type':"특",
-                        'love'  : ["담소자약"],
                         'skill' : '고유스킬 : 스킬을 사용하면, 대상 바로 뒤로 이동',
                         'point' : '스킬사용시 기력소모량 : 58',
                         'skill_b' : 'B 스킬 : 공격력의 300%로 체력비율이 가장 낮은 적 1명 타격',
@@ -466,7 +540,6 @@
                         'color':"황",
                         'country':"오",
                         'd_type':"책",
-                        'love'  : ["오하아몽","담소자약"],
                         'skill' : '고유스킬 : 일반 공격시, 대상의 최대체력이 더 높으면 20% 확률로 3초간 화염 부여(초당 최대 체력의 1% 피해)',
                         'point' : '스킬사용시 기력소모량 : 71',
                         'skill_b' : 'B 스킬 : 공격력의 220%로 모든 적 타격',
@@ -487,153 +560,114 @@
                     },
                     {
                         'name' : "공손찬",
-                        'info' : "[1슬롯 / 청속성 / 창병 / 군웅 / 가까운 적 / 사거리 : 7 ]",
+                        'info' : "[1슬롯 / 청속성 / 창병 / 군웅 / 가장 먼 적 / 사거리 : 32 ]",
                         'color':"청",
                         'country':"군",
                         'd_type':"창",
-                        'love'  : ["상산 조자룡"],
-                        'skill' : '고유스킬 : 일반 공격 시, 대상의 공격속도 3% 씩 누적 감소 (최대39%)',
-                        'point' : '스킬사용시 기력소모량 : 54',
-                        'skill_b' : 'B 스킬 : 공격력의 280%로 가까운 적 1명 타격',
-                        'skill_a' : 'A 스킬 : 대상의 공격속도와 이동속도가 12초간 70% 감소',
-                        'skill_s' : 'S 스킬 : 대상을 제외한 모든 적의 공격속도와 이동속도가 12초간 40% 감수'
+                        'skill' : '고유스킬 : ',
+                        'point' : '스킬사용시 기력소모량 : ',
+                        'skill_b' : 'B 스킬 : ',
+                        'skill_a' : 'A 스킬 : ',
+                        'skill_s' : 'S 스킬 : '
                     },
                     {
                         'name' : "안량",
-                        'info' : "[1슬롯 / 적속성 / 검병 / 군웅 / 가까운 적 / 사거리 : 5 ]",
+                        'info' : "[1슬롯 / 적속성 / 검병 / 군웅 / 가장 먼 적 / 사거리 : 32 ]",
                         'color':"적",
                         'country':"군",
                         'd_type':"검",
-                        'love'  : ["하북대장군"],
-                        'skill' : '고유스킬 : 체력 회복 시, 회복량 2배 증가',
-                        'point' : '스킬사용시 기력소모량 : 57',
-                        'skill_b' : 'B 스킬 : 공격력의 255%로 가까운적 2명 타격',
-                        'skill_a' : 'A 스킬 : 12초간 물리방어력 70% 증가',
-                        'skill_s' : 'S 스킬 : 자신이 가진 디버프를 6~6개 만큼 랜덤 제거'
+                        'skill' : '고유스킬 : ',
+                        'point' : '스킬사용시 기력소모량 : ',
+                        'skill_b' : 'B 스킬 : ',
+                        'skill_a' : 'A 스킬 : ',
+                        'skill_s' : 'S 스킬 : '
                     },
                     {
                         'name' : "원소",
-                        'info' : "[1슬롯 / 적속성 / 검병 / 군웅 / 가까운 적 / 사거리 : 7 ]",
+                        'info' : "[1슬롯 / 적속성 / 검병 / 군웅 / 가장 먼 적 / 사거리 : 32 ]",
                         'color':"적",
                         'country':"군",
                         'd_type':"검",
-                        'love'  : ["하북대장군", "원가형제"],
-                        'skill' : '고유스킬 : 체력이 40% 이하이면, 물리방어력 30% 증가',
-                        'point' : '스킬사용시 기력소모량 : 54',
-                        'skill_b' : 'B 스킬 : 공격력의 255%로 가장 가까운 적 2명 타격',
-                        'skill_a' : 'A 스킬 : 시전자 공격력의 62%만큼 가까운 아군 1명과 자신의 책략방어력 12초간 증가',
-                        'skill_s' : 'S 스킬 : 대상이 검병 또는 특수병이면 공격력의 200%로 추가 타격'
+                        'skill' : '고유스킬 : ',
+                        'point' : '스킬사용시 기력소모량 : ',
+                        'skill_b' : 'B 스킬 : ',
+                        'skill_a' : 'A 스킬 : ',
+                        'skill_s' : 'S 스킬 : '
                     },
                     {
                         'name' : "원술",
-                        'info' : "[1슬롯 / 청속성 / 책략병 / 군웅 / 가까운 적 / 사거리 : 18 ]",
+                        'info' : "[1슬롯 / 청속성 / 책략병 / 군웅 / 가장 먼 적 / 사거리 : 32 ]",
                         'color':"청",
                         'country':"군",
                         'd_type':"책",
-                        'love'  : ["원가형제"],
-                        'skill' : '고유스킬 : 5초 이상 아무런 피해를 받지 않는다면 가장 낮은 기력 5회복 (5초마다 반복)',
-                        'point' : '스킬사용시 기력소모량 : 61',
-                        'skill_b' : 'B 스킬 : 12초간 공격력 70% 증가',
-                        'skill_a' : 'A 스킬 : 공격력의 270% 만큼 가까운 아군 2명과 자신의 체력 회복',
-                        'skill_s' : 'S 스킬 : 자신의 속성과 다른 기력 20 충전'
+                        'skill' : '고유스킬 : ',
+                        'point' : '스킬사용시 기력소모량 : ',
+                        'skill_b' : 'B 스킬 : ',
+                        'skill_a' : 'A 스킬 : ',
+                        'skill_s' : 'S 스킬 : '
                     },
                     {
                         'name' : "축융",
-                        'info' : "[1슬롯 / 적속성 / 특수병 / 군웅 / 가까운 적 / 사거리 : 17 ]",
+                        'info' : "[1슬롯 / 적속성 / 특수병 / 군웅 / 가장 먼 적 / 사거리 : 32 ]",
                         'color':"적",
                         'country':"군",
                         'd_type':"특",
-                        'skill' : '고유스킬 : 일반 공격 시, 대상이 상태이상이면 5초간 상흔 부여',
-                        'point' : '스킬사용시 기력소모량 : 51',
-                        'skill_b' : 'B 스킬 : 공격력의 240%로 랜덤 적 3명 타격',
-                        'skill_a' : 'A 스킬 : 대상과 속성이 같으면 12초간 상흔 부여',
-                        'skill_s' : 'S 스킬 : 아군 특수병의 치명타확률 15초간 62% 증가'
+                        'skill' : '고유스킬 : ',
+                        'point' : '스킬사용시 기력소모량 : ',
+                        'skill_b' : 'B 스킬 : ',
+                        'skill_a' : 'A 스킬 : ',
+                        'skill_s' : 'S 스킬 : '
                     },
                     {
                         'name' : "문추",
-                        'info' : "[2슬롯 / 청속성 / 검병 / 군웅 / 가까운 적 / 사거리 : 5 ]",
+                        'info' : "[2슬롯 / 청속성 / 검병 / 군웅 / 가장 먼 적 / 사거리 : 32 ]",
                         'color':"청",
                         'country':"군",
                         'd_type':"검",
-                        'love'  : ["하북대장군"],
-                        'skill' : '고유스킬 : 넉백에 면역, 넉백을 받을 때마다 모든방어력 5%씩 누적 증가',
-                        'point' : '스킬사용시 기력소모량 : 66',
-                        'skill_b' : 'B 스킬 : 모든 아군의 물리방어력 12초간 40% 증가',
-                        'skill_a' : 'A 스킬 : 공격력의 255%로 가장 가까운 적 2명 타격',
-                        'skill_s' : 'S 스킬 : 공격력이 가장 높은 적 2명에게 12초간 기절 부여'
+                        'skill' : '고유스킬 : ',
+                        'point' : '스킬사용시 기력소모량 : ',
+                        'skill_b' : 'B 스킬 : ',
+                        'skill_a' : 'A 스킬 : ',
+                        'skill_s' : 'S 스킬 : '
                     },
                     {
                         'name' : "장각",
-                        'info' : "[2슬롯 / 청속성 / 책략병 / 군웅 / 가까운 적 / 사거리 : 20 ]",
+                        'info' : "[2슬롯 / 청속성 / 책략병 / 군웅 / 가장 먼 적 / 사거리 : 32 ]",
                         'color':"청",
                         'country':"군",
                         'd_type':"책",
-                        'skill' : '고유스킬 : 20초마다 랜덤 적 한 명을 대상으로 스킬 시전',
-                        'point' : '스킬사용시 기력소모량 : 61',
-                        'skill_b' : 'B 스킬 : 공격력의 200%로 랜덤 적 3명 타격',
-                        'skill_a' : 'A 스킬 : 대상의 이동속도 12초간 50% 감소',
-                        'skill_s' : 'S 스킬 : 대상에게 각각 45% 확률로 12초간 혼란 부여'
+                        'skill' : '고유스킬 : ',
+                        'point' : '스킬사용시 기력소모량 : ',
+                        'skill_b' : 'B 스킬 : ',
+                        'skill_a' : 'A 스킬 : ',
+                        'skill_s' : 'S 스킬 : '
                     },
                     {
                         'name' : "여포",
-                        'info' : "[3슬롯 / 황속성 / 창병 / 군웅 / 가까운 적 / 사거리 : 8 ]",
+                        'info' : "[3슬롯 / 황속성 / 창병 / 군웅 / 가장 먼 적 / 사거리 : 32 ]",
                         'color':"황",
                         'country':"군",
                         'd_type':"창",
-                        'love'  : ["폐월과 봉선"],
-                        'skill' : '고유스킬 : 체력이 60% 이하일 때 피해를 받으면, 받을 때마다 공격력이 1%씩 누적 증가(최대30%)',
-                        'point' : '스킬사용시 기력소모량 : 53',
-                        'skill_b' : 'B 스킬 : 12초간 공격력의 70% 증가',
-                        'skill_a' : 'A 스킬 : 12초간 공격속도와 이동속도 70% 증가',
-                        'skill_s' : 'S 스킬 : 스킬 지속시간 6초 증가'
+                        'skill' : '고유스킬 : ',
+                        'point' : '스킬사용시 기력소모량 : ',
+                        'skill_b' : 'B 스킬 : ',
+                        'skill_a' : 'A 스킬 : ',
+                        'skill_s' : 'S 스킬 : '
                     },
                     {
                         'name' : "초선",
-                        'info' : "[3슬롯 / 적속성 / 책략병 / 군웅 / 가까운 적 / 사거리 : 19 ]",
+                        'info' : "[3슬롯 / 적속성 / 책략병 / 군웅 / 가장 먼 적 / 사거리 : 32 ]",
                         'color':"적",
                         'country':"군",
                         'd_type':"책",
-                        'love'  : ["폐월과 봉선"],
-                        'skill' : '고유스킬 : 전투 시작 시 보호막이 없는 모든 아군에게 8초간 1의 보호막 부여(이후 아군이 스킬을 5회 사용시마다 반복)',
-                        'point' : '스킬사용시 기력소모량 : 50',
-                        'skill_b' : 'B 스킬 : 체력비율이 가장 낮은 아군 1명에게 10초간 지속 회복 부여(초당 공격력의 59% 회복)',
-                        'skill_a' : 'A 스킬 : 버프를 가장 많이 보유한 적군 1명의 공격력 12초간 40% 감소',
-                        'skill_s' : 'S 스킬 : 체력비율이 가장 낮은 아군 1명의 최대체력을 16초간 공격력의 75%만큼 증가'
+                        'skill' : '고유스킬 : ',
+                        'point' : '스킬사용시 기력소모량 : ',
+                        'skill_b' : 'B 스킬 : ',
+                        'skill_a' : 'A 스킬 : ',
+                        'skill_s' : 'S 스킬 : '
                     }
                 ]
-
-                this.default_love_cnt_info = { "도원결의"    : "3" ,
-                               "상산 조자룡" : "2" ,
-                               "맹덕과 봉효" : "2" ,
-                               "오하아몽"    : "2" ,
-                               "하북대장군"  : "3" ,
-                               "강동이교"    : "2" ,
-                               "담소자약"    : "2" ,
-                               "하후형제"    : "2" ,
-                               "수어지교"    : "2" ,
-                               "왕좌지재"    : "2" ,
-                               "오관참육창"  : "2" ,
-                               "원가형제"    : "2" ,
-                               "량재녀모"    : "2" ,
-                               "폐월과 봉선" : "2"
-                             };
-
-                this.default_love_info = {  "도원결의"    : "유비, 관우, 장비의 체력이 15% 증가" ,
-                               "상산 조자룡" : "공손찬, 조운의 무력이 10 증가" ,
-                               "맹덕과 봉효" : "조조, 곽가의 통솔력이 10 증가" ,
-                               "오하아몽"    : "주유, 여몽의 지력이 10 증가" ,
-                               "하북대장군"  : "원소, 문추, 안량의 물리공격력이 15% 증가" ,
-                               "강동이교"    : "대교, 소교의 지력이 10 증가" ,
-                               "담소자약"    : "감녕, 주유의 물리방어력이 10% 증가" ,
-                               "하후형제"    : "하후돈, 하후연의 물리공격력이 10% 증가" ,
-                               "수어지교"    : "유비, 제갈량의 지력이 10 증가" ,
-                               "왕좌지재"    : "조조, 순욱의 책략방어력이 10% 증가" ,
-                               "오관참육창"  : "조조, 관우의 무력이 10 증가" ,
-                               "원가형제"    : "원소, 원술의 물리방어력이 10% 증가" ,
-                               "량재녀모"    : "제갈량, 황월영의 책략방어력이 10% 증가" ,
-                               "폐월과 봉선" : "초선, 여포의 순발력이 10 증가"
-                };
-
+                
                 this.select_Btn = document.querySelectorAll('input');
 
                 this.reset_Btn = document.querySelectorAll('.js_reset');
@@ -660,7 +694,6 @@
                 this.type_lance = 0;
                 this.type_deceit = 0;
                 this.type_special = 0;
-                this.type_add_love = [];
             }
 
             mount(){
@@ -679,7 +712,6 @@
                             color : _self.default_member_info[_idx].color,
                             country : _self.default_member_info[_idx].country,
                             type : _self.default_member_info[_idx].d_type,
-                            love : _self.default_member_info[_idx].love,
                             info : _self.default_member_info[_idx].info,
                             skill : _self.default_member_info[_idx].skill,
                             point : _self.default_member_info[_idx].point,
@@ -717,7 +749,6 @@
                 this._add_color_check();
                 this._add_country_check();
                 this._add_type_check();
-                this._add_love_check();
             }
 
             _del_Event(){
@@ -725,7 +756,6 @@
                 this._del_color_check();
                 this._del_country_check();
                 this._del_type_check();
-                this._del_love_check();
             }
 
             _add_color_check(){
@@ -971,64 +1001,6 @@
                 }
             }            
 
-            _add_love_check(){
-                if(this.current_select_member.love != null) {
-                    for(var i = 0 ; i < this.current_select_member.love.length ; i++) {
-                        this.type_add_love.push(this.current_select_member.love[i]);
-                    }
-                }
-
-                var array = [];
-
-                for(var i = 0 ; i < this.type_add_love.length ; i++) {
-                    if(array.indexOf(this.type_add_love[i]) < 0) {
-                        array.push(this.type_add_love[i]);
-                    }
-                }
-
-                for(var i = 0 ; i < array.length ; i++) {
-                    var cnt = 0;
-
-                    for(var j = 0 ; j < this.type_add_love.length ; j++) {
-                        if(array[i] == this.type_add_love[j]) {
-                            cnt++;
-                        }
-                    }
-
-                    if(this.default_love_cnt_info[array[i]] == cnt) {
-                        this._add_organization("["+array[i]+"] - "+this.default_love_info[array[i]]);
-                    }
-                }
-            }
-            _del_love_check(){
-                if(this.current_select_member.love != null ) {
-                    for(var i = 0 ; i < this.current_select_member.love.length ; i++) {
-                        this.type_add_love.splice(this.type_add_love.indexOf(this.current_select_member.love[i]),1);
-                    }
-                }
-                var array = [];
-
-                for(var i = 0 ; i < this.type_add_love.length ; i++) {
-                    if(array.indexOf(this.type_add_love[i]) < 0) {
-                        array.push(this.type_add_love[i]);
-                    }
-                }
-
-                for(var i = 0 ; i < array.length ; i++) {
-                    var cnt = 0;
-
-                    for(var j = 0 ; j < this.type_add_love.length ; j++) {
-                        if(array[i] == this.type_add_love[j]) {
-                            cnt++;
-                        }
-                    }
-
-                    if(this.default_love_cnt_info[array[i]] != cnt) {
-                        this._del_organization("["+array[i]+"] - "+this.default_love_info[array[i]]);
-                    }
-                }
-            }
-
             _add_member(){
                 let _name = this.current_select_member.name;
                 let _info = this.current_select_member.info;
@@ -1132,7 +1104,6 @@
             _reset(){                
                 this.select_member = [];
                 this.select_organization = [];
-                this.type_add_love = [];
 
                 this.current_select_member = undefined;
                 

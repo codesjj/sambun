@@ -10,7 +10,7 @@ class set{
             self.default_member_info = data;
         })
 
-        $.getJSON("love_info.json", function(data){
+        $.getJSON("love_cnt_info.json", function(data){
             self.default_love_cnt_info = data;
         })
 

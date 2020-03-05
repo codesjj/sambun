@@ -18,13 +18,12 @@ class set{
             _self.default_love_info = data;
         })
 
-        this.select_Btn = document.querySelectorAll('input');
+        this.select_Btn = $('input');
+        this.reset_Btn = $('.js_reset');
 
-        this.reset_Btn = document.querySelectorAll('.js_reset');
-
-        this.result_member_txt = document.querySelector('.type1');
-        this.result_organization_txt = document.querySelector('.type2');
-        this.result_member_skill_txt = document.querySelector('.type3');
+        this.result_member_txt = $('.type1');
+        this.result_organization_txt = $('.type2');
+        this.result_member_skill_txt = $('.type3');
 
         this.select_member = [];
         this.select_organization = [];
@@ -49,50 +48,31 @@ class set{
 
     mount(){
         let _self = this;
-        this.select_Btn.forEach((_e)=>{
-            _e.addEventListener('click', function(){
-                
-                let _name = this.getAttribute('data-name');
-                let _idx = _self.default_member_info.findIndex(function(item) {return item.name === _name});
-                
-                
-                console.log();
+        this.select_Btn.click(function(){
+            let _name = this.getAttribute('data-name');
+            let _idx = _self.default_member_info.findIndex(function(item) {return item.name === _name});
 
-                let selectTarget = {
-                    name : _self.default_member_info[_idx].name,
-                    color : _self.default_member_info[_idx].color,
-                    country : _self.default_member_info[_idx].country,
-                    type : _self.default_member_info[_idx].d_type,
-                    love : _self.default_member_info[_idx].love,
-                    info : _self.default_member_info[_idx].info,
-                    skill : _self.default_member_info[_idx].skill,
-                    point : _self.default_member_info[_idx].point,
-                    skill_b : _self.default_member_info[_idx].skill_b,
-                    skill_a : _self.default_member_info[_idx].skill_a,
-                    skill_s : _self.default_member_info[_idx].skill_s
-                }
-                
-                _self.current_select_member = selectTarget;
+            let selectTarget = _self.default_member_info[_idx];
+            
+            _self.current_select_member = selectTarget;
 
-                if(this.checked) {
-                    if(_self.select_member.length <= 5){
-                        _self._add_Event();
-                    }else{
-                        alert('6명의 장수만 선택가능합니다.');
-                        this.checked = false;
-                    }
+            if(this.checked) {
+                if(_self.select_member.length <= 5){
+                    _self._add_Event();
                 }else{
-                    //console.log('cancel');
-                    _self._del_Event();
+                    alert('6명의 장수만 선택가능합니다.');
+                    this.checked = false;
                 }
-            });
+            }else{
+                //console.log('cancel');
+                _self._del_Event();
+            }
         });
 
-        this.reset_Btn.forEach((_e)=>{
-            _e.addEventListener('click', function(){
-                _self._reset();
-            })
-        })
+        this.reset_Btn.click(function(){
+            _self._reset();
+        });
+    }
 
     }
 
@@ -425,38 +405,15 @@ class set{
 
         this.select_member.push(_name);
 
-        let _a = document.createElement('li'),
-            _a_n = document.createElement('span'),
-            _a_n_t = document.createTextNode(_name),
-            _a_i = document.createTextNode(_info);
+        let _a = $("<li></li>");
+        _a.append($("<span></span>").text(_name), _info);
 
-        let _b = document.createElement('li'),
-            _b_n = document.createElement('span'),
-            _b_n_t = document.createTextNode(_name),
-            _s = document.createTextNode(_skill),
-            _s_p = document.createTextNode(_skill_p),
-            _s_b = document.createTextNode(_skill_b),
-            _s_a = document.createTextNode(_skill_a),
-            _s_s = document.createTextNode(_skill_s);
+        let _b = $("<li></li>");
+        _b.append($("<span></span").text(_name));
+        _b.append(_skill, "<br/>", _skill_p, "<br/>", _skill_b, "<br/>", _skill_a, "<br/>", _skill_s);
 
-        _a_n.appendChild(_a_n_t);
-        _a.appendChild(_a_n);
-        _a.appendChild(_a_i);
-        
-        _b_n.appendChild(_b_n_t);
-        _b.appendChild(_b_n);
-        _b.appendChild(_s);
-        _b.appendChild(document.createElement('br'));
-        _b.appendChild(_s_p);
-        _b.appendChild(document.createElement('br'));
-        _b.appendChild(_s_b);
-        _b.appendChild(document.createElement('br'));
-        _b.appendChild(_s_a);
-        _b.appendChild(document.createElement('br'));
-        _b.appendChild(_s_s);
-
-        this.result_member_txt.appendChild(_a);
-        this.result_member_skill_txt.appendChild(_b);
+        this.result_member_txt.append(_a);
+        this.result_member_skill_txt.append(_b);
     }
 
     _del_member(){
@@ -464,12 +421,12 @@ class set{
         let _idx = this.select_member.findIndex(function(item) {return item.name === _name});
         this.select_member.splice(_idx, 1);
 
-        this.result_member_txt.querySelectorAll('li').forEach((_e)=>{
+        $.each(this.result_member_txt.children('li'),function(idx, _e){
             if(_e.childNodes[0].textContent == _name){
                 _e.remove();
             }
         });
-        this.result_member_skill_txt.querySelectorAll('li').forEach((_e)=>{
+        $.each(this.result_member_skill_txt.children('li'),function(idx, _e){
             if(_e.childNodes[0].textContent == _name){
                 _e.remove();
             }
@@ -484,12 +441,9 @@ class set{
             this.select_organization.push(_txt);
             //console.log(this.select_organization);
 
-            let _a = document.createElement('li'),
-                _a_t = document.createTextNode(_txt);
-                
-            _a.appendChild(_a_t);
-            this.result_organization_txt.appendChild(_a);
             //console.log(_txt);
+            let _a = $("<li></li>").text(_txt);
+            this.result_organization_txt.append(_a);
         }else{
             //console.log('이미 추가되어 있음');
         }
@@ -503,7 +457,7 @@ class set{
             //console.log('있음 - 삭제완료');
             this.select_organization.splice(_idx, 1);
             //console.log(this.select_organization);
-            this.result_organization_txt.querySelectorAll('li').forEach((_e)=>{
+            $.each(this.result_organization_txt.children('li'), function(idx, _e){
                 if(_e.textContent == _txt){
                     _e.remove();
                 }
@@ -534,14 +488,12 @@ class set{
         this.type_deceit = 0;
         this.type_special = 0;
 
-        this.result_member_txt.innerHTML = "";
-        this.result_organization_txt.innerHTML = "";
-        this.result_member_skill_txt.innerHTML = "";
+        this.result_member_txt.html("");
+        this.result_organization_txt.html("");
+        this.result_member_skill_txt.html("");
 
-        this.select_Btn.forEach((_e)=>{
-            if(_e.checked){
-                _e.checked = false;
-            }
+        $.each(this.select_Btn, function(idx, _e){
+            if(_e.checked) _e.checked = false;
         });
     }
 }

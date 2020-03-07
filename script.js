@@ -1,13 +1,19 @@
-class set{
-    constructor(){
-        let _self = this;
+'use strict';
 
+const e = React.createElement;
+var OverlayTrigger = ReactBootstrap.OverlayTrigger;
+var Tooltip = ReactBootstrap.Tooltip;
+
+class Deck extends React.Component{
+    load_data(){
+        let _self = this;
         $.getJSON("organization_info.json", function(data){
             _self.default_organiztion_txt = data;
         })
 
         $.getJSON("member_info.json", function(data){
             _self.default_member_info = data;
+            _self.setState({});
         })
 
         $.getJSON("love_cnt_info.json", function(data){
@@ -17,14 +23,19 @@ class set{
         $.getJSON("love_info.json", function(data){
             _self.default_love_info = data;
         })
+    }
+    constructor(){
+        super();
 
-        this.select_Btn = document.querySelectorAll('input');
+        let _self = this;
 
-        this.reset_Btn = document.querySelectorAll('.js_reset');
+        this.load_data();
 
-        this.result_member_txt = document.querySelector('.type1');
-        this.result_organization_txt = document.querySelector('.type2');
-        this.result_member_skill_txt = document.querySelector('.type3');
+        this.default_member_info = [];
+
+        this.result_member_txt = $('.type1');
+        this.result_organization_txt = $('.type2');
+        this.result_member_skill_txt = $('.type3');
 
         this.select_member = [];
         this.select_organization = [];
@@ -45,55 +56,101 @@ class set{
         this.type_deceit = 0;
         this.type_special = 0;
         this.type_add_love = [];
+
+        this.state = {
+            member_info: this.default_member_info
+        }
+        $('.js_reset').click(function(){
+            _self._reset();
+        });
     }
 
-    mount(){
+    renderCheckBox(item, list_code, index){
         let _self = this;
-        this.select_Btn.forEach((_e)=>{
-            _e.addEventListener('click', function(){
-                
-                let _name = this.getAttribute('data-name');
-                let _idx = _self.default_member_info.findIndex(function(item) {return item.name === _name});
-                
-                
-                console.log();
 
-                let selectTarget = {
-                    name : _self.default_member_info[_idx].name,
-                    color : _self.default_member_info[_idx].color,
-                    country : _self.default_member_info[_idx].country,
-                    type : _self.default_member_info[_idx].d_type,
-                    love : _self.default_member_info[_idx].love,
-                    info : _self.default_member_info[_idx].info,
-                    skill : _self.default_member_info[_idx].skill,
-                    point : _self.default_member_info[_idx].point,
-                    skill_b : _self.default_member_info[_idx].skill_b,
-                    skill_a : _self.default_member_info[_idx].skill_a,
-                    skill_s : _self.default_member_info[_idx].skill_s
-                }
-                
-                _self.current_select_member = selectTarget;
+        let color_code_list = {"적": "red", "청": "blue", "황": "yellow"};
+        let type_name_list = {"검": "검병", "창": "창병", "책": "책략병", "특": "특수병"};
 
-                if(this.checked) {
-                    if(_self.select_member.length <= 5){
-                        _self._add_Event();
-                    }else{
-                        alert('6명의 장수만 선택가능합니다.');
-                        this.checked = false;
-                    }
-                }else{
-                    //console.log('cancel');
-                    _self._del_Event();
-                }
-            });
-        });
+        let color_code = color_code_list[item.color];
+        let input_id = list_code + "_" + index;
 
-        this.reset_Btn.forEach((_e)=>{
-            _e.addEventListener('click', function(){
-                _self._reset();
-            })
-        })
+        return e(OverlayTrigger, {
+                    placement: "bottom-start",
+                    overlay: e(Tooltip, {className: "skill-tooltip"}, item.point, e("br"), item.skill, e("br"), item.skill_b, e("br"), item.skill_a, e("br"), item.skill_s)
+                },
+                e("li", {className: color_code},
+                    e("input", {
+                        type: "checkbox", name:"s", id:input_id, "data-name":item.name,
+                        onClick: function(e){
+                            let _name = item.name;
+                            let _idx = _self.default_member_info.findIndex(function(item) {return item.name === _name});
 
+                            let selectTarget = _self.default_member_info[_idx];
+                            
+                            _self.current_select_member = selectTarget;
+
+                            if(e.target.checked) {
+                                if(_self.select_member.length <= 5){
+                                    _self._add_Event();
+                                }else{
+                                    alert('6명의 장수만 선택가능합니다.');
+                                    e.target.checked = false;
+                                }
+                            }else{
+                                _self._del_Event();
+                            }
+                        }
+                    }),
+                    e("label", {htmlFor: input_id},
+                        e("span", null, item.name),
+                        "[" + item.slot + "슬롯]", e("br"),
+                        type_name_list[item.type]
+                    )
+                )
+            )
+    }
+
+    renderList(list, list_name, list_code){
+        return e("li", {className: "col col-3"},
+                e("h2", null, list_name),
+                e("ul", null, 
+                    list.map((item, index) => this.renderCheckBox(item, list_code, index))
+                )
+            )
+    }
+
+    renderListByNation(){
+        return e("div", null, 
+                    e("div", {className: "row"}, 
+                        e("div", {className: "col col-12"},
+                            e("h1", null, 
+                                "덱 구성", 
+                                e("button", {
+                                    "className": "btn btn-outline-danger float-right js_reset", onClick: () => this._reset()
+                                }, "Reset")
+                            ),
+                        )
+                    ),
+                    e("ul", {className: "row total"},
+                        this.renderList(
+                            this.default_member_info.filter((item, index) => item.country=="위"), "위나라", "wei"
+                        ),
+                        this.renderList(
+                            this.default_member_info.filter((item, index) => item.country=="촉"), "촉나라", "shu"
+                        ),
+                        this.renderList(
+                            this.default_member_info.filter((item, index) => item.country=="오"), "오나라", "wo"
+                        ),
+                        this.renderList(
+                            this.default_member_info.filter((item, index) => item.country=="군"), "군웅", "king"
+                        ),
+                    )
+                );
+    }
+    render(){
+        return e("div", {className: "container-fluid"}, 
+                this.renderListByNation()
+                )
     }
 
     _add_Event(){
@@ -425,38 +482,15 @@ class set{
 
         this.select_member.push(_name);
 
-        let _a = document.createElement('li'),
-            _a_n = document.createElement('span'),
-            _a_n_t = document.createTextNode(_name),
-            _a_i = document.createTextNode(_info);
+        let _a = $("<li></li>");
+        _a.append($("<span></span>").text(_name), _info);
 
-        let _b = document.createElement('li'),
-            _b_n = document.createElement('span'),
-            _b_n_t = document.createTextNode(_name),
-            _s = document.createTextNode(_skill),
-            _s_p = document.createTextNode(_skill_p),
-            _s_b = document.createTextNode(_skill_b),
-            _s_a = document.createTextNode(_skill_a),
-            _s_s = document.createTextNode(_skill_s);
+        let _b = $("<li></li>");
+        _b.append($("<span></span").text(_name));
+        _b.append(_skill, "<br/>", _skill_p, "<br/>", _skill_b, "<br/>", _skill_a, "<br/>", _skill_s);
 
-        _a_n.appendChild(_a_n_t);
-        _a.appendChild(_a_n);
-        _a.appendChild(_a_i);
-        
-        _b_n.appendChild(_b_n_t);
-        _b.appendChild(_b_n);
-        _b.appendChild(_s);
-        _b.appendChild(document.createElement('br'));
-        _b.appendChild(_s_p);
-        _b.appendChild(document.createElement('br'));
-        _b.appendChild(_s_b);
-        _b.appendChild(document.createElement('br'));
-        _b.appendChild(_s_a);
-        _b.appendChild(document.createElement('br'));
-        _b.appendChild(_s_s);
-
-        this.result_member_txt.appendChild(_a);
-        this.result_member_skill_txt.appendChild(_b);
+        this.result_member_txt.append(_a);
+        this.result_member_skill_txt.append(_b);
     }
 
     _del_member(){
@@ -464,12 +498,12 @@ class set{
         let _idx = this.select_member.findIndex(function(item) {return item.name === _name});
         this.select_member.splice(_idx, 1);
 
-        this.result_member_txt.querySelectorAll('li').forEach((_e)=>{
+        $.each(this.result_member_txt.children('li'),function(idx, _e){
             if(_e.childNodes[0].textContent == _name){
                 _e.remove();
             }
         });
-        this.result_member_skill_txt.querySelectorAll('li').forEach((_e)=>{
+        $.each(this.result_member_skill_txt.children('li'),function(idx, _e){
             if(_e.childNodes[0].textContent == _name){
                 _e.remove();
             }
@@ -484,12 +518,9 @@ class set{
             this.select_organization.push(_txt);
             //console.log(this.select_organization);
 
-            let _a = document.createElement('li'),
-                _a_t = document.createTextNode(_txt);
-                
-            _a.appendChild(_a_t);
-            this.result_organization_txt.appendChild(_a);
             //console.log(_txt);
+            let _a = $("<li></li>").text(_txt);
+            this.result_organization_txt.append(_a);
         }else{
             //console.log('이미 추가되어 있음');
         }
@@ -503,7 +534,7 @@ class set{
             //console.log('있음 - 삭제완료');
             this.select_organization.splice(_idx, 1);
             //console.log(this.select_organization);
-            this.result_organization_txt.querySelectorAll('li').forEach((_e)=>{
+            $.each(this.result_organization_txt.children('li'), function(idx, _e){
                 if(_e.textContent == _txt){
                     _e.remove();
                 }
@@ -534,18 +565,21 @@ class set{
         this.type_deceit = 0;
         this.type_special = 0;
 
-        this.result_member_txt.innerHTML = "";
-        this.result_organization_txt.innerHTML = "";
-        this.result_member_skill_txt.innerHTML = "";
+        this.result_member_txt.html("");
+        this.result_organization_txt.html("");
+        this.result_member_skill_txt.html("");
 
-        this.select_Btn.forEach((_e)=>{
-            if(_e.checked){
-                _e.checked = false;
-            }
+        $.each($("input"), function(idx, _e){
+            if(_e.checked) _e.checked = false;
         });
     }
 }
 
-$(function(){
-    new set().mount()
-})
+ReactDOM.render(   
+    e(Deck, null),
+    document.getElementById('root')
+);
+
+// $(function(){
+    // new Deck().mount()
+// })

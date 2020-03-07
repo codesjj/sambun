@@ -1,7 +1,10 @@
-class set{
-    constructor(){
-        let _self = this;
+'use strict';
 
+const e = React.createElement;
+
+class Deck extends React.Component{
+    load_data(){
+        let _self = this;
         $.getJSON("organization_info.json", function(data){
             _self.default_organiztion_txt = data;
         })
@@ -17,6 +20,13 @@ class set{
         $.getJSON("love_info.json", function(data){
             _self.default_love_info = data;
         })
+    }
+    constructor(){
+        super();
+
+        let _self = this;
+
+        this.load_data();
 
         this.select_Btn = $('input');
         this.reset_Btn = $('.js_reset');
@@ -44,6 +54,7 @@ class set{
         this.type_deceit = 0;
         this.type_special = 0;
         this.type_add_love = [];
+        this.mount();
     }
 
     mount(){
@@ -74,6 +85,7 @@ class set{
         });
     }
 
+    render(){
     }
 
     _add_Event(){
@@ -498,6 +510,11 @@ class set{
     }
 }
 
-$(function(){
-    new set().mount()
-})
+ReactDOM.render(   
+    e(Deck, null),
+    document.getElementById('root')
+);
+
+// $(function(){
+    // new Deck().mount()
+// })

@@ -50,7 +50,7 @@ button.reset{float:right;background:red;padding:5px;border:0;color:#fff;font-wei
 
 @media screen and (max-width: 970px) {
     .row.total{display:block}
-    .total>li{width:33.33%}
+    .total>li{width:33.33%;max-width:100%}
     .total>li:nth-child(3n){border:0}
     .result .left,
     .result .right{float:none;width:100%}
@@ -65,7 +65,7 @@ button.reset{float:right;background:red;padding:5px;border:0;color:#fff;font-wei
 }
 
 @media screen and (max-width: 515px) {
-    .total>li{width:100%;max-width:100%;border:0}
+    .total>li{width:100%;border:0}
     .total>li:nth-child(3n){border:0}
 }
 

@@ -81,30 +81,13 @@ class Deck extends React.Component{
                 e("li", {className: color_code},
                     e("input", {
                         type: "checkbox", name:"s", id:input_id, "data-name":item.name,
-                        onClick: function(e){
-                            let _name = item.name;
-                            let _idx = _self.default_member_info.findIndex(function(item) {return item.name === _name});
-
-                            let selectTarget = _self.default_member_info[_idx];
-                            
-                            _self.current_select_member = selectTarget;
-
-                            if(e.target.checked) {
-                                if(_self.select_member.length <= 5){
-                                    _self._add_Event();
-                                }else{
-                                    alert('6명의 장수만 선택가능합니다.');
-                                    e.target.checked = false;
-                                }
-                            }else{
-                                _self._del_Event();
-                            }
-                        }
+                        onClick: (e) => _self._select_Event(item, e),
+                        checked: item.selected
                     }),
                     e("label", {htmlFor: input_id},
                         e("span", null, item.name),
                         "[" + item.slot + "슬롯]", e("br"),
-                        type_name_list[item.type]
+                        "[" + type_name_list[item.type] + "]"
                     )
                 )
             )
@@ -151,6 +134,24 @@ class Deck extends React.Component{
         return e("div", {className: "container-fluid"}, 
                 this.renderListByNation()
                 )
+    }
+
+    _select_Event(item, e) {
+        this.current_select_member = item;
+
+        if(!item.selected) { 
+            if(this.select_member.length <= 5){
+                item.selected = true;
+                this._add_Event();
+            }else{
+                e.target.checked = false;
+                $("#max_general_error").toast("show");
+            }
+        }else{
+            item.selected = false;
+            this._del_Event();
+        }
+        this.setState({});
     }
 
     _add_Event(){
@@ -572,6 +573,9 @@ class Deck extends React.Component{
         $.each($("input"), function(idx, _e){
             if(_e.checked) _e.checked = false;
         });
+        $.each(this.default_member_info, function(idx, _e){
+            _e.selected=false;
+        })
     }
 }
 

@@ -1,6 +1,8 @@
 'use strict';
 
 const e = React.createElement;
+var OverlayTrigger = ReactBootstrap.OverlayTrigger;
+var Tooltip = ReactBootstrap.Tooltip;
 
 class Deck extends React.Component{
     load_data(){
@@ -71,34 +73,39 @@ class Deck extends React.Component{
 
         let color_code = color_code_list[item.color];
         let input_id = list_code + "_" + index;
-// <li class="yellow"><input type="checkbox" name="s" id="wei_2" data-name="순욱"><label for="wei_2"><span>순욱</span>[2슬롯]<br>[책략병]</label></li>
-        return e("li", {className: color_code},
-                e("input", {
-                    type: "checkbox", name:"s", id:input_id, "data-name":item.name,
-                    onClick: function(e){
-                        let _name = item.name;
-                        let _idx = _self.default_member_info.findIndex(function(item) {return item.name === _name});
 
-                        let selectTarget = _self.default_member_info[_idx];
-                        
-                        _self.current_select_member = selectTarget;
+        return e(OverlayTrigger, {
+                    placement: "bottom-start",
+                    overlay: e(Tooltip, {className: "skill-tooltip"}, item.point, e("br"), item.skill, e("br"), item.skill_b, e("br"), item.skill_a, e("br"), item.skill_s)
+                },
+                e("li", {className: color_code},
+                    e("input", {
+                        type: "checkbox", name:"s", id:input_id, "data-name":item.name,
+                        onClick: function(e){
+                            let _name = item.name;
+                            let _idx = _self.default_member_info.findIndex(function(item) {return item.name === _name});
 
-                        if(e.target.checked) {
-                            if(_self.select_member.length <= 5){
-                                _self._add_Event();
+                            let selectTarget = _self.default_member_info[_idx];
+                            
+                            _self.current_select_member = selectTarget;
+
+                            if(e.target.checked) {
+                                if(_self.select_member.length <= 5){
+                                    _self._add_Event();
+                                }else{
+                                    alert('6명의 장수만 선택가능합니다.');
+                                    e.target.checked = false;
+                                }
                             }else{
-                                alert('6명의 장수만 선택가능합니다.');
-                                e.target.checked = false;
+                                _self._del_Event();
                             }
-                        }else{
-                            _self._del_Event();
                         }
-                    }
-                }),
-                e("label", {htmlFor: input_id},
-                    e("span", null, item.name),
-                    "[" + item.slot + "슬롯]", e("br"),
-                    type_name_list[item.type]
+                    }),
+                    e("label", {htmlFor: input_id},
+                        e("span", null, item.name),
+                        "[" + item.slot + "슬롯]", e("br"),
+                        type_name_list[item.type]
+                    )
                 )
             )
     }
@@ -142,7 +149,8 @@ class Deck extends React.Component{
     }
     render(){
         return e("div", {className: "container-fluid"}, 
-                this.renderListByNation());
+                this.renderListByNation()
+                )
     }
 
     _add_Event(){

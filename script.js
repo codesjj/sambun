@@ -61,7 +61,6 @@ class Deck extends React.Component{
         $('.js_reset').click(function(){
             _self._reset();
         });
-        this.mount();
     }
 
     renderCheckBox(item, list_code, index){

@@ -11,6 +11,7 @@ class Deck extends React.Component{
 
         $.getJSON("member_info.json", function(data){
             _self.default_member_info = data;
+            _self.setState({});
         })
 
         $.getJSON("love_cnt_info.json", function(data){
@@ -28,8 +29,7 @@ class Deck extends React.Component{
 
         this.load_data();
 
-        this.select_Btn = $('input');
-        this.reset_Btn = $('.js_reset');
+        this.default_member_info = [];
 
         this.result_member_txt = $('.type1');
         this.result_organization_txt = $('.type2');
@@ -54,38 +54,96 @@ class Deck extends React.Component{
         this.type_deceit = 0;
         this.type_special = 0;
         this.type_add_love = [];
+
+        this.state = {
+            member_info: this.default_member_info
+        }
+        $('.js_reset').click(function(){
+            _self._reset();
+        });
         this.mount();
     }
 
-    mount(){
+    renderCheckBox(item, list_code, index){
         let _self = this;
-        this.select_Btn.click(function(){
-            let _name = this.getAttribute('data-name');
-            let _idx = _self.default_member_info.findIndex(function(item) {return item.name === _name});
 
-            let selectTarget = _self.default_member_info[_idx];
-            
-            _self.current_select_member = selectTarget;
+        let color_code_list = {"적": "red", "청": "blue", "황": "yellow"};
+        let type_name_list = {"검": "검병", "창": "창병", "책": "책략병", "특": "특수병"};
 
-            if(this.checked) {
-                if(_self.select_member.length <= 5){
-                    _self._add_Event();
-                }else{
-                    alert('6명의 장수만 선택가능합니다.');
-                    this.checked = false;
-                }
-            }else{
-                //console.log('cancel');
-                _self._del_Event();
-            }
-        });
+        let color_code = color_code_list[item.color];
+        let input_id = list_code + "_" + index;
+// <li class="yellow"><input type="checkbox" name="s" id="wei_2" data-name="순욱"><label for="wei_2"><span>순욱</span>[2슬롯]<br>[책략병]</label></li>
+        return e("li", {className: color_code},
+                e("input", {
+                    type: "checkbox", name:"s", id:input_id, "data-name":item.name,
+                    onClick: function(e){
+                        let _name = item.name;
+                        let _idx = _self.default_member_info.findIndex(function(item) {return item.name === _name});
 
-        this.reset_Btn.click(function(){
-            _self._reset();
-        });
+                        let selectTarget = _self.default_member_info[_idx];
+                        
+                        _self.current_select_member = selectTarget;
+
+                        if(e.target.checked) {
+                            if(_self.select_member.length <= 5){
+                                _self._add_Event();
+                            }else{
+                                alert('6명의 장수만 선택가능합니다.');
+                                e.target.checked = false;
+                            }
+                        }else{
+                            _self._del_Event();
+                        }
+                    }
+                }),
+                e("label", {htmlFor: input_id},
+                    e("span", null, item.name),
+                    "[" + item.slot + "슬롯]", e("br"),
+                    type_name_list[item.type]
+                )
+            )
     }
 
+    renderList(list, list_name, list_code){
+        return e("li", {className: "col col-3"},
+                e("h2", null, list_name),
+                e("ul", null, 
+                    list.map((item, index) => this.renderCheckBox(item, list_code, index))
+                )
+            )
+    }
+
+    renderListByNation(){
+        return e("div", null, 
+                    e("div", {className: "row"}, 
+                        e("div", {className: "col col-12"},
+                            e("h1", null, 
+                                "덱 구성", 
+                                e("button", {
+                                    "className": "btn btn-outline-danger float-right js_reset", onClick: () => this._reset()
+                                }, "Reset")
+                            ),
+                        )
+                    ),
+                    e("ul", {className: "row total"},
+                        this.renderList(
+                            this.default_member_info.filter((item, index) => item.country=="위"), "위나라", "wei"
+                        ),
+                        this.renderList(
+                            this.default_member_info.filter((item, index) => item.country=="촉"), "촉나라", "shu"
+                        ),
+                        this.renderList(
+                            this.default_member_info.filter((item, index) => item.country=="오"), "오나라", "wo"
+                        ),
+                        this.renderList(
+                            this.default_member_info.filter((item, index) => item.country=="군"), "군웅", "king"
+                        ),
+                    )
+                );
+    }
     render(){
+        return e("div", {className: "container-fluid"}, 
+                this.renderListByNation());
     }
 
     _add_Event(){
@@ -504,7 +562,7 @@ class Deck extends React.Component{
         this.result_organization_txt.html("");
         this.result_member_skill_txt.html("");
 
-        $.each(this.select_Btn, function(idx, _e){
+        $.each($("input"), function(idx, _e){
             if(_e.checked) _e.checked = false;
         });
     }

@@ -15,12 +15,10 @@
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
 </head>
 <body>
-    <div aria-live="polite" aria-atomic="true" style="position: relative;">
-      <div class="toast" id="max_general_error" style="position: absolute; top: 0; right: 0;" data-delay=1000>
+    <div class="toast" id="max_general_error" style="position: fixed; top: 0; right: 0; z-index: 1000" data-delay=1000>
         <div class="toast-body alert-danger">
           <strong>오류</strong> - 6명의 장수만 선택가능합니다.
         </div>
-      </div>
     </div>
     <div class="info">
         <div class="current">

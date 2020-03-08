@@ -40,7 +40,6 @@ class Deck extends React.Component{
         this.select_member = [];
         this.select_organization = [];
 
-        this.current_select_member = undefined;
         
         this.color_blue = 0;
         this.color_red = 0;
@@ -137,41 +136,80 @@ class Deck extends React.Component{
     }
 
     _select_Event(item, e) {
-        this.current_select_member = item;
-
         if(!item.selected) { 
             if(this.select_member.length <= 5){
                 item.selected = true;
-                this._add_Event();
+                this._add_Event(item);
             }else{
                 e.target.checked = false;
                 $("#max_general_error").toast("show");
             }
         }else{
             item.selected = false;
-            this._del_Event();
+            this._del_Event(item);
         }
         this.setState({});
     }
 
-    _add_Event(){
-        this._add_member();
-        this._add_color_check();
-        this._add_country_check();
-        this._add_type_check();
-        this._add_love_check();
+    _add_Event(item){
+        this._add_member(item);
+        this._add_color_check(item);
+        this._add_country_check(item);
+        this._add_type_check(item);
+        this._add_love_check(item);
     }
 
-    _del_Event(){
-        this._del_member();
-        this._del_color_check();
-        this._del_country_check();
-        this._del_type_check();
-        this._del_love_check();
+    _del_Event(item){
+        this._del_member(item);
+        this._del_color_check(item);
+        this._del_country_check(item);
+        this._del_type_check(item);
+        this._del_love_check(item);
     }
 
-    _add_color_check(){
-        switch(this.current_select_member.color){
+    _add_member(item){
+        let _name = item.name;
+        let _info = item.info;
+
+        let _skill = item.skill;
+        let _skill_p = item.point;
+        let _skill_b = item.skill_b;
+        let _skill_a = item.skill_a;
+        let _skill_s = item.skill_s;
+
+        this.select_member.push(_name);
+
+        let _a = $("<li></li>");
+        _a.append($("<span></span>").text(_name), _info);
+
+        let _b = $("<li></li>");
+        _b.append($("<span></span").text(_name));
+        _b.append(_skill, "<br/>", _skill_p, "<br/>", _skill_b, "<br/>", _skill_a, "<br/>", _skill_s);
+
+        this.result_member_txt.append(_a);
+        this.result_member_skill_txt.append(_b);
+    }
+
+    _del_member(item){
+        let _name = item.name;
+        let _idx = this.select_member.findIndex(function(item) {return item.name === _name});
+        this.select_member.splice(_idx, 1);
+
+        $.each(this.result_member_txt.children('li'),function(idx, _e){
+            if(_e.childNodes[0].textContent == _name){
+                _e.remove();
+            }
+        });
+        $.each(this.result_member_skill_txt.children('li'),function(idx, _e){
+            if(_e.childNodes[0].textContent == _name){
+                _e.remove();
+            }
+        });
+    }
+    
+
+    _add_color_check(item){
+        switch(item.color){
             case '청' :
                 this.color_blue++;
                 if(this.color_blue >= 3){
@@ -209,7 +247,7 @@ class Deck extends React.Component{
         }
     }
     
-    _del_color_check(){
+    _del_color_check(item){
         if(this.select_member.length != 6){
             this._del_organization(this.default_organiztion_txt[5]);
         }else{
@@ -222,7 +260,7 @@ class Deck extends React.Component{
             this._del_organization(this.default_organiztion_txt[4]);
         }
         
-        switch(this.current_select_member.color){
+        switch(item.color){
             case '청' :
                 if(this.color_blue == 4){
                     this._del_organization(this.default_organiztion_txt[3]);
@@ -253,8 +291,8 @@ class Deck extends React.Component{
         }
     }
 
-    _add_country_check(){
-        switch(this.current_select_member.country){
+    _add_country_check(item){
+        switch(item.country){
             case '위' :
                 this.country_wei++;
                 if(this.country_wei >= 4){
@@ -289,9 +327,8 @@ class Deck extends React.Component{
         }
     }
     
-    _del_country_check(){
-        
-        switch(this.current_select_member.country){
+    _del_country_check(item){
+        switch(item.country){
             case '위' :
                 if(this.country_wei == 4){
                     this._del_organization(this.default_organiztion_txt[6]);
@@ -332,8 +369,8 @@ class Deck extends React.Component{
         }
     }
 
-    _add_type_check(){
-        switch(this.current_select_member.type){
+    _add_type_check(item){
+        switch(item.type){
             case '검' :
                 this.type_sword++;
                 if(this.type_sword >= 3){
@@ -375,9 +412,9 @@ class Deck extends React.Component{
         }
     }
 
-    _del_type_check(){
+    _del_type_check(item){
         
-        switch(this.current_select_member.type){
+        switch(item.type){
             case '검' :
                 if(this.type_sword == 3){
                     this._del_organization(this.default_organiztion_txt[11]);
@@ -413,10 +450,10 @@ class Deck extends React.Component{
         }
     }            
 
-    _add_love_check(){
-        if(this.current_select_member.love != null) {
-            for(var i = 0 ; i < this.current_select_member.love.length ; i++) {
-                this.type_add_love.push(this.current_select_member.love[i]);
+    _add_love_check(item){
+        if(item.love != null) {
+            for(var i = 0 ; i < item.love.length ; i++) {
+                this.type_add_love.push(item.love[i]);
             }
         }
 
@@ -442,10 +479,10 @@ class Deck extends React.Component{
             }
         }
     }
-    _del_love_check(){
-        if(this.current_select_member.love != null ) {
-            for(var i = 0 ; i < this.current_select_member.love.length ; i++) {
-                this.type_add_love.splice(this.type_add_love.indexOf(this.current_select_member.love[i]),1);
+    _del_love_check(item){
+        if(item.love != null ) {
+            for(var i = 0 ; i < item.love.length ; i++) {
+                this.type_add_love.splice(this.type_add_love.indexOf(item.love[i]),1);
             }
         }
         var array = [];
@@ -471,46 +508,6 @@ class Deck extends React.Component{
         }
     }
 
-    _add_member(){
-        let _name = this.current_select_member.name;
-        let _info = this.current_select_member.info;
-
-        let _skill = this.current_select_member.skill;
-        let _skill_p = this.current_select_member.point;
-        let _skill_b = this.current_select_member.skill_b;
-        let _skill_a = this.current_select_member.skill_a;
-        let _skill_s = this.current_select_member.skill_s;
-
-        this.select_member.push(_name);
-
-        let _a = $("<li></li>");
-        _a.append($("<span></span>").text(_name), _info);
-
-        let _b = $("<li></li>");
-        _b.append($("<span></span").text(_name));
-        _b.append(_skill, "<br/>", _skill_p, "<br/>", _skill_b, "<br/>", _skill_a, "<br/>", _skill_s);
-
-        this.result_member_txt.append(_a);
-        this.result_member_skill_txt.append(_b);
-    }
-
-    _del_member(){
-        let _name = this.current_select_member.name;
-        let _idx = this.select_member.findIndex(function(item) {return item.name === _name});
-        this.select_member.splice(_idx, 1);
-
-        $.each(this.result_member_txt.children('li'),function(idx, _e){
-            if(_e.childNodes[0].textContent == _name){
-                _e.remove();
-            }
-        });
-        $.each(this.result_member_skill_txt.children('li'),function(idx, _e){
-            if(_e.childNodes[0].textContent == _name){
-                _e.remove();
-            }
-        });
-    }
-    
     _add_organization(_txt){
         let _idx = this.select_organization.indexOf(_txt);
 
@@ -550,8 +547,6 @@ class Deck extends React.Component{
         this.select_organization = [];
         this.type_add_love = [];
 
-        this.current_select_member = undefined;
-        
         this.color_blue = 0;
         this.color_red = 0;
         this.color_yellow = 0;

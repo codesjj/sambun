@@ -1,8 +1,13 @@
 'use strict';
 
+var rbs = ReactBootstrap
 const e = React.createElement;
-var OverlayTrigger = ReactBootstrap.OverlayTrigger;
-var Tooltip = ReactBootstrap.Tooltip;
+var OverlayTrigger = rbs.OverlayTrigger;
+var Tooltip = rbs.Tooltip;
+var ToggleButtonGroup = rbs.ToggleButtonGroup;
+var ToggleButton = rbs.ToggleButton;
+var Button = rbs.Button;
+var ButtonToolbar = rbs.ButtonToolbar;
 
 class Deck extends React.Component{
     load_data(){
@@ -40,7 +45,6 @@ class Deck extends React.Component{
         this.select_member = [];
         this.select_organization = [];
 
-        this.current_select_member = undefined;
         
         this.color_blue = 0;
         this.color_red = 0;
@@ -56,6 +60,8 @@ class Deck extends React.Component{
         this.type_deceit = 0;
         this.type_special = 0;
         this.type_add_love = [];
+
+        this.view_mode = 1;
 
         this.state = {
             member_info: this.default_member_info
@@ -81,37 +87,20 @@ class Deck extends React.Component{
                 e("li", {className: color_code},
                     e("input", {
                         type: "checkbox", name:"s", id:input_id, "data-name":item.name,
-                        onClick: function(e){
-                            let _name = item.name;
-                            let _idx = _self.default_member_info.findIndex(function(item) {return item.name === _name});
-
-                            let selectTarget = _self.default_member_info[_idx];
-                            
-                            _self.current_select_member = selectTarget;
-
-                            if(e.target.checked) {
-                                if(_self.select_member.length <= 5){
-                                    _self._add_Event();
-                                }else{
-                                    alert('6명의 장수만 선택가능합니다.');
-                                    e.target.checked = false;
-                                }
-                            }else{
-                                _self._del_Event();
-                            }
-                        }
+                        onChange: (e) => _self._select_Event(item, e),
+                        checked: item.selected
                     }),
                     e("label", {htmlFor: input_id},
                         e("span", null, item.name),
                         "[" + item.slot + "슬롯]", e("br"),
-                        type_name_list[item.type]
+                        "[" + type_name_list[item.type] + "]"
                     )
                 )
             )
     }
 
-    renderList(list, list_name, list_code){
-        return e("li", {className: "col col-3"},
+    renderList(list, list_name, list_code, list_class="col col-3"){
+        return e("li", {className: list_class},
                 e("h2", null, list_name),
                 e("ul", null, 
                     list.map((item, index) => this.renderCheckBox(item, list_code, index))
@@ -120,57 +109,180 @@ class Deck extends React.Component{
     }
 
     renderListByNation(){
-        return e("div", null, 
+        return e("ul", {className: "row total"},
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.country=="위"), "위나라", "wei"
+                ),
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.country=="촉"), "촉나라", "shu"
+                ),
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.country=="오"), "오나라", "wo"
+                ),
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.country=="군"), "군웅", "king"
+                ),
+            );
+    }
+
+    renderListBySlot(){
+        return e("ul", {className: "row total"},
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.slot==1), "1슬롯", "s1", "col col-4"
+                ),
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.slot==2), "2슬롯", "s2", "col col-4"
+                ),
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.slot==3), "3슬롯", "s3", "col col-4"
+                ),
+            );
+    }
+
+    renderListByClass(){
+        return e("ul", {className: "row total"},
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.type=="검"), "검병", "sword"
+                ),
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.type=="창"), "창병", "lance"
+                ),
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.type=="책"), "책사", "deceit"
+                ),
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.type=="특"), "특수병", "special"
+                ),
+            );
+    }
+
+    render(){
+        var _self = this;
+        var renderedList = null;
+
+        switch(this.view_mode) {
+            case 1: renderedList = this.renderListByNation(); break;
+            case 2: renderedList = this.renderListBySlot(); break;
+            case 3: renderedList = this.renderListByClass(); break;
+        }
+        return e("div", {className: "container-fluid"}, 
+                e(ButtonToolbar, {
+                    className: "float-right"
+                },
+                    e(ToggleButtonGroup, {
+                        type: "radio",
+                        defaultValue: this.view_mode,
+                        onChange: function(value){ 
+                            _self.view_mode = value;
+                            _self.setState({}); 
+                        },
+                        name:"display_option"
+                    }, 
+                        e(ToggleButton, {
+                            value: 1,
+                            variant: "light"
+                        }, "국가별"), 
+                        e(ToggleButton, {
+                            value: 2,
+                            variant: "light"
+                        }, "슬롯별"), 
+                        e(ToggleButton, {
+                            value: 3,
+                            variant: "light"
+                        }, "직업별")
+                    ),
+                ),
+                e("div", null,
                     e("div", {className: "row"}, 
                         e("div", {className: "col col-12"},
                             e("h1", null, 
-                                "덱 구성", 
-                                e("button", {
-                                    "className": "btn btn-outline-danger float-right js_reset", onClick: () => this._reset()
-                                }, "Reset")
+                                "로망[Roman] 장수 선택 툴"
                             ),
                         )
                     ),
-                    e("ul", {className: "row total"},
-                        this.renderList(
-                            this.default_member_info.filter((item, index) => item.country=="위"), "위나라", "wei"
-                        ),
-                        this.renderList(
-                            this.default_member_info.filter((item, index) => item.country=="촉"), "촉나라", "shu"
-                        ),
-                        this.renderList(
-                            this.default_member_info.filter((item, index) => item.country=="오"), "오나라", "wo"
-                        ),
-                        this.renderList(
-                            this.default_member_info.filter((item, index) => item.country=="군"), "군웅", "king"
-                        ),
-                    )
-                );
-    }
-    render(){
-        return e("div", {className: "container-fluid"}, 
-                this.renderListByNation()
-                )
+                    renderedList,
+                    e("button", {
+                        "className": "btn btn-danger float-right js_reset", onClick: () => this._reset()
+                    }, "선택 초기화"),
+                ), 
+            )
     }
 
-    _add_Event(){
-        this._add_member();
-        this._add_color_check();
-        this._add_country_check();
-        this._add_type_check();
-        this._add_love_check();
+    _select_Event(item, e) {
+        if(!item.selected) { 
+            if(this.select_member.length <= 5){
+                item.selected = true;
+                this._add_Event(item);
+            }else{
+                e.target.checked = false;
+                $("#max_general_error").toast("show");
+            }
+        }else{
+            item.selected = false;
+            this._del_Event(item);
+        }
+        this.setState({});
     }
 
-    _del_Event(){
-        this._del_member();
-        this._del_color_check();
-        this._del_country_check();
-        this._del_type_check();
-        this._del_love_check();
+    _add_Event(item){
+        this._add_member(item);
+        this._add_color_check(item);
+        this._add_country_check(item);
+        this._add_type_check(item);
+        this._add_love_check(item);
     }
 
-    _add_color_check(){
-        switch(this.current_select_member.color){
+    _del_Event(item){
+        this._del_member(item);
+        this._del_color_check(item);
+        this._del_country_check(item);
+        this._del_type_check(item);
+        this._del_love_check(item);
+    }
+
+    _add_member(item){
+        let _name = item.name;
+        let _info = item.info;
+
+        let _skill = item.skill;
+        let _skill_p = item.point;
+        let _skill_b = item.skill_b;
+        let _skill_a = item.skill_a;
+        let _skill_s = item.skill_s;
+
+        this.select_member.push(_name);
+
+        let _a = $("<li></li>");
+        _a.append($("<span></span>").text(_name), _info);
+
+        let _b = $("<li></li>");
+        _b.append($("<span></span").text(_name));
+        _b.append(_skill, "<br/>", _skill_p, "<br/>", _skill_b, "<br/>", _skill_a, "<br/>", _skill_s);
+
+        this.result_member_txt.append(_a);
+        this.result_member_skill_txt.append(_b);
+    }
+
+    _del_member(item){
+        let _name = item.name;
+        let _idx = this.select_member.findIndex(function(item) {return item.name === _name});
+        this.select_member.splice(_idx, 1);
+
+        $.each(this.result_member_txt.children('li'),function(idx, _e){
+            if(_e.childNodes[0].textContent == _name){
+                _e.remove();
+            }
+        });
+        $.each(this.result_member_skill_txt.children('li'),function(idx, _e){
+            if(_e.childNodes[0].textContent == _name){
+                _e.remove();
+            }
+        });
+    }
+    
+
+    _add_color_check(item){
+        switch(item.color){
             case '청' :
                 this.color_blue++;
                 if(this.color_blue >= 3){
@@ -208,7 +320,7 @@ class Deck extends React.Component{
         }
     }
     
-    _del_color_check(){
+    _del_color_check(item){
         if(this.select_member.length != 6){
             this._del_organization(this.default_organiztion_txt[5]);
         }else{
@@ -221,7 +333,7 @@ class Deck extends React.Component{
             this._del_organization(this.default_organiztion_txt[4]);
         }
         
-        switch(this.current_select_member.color){
+        switch(item.color){
             case '청' :
                 if(this.color_blue == 4){
                     this._del_organization(this.default_organiztion_txt[3]);
@@ -252,8 +364,8 @@ class Deck extends React.Component{
         }
     }
 
-    _add_country_check(){
-        switch(this.current_select_member.country){
+    _add_country_check(item){
+        switch(item.country){
             case '위' :
                 this.country_wei++;
                 if(this.country_wei >= 4){
@@ -288,9 +400,8 @@ class Deck extends React.Component{
         }
     }
     
-    _del_country_check(){
-        
-        switch(this.current_select_member.country){
+    _del_country_check(item){
+        switch(item.country){
             case '위' :
                 if(this.country_wei == 4){
                     this._del_organization(this.default_organiztion_txt[6]);
@@ -331,8 +442,8 @@ class Deck extends React.Component{
         }
     }
 
-    _add_type_check(){
-        switch(this.current_select_member.type){
+    _add_type_check(item){
+        switch(item.type){
             case '검' :
                 this.type_sword++;
                 if(this.type_sword >= 3){
@@ -374,9 +485,9 @@ class Deck extends React.Component{
         }
     }
 
-    _del_type_check(){
+    _del_type_check(item){
         
-        switch(this.current_select_member.type){
+        switch(item.type){
             case '검' :
                 if(this.type_sword == 3){
                     this._del_organization(this.default_organiztion_txt[11]);
@@ -412,10 +523,10 @@ class Deck extends React.Component{
         }
     }            
 
-    _add_love_check(){
-        if(this.current_select_member.love != null) {
-            for(var i = 0 ; i < this.current_select_member.love.length ; i++) {
-                this.type_add_love.push(this.current_select_member.love[i]);
+    _add_love_check(item){
+        if(item.love != null) {
+            for(var i = 0 ; i < item.love.length ; i++) {
+                this.type_add_love.push(item.love[i]);
             }
         }
 
@@ -441,10 +552,10 @@ class Deck extends React.Component{
             }
         }
     }
-    _del_love_check(){
-        if(this.current_select_member.love != null ) {
-            for(var i = 0 ; i < this.current_select_member.love.length ; i++) {
-                this.type_add_love.splice(this.type_add_love.indexOf(this.current_select_member.love[i]),1);
+    _del_love_check(item){
+        if(item.love != null ) {
+            for(var i = 0 ; i < item.love.length ; i++) {
+                this.type_add_love.splice(this.type_add_love.indexOf(item.love[i]),1);
             }
         }
         var array = [];
@@ -470,46 +581,6 @@ class Deck extends React.Component{
         }
     }
 
-    _add_member(){
-        let _name = this.current_select_member.name;
-        let _info = this.current_select_member.info;
-
-        let _skill = this.current_select_member.skill;
-        let _skill_p = this.current_select_member.point;
-        let _skill_b = this.current_select_member.skill_b;
-        let _skill_a = this.current_select_member.skill_a;
-        let _skill_s = this.current_select_member.skill_s;
-
-        this.select_member.push(_name);
-
-        let _a = $("<li></li>");
-        _a.append($("<span></span>").text(_name), _info);
-
-        let _b = $("<li></li>");
-        _b.append($("<span></span").text(_name));
-        _b.append(_skill, "<br/>", _skill_p, "<br/>", _skill_b, "<br/>", _skill_a, "<br/>", _skill_s);
-
-        this.result_member_txt.append(_a);
-        this.result_member_skill_txt.append(_b);
-    }
-
-    _del_member(){
-        let _name = this.current_select_member.name;
-        let _idx = this.select_member.findIndex(function(item) {return item.name === _name});
-        this.select_member.splice(_idx, 1);
-
-        $.each(this.result_member_txt.children('li'),function(idx, _e){
-            if(_e.childNodes[0].textContent == _name){
-                _e.remove();
-            }
-        });
-        $.each(this.result_member_skill_txt.children('li'),function(idx, _e){
-            if(_e.childNodes[0].textContent == _name){
-                _e.remove();
-            }
-        });
-    }
-    
     _add_organization(_txt){
         let _idx = this.select_organization.indexOf(_txt);
 
@@ -549,8 +620,6 @@ class Deck extends React.Component{
         this.select_organization = [];
         this.type_add_love = [];
 
-        this.current_select_member = undefined;
-        
         this.color_blue = 0;
         this.color_red = 0;
         this.color_yellow = 0;
@@ -572,6 +641,9 @@ class Deck extends React.Component{
         $.each($("input"), function(idx, _e){
             if(_e.checked) _e.checked = false;
         });
+        $.each(this.default_member_info, function(idx, _e){
+            _e.selected=false;
+        })
     }
 }
 

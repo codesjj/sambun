@@ -1,8 +1,13 @@
 'use strict';
 
+var rbs = ReactBootstrap
 const e = React.createElement;
-var OverlayTrigger = ReactBootstrap.OverlayTrigger;
-var Tooltip = ReactBootstrap.Tooltip;
+var OverlayTrigger = rbs.OverlayTrigger;
+var Tooltip = rbs.Tooltip;
+var ToggleButtonGroup = rbs.ToggleButtonGroup;
+var ToggleButton = rbs.ToggleButton;
+var Button = rbs.Button;
+var ButtonToolbar = rbs.ButtonToolbar;
 
 class Deck extends React.Component{
     load_data(){
@@ -56,6 +61,8 @@ class Deck extends React.Component{
         this.type_special = 0;
         this.type_add_love = [];
 
+        this.view_mode = 1;
+
         this.state = {
             member_info: this.default_member_info
         }
@@ -80,7 +87,7 @@ class Deck extends React.Component{
                 e("li", {className: color_code},
                     e("input", {
                         type: "checkbox", name:"s", id:input_id, "data-name":item.name,
-                        onClick: (e) => _self._select_Event(item, e),
+                        onChange: (e) => _self._select_Event(item, e),
                         checked: item.selected
                     }),
                     e("label", {htmlFor: input_id},
@@ -92,8 +99,8 @@ class Deck extends React.Component{
             )
     }
 
-    renderList(list, list_name, list_code){
-        return e("li", {className: "col col-3"},
+    renderList(list, list_name, list_code, list_class="col col-3"){
+        return e("li", {className: list_class},
                 e("h2", null, list_name),
                 e("ul", null, 
                     list.map((item, index) => this.renderCheckBox(item, list_code, index))
@@ -102,37 +109,103 @@ class Deck extends React.Component{
     }
 
     renderListByNation(){
-        return e("div", null, 
+        return e("ul", {className: "row total"},
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.country=="위"), "위나라", "wei"
+                ),
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.country=="촉"), "촉나라", "shu"
+                ),
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.country=="오"), "오나라", "wo"
+                ),
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.country=="군"), "군웅", "king"
+                ),
+            );
+    }
+
+    renderListBySlot(){
+        return e("ul", {className: "row total"},
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.slot==1), "1슬롯", "s1", "col col-4"
+                ),
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.slot==2), "2슬롯", "s2", "col col-4"
+                ),
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.slot==3), "3슬롯", "s3", "col col-4"
+                ),
+            );
+    }
+
+    renderListByClass(){
+        return e("ul", {className: "row total"},
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.type=="검"), "검병", "sword"
+                ),
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.type=="창"), "창병", "lance"
+                ),
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.type=="책"), "책사", "deceit"
+                ),
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.type=="특"), "특수병", "special"
+                ),
+            );
+    }
+
+    render(){
+        var _self = this;
+        var renderedList = null;
+
+        switch(this.view_mode) {
+            case 1: renderedList = this.renderListByNation(); break;
+            case 2: renderedList = this.renderListBySlot(); break;
+            case 3: renderedList = this.renderListByClass(); break;
+        }
+        return e("div", {className: "container-fluid"}, 
+                e(ButtonToolbar, {
+                    className: "float-right"
+                },
+                    e(ToggleButtonGroup, {
+                        type: "radio",
+                        defaultValue: this.view_mode,
+                        onChange: function(value){ 
+                            _self.view_mode = value;
+                            _self.setState({}); 
+                        },
+                        name:"display_option"
+                    }, 
+                        e(ToggleButton, {
+                            value: 1,
+                            variant: "light"
+                        }, "국가별"), 
+                        e(ToggleButton, {
+                            value: 2,
+                            variant: "light"
+                        }, "슬롯별"), 
+                        e(ToggleButton, {
+                            value: 3,
+                            variant: "light"
+                        }, "직업별")
+                    ),
+                ),
+                e("div", null,
                     e("div", {className: "row"}, 
                         e("div", {className: "col col-12"},
                             e("h1", null, 
-                                "덱 구성", 
-                                e("button", {
-                                    "className": "btn btn-outline-danger float-right js_reset", onClick: () => this._reset()
-                                }, "Reset")
+                                "로망[Roman] 장수 선택 툴"
                             ),
                         )
                     ),
-                    e("ul", {className: "row total"},
-                        this.renderList(
-                            this.default_member_info.filter((item, index) => item.country=="위"), "위나라", "wei"
-                        ),
-                        this.renderList(
-                            this.default_member_info.filter((item, index) => item.country=="촉"), "촉나라", "shu"
-                        ),
-                        this.renderList(
-                            this.default_member_info.filter((item, index) => item.country=="오"), "오나라", "wo"
-                        ),
-                        this.renderList(
-                            this.default_member_info.filter((item, index) => item.country=="군"), "군웅", "king"
-                        ),
-                    )
-                );
-    }
-    render(){
-        return e("div", {className: "container-fluid"}, 
-                this.renderListByNation()
-                )
+                    renderedList,
+                    e("button", {
+                        "className": "btn btn-danger float-right js_reset", onClick: () => this._reset()
+                    }, "선택 초기화"),
+                ), 
+            )
     }
 
     _select_Event(item, e) {

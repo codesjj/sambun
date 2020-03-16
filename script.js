@@ -82,7 +82,7 @@ class Deck extends React.Component{
 
         return e(OverlayTrigger, {
                     placement: "bottom-start",
-                    overlay: e(Tooltip, {className: "skill-tooltip"}, item.point, e("br"), item.skill, e("br"), item.skill_b, e("br"), item.skill_a, e("br"), item.skill_s)
+                    overlay: e(Tooltip, {className: "skill-tooltip"}, item.love, e("br"), item.point, e("br"), item.skill, e("br"), item.skill_b, e("br"), item.skill_a, e("br"), item.skill_s)
                 },
                 e("li", {className: color_code},
                     e("input", {

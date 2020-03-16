@@ -11,6 +11,8 @@ ul, li{list-style: none}
 .info .next{float:left;min-width:300px;margin-top:20px;margin-right:30px}
 .info .next{color:#aaa}
 .info .reset{clear:both}
+.history a,
+.info a{font-size:13px;color:blueviolet;font-weight:bold}
 
 .total{padding:20px;overflow:hidden}
 

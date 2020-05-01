@@ -157,6 +157,20 @@ class Deck extends React.Component{
             );
     }
 
+    renderListByColor(){
+        return e("ul", {className: "row total"},
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.color=="적"), "적색", "red", "col col-4"
+                ),
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.color=="황"), "황색", "yellow", "col col-4"
+                ),
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.color=="청"), "청색", "blue", "col col-4"
+                ),
+            );
+    }
+
     render(){
         var _self = this;
         var renderedList = null;
@@ -165,6 +179,7 @@ class Deck extends React.Component{
             case 1: renderedList = this.renderListByNation(); break;
             case 2: renderedList = this.renderListBySlot(); break;
             case 3: renderedList = this.renderListByClass(); break;
+            case 4: renderedList = this.renderListByColor(); break;
         }
         return e("div", {className: "container-fluid"}, 
                 e(ButtonToolbar, {
@@ -190,7 +205,11 @@ class Deck extends React.Component{
                         e(ToggleButton, {
                             value: 3,
                             variant: "light"
-                        }, "직업별")
+                        }, "직업별"),
+                        e(ToggleButton, {
+                            value: 4,
+                            variant: "light"
+                        }, "색상별"), 
                     ),
                 ),
                 e("div", null,

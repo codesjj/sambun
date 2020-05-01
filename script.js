@@ -14,6 +14,17 @@ let color_name_list = {"적": "적속성", "황": "황속성", "청": "청속성
 let type_name_list = {"검": "검병", "창": "창병", "책": "책략병", "특": "특수병"};
 let country_name_list = {"위": "위나라", "촉": "촉나라", "오": "오나라", "군": "군웅"};
 
+function sort_by_key(data, eval_func){
+    return data.sort(function(a,b) {
+        if(eval_func(a) < eval_func(b))
+            return -1
+        else if(eval_func(a) == eval_func(b))
+            return 0
+        else
+            return 1
+    })
+}
+
 class Deck extends React.Component{
     load_data(){
         let _self = this;
@@ -68,6 +79,7 @@ class Deck extends React.Component{
         this.type_add_love = [];
 
         this.view_mode = 1;
+        this.order_mode = 1;
 
         this.state = {
             member_info: this.default_member_info
@@ -75,6 +87,18 @@ class Deck extends React.Component{
         $('.js_reset').click(function(){
             _self._reset();
         });
+    }
+
+    order_spec(item) {
+        switch(this.order_mode) {
+            case 1: return e("span", null, item.slot + "슬롯")
+            case 2: return e("span", null, "기력 " + item.skill_point)
+            case 3: 
+                switch(item.target){
+                    case "가까운 적": return e("span", null, "사거리 " + item.distance)
+                    case "가장 먼 적": return e("span", {className: "text-danger"}, "사거리 " + item.distance)
+                }
+        }
     }
 
     renderCheckBox(item, list_code, index){
@@ -97,7 +121,7 @@ class Deck extends React.Component{
                         item.skill_s
                         )
                 },
-                e("li", {className: color_code},
+                e("li", {className: color_code + " text-center"},
                     e("input", {
                         type: "checkbox", name:"s", id:input_id, "data-name":item.name,
                         onChange: (e) => _self._select_Event(item, e),
@@ -105,8 +129,8 @@ class Deck extends React.Component{
                     }),
                     e("label", {htmlFor: input_id},
                         e("span", null, item.name),
-                        "[" + item.slot + "슬롯]", e("br"),
-                        "[" + type_name_list[item.type] + "]"
+                        _self.order_spec(item),
+                        item.slot + "슬롯/" + type_name_list[item.type]
                     )
                 )
             )
@@ -183,17 +207,40 @@ class Deck extends React.Component{
             );
     }
 
-    render(){
+    renderSubMenuBar(){
         var _self = this;
-        var renderedList = null;
-
-        switch(this.view_mode) {
-            case 1: renderedList = this.renderListByNation(); break;
-            case 2: renderedList = this.renderListBySlot(); break;
-            case 3: renderedList = this.renderListByClass(); break;
-            case 4: renderedList = this.renderListByColor(); break;
-        }
-        return e("div", {className: "container-fluid"}, 
+        return e("div", {className: "clearfix"}, 
+                e(ButtonToolbar, {
+                    className: "float-left"
+                },
+                    e(ToggleButtonGroup, {
+                        type: "radio",
+                        defaultValue: this.order_mode,
+                        onChange: function(value){ 
+                            _self.order_mode = value;
+                            switch(value){
+                                case 1: _self.default_member_info = sort_by_key(_self.default_member_info, (x) => x.slot); break;
+                                case 2: _self.default_member_info = sort_by_key(_self.default_member_info, (x) => x.skill_point); break;
+                                case 3: _self.default_member_info = sort_by_key(_self.default_member_info, (x) => x.distance)
+                            }
+                            _self.setState({}); 
+                        },
+                        name:"color_option"
+                    }, 
+                        e(ToggleButton, {
+                            value: 1,
+                            variant: "light"
+                        }, "슬롯순"), 
+                        e(ToggleButton, {
+                            value: 2,
+                            variant: "light"
+                        }, "사용기력순"), 
+                        e(ToggleButton, {
+                            value: 3,
+                            variant: "light"
+                        }, "사거리순"),
+                    ),
+                ),
                 e(ButtonToolbar, {
                     className: "float-right"
                 },
@@ -222,21 +269,35 @@ class Deck extends React.Component{
                             value: 4,
                             variant: "light"
                         }, "색상별"), 
+                        e("button", {
+                            "className": "btn btn-danger float-right js_reset", onClick: () => this._reset()
+                        }, "선택 초기화"),
                     ),
                 ),
-                e("div", null,
-                    e("div", {className: "row"}, 
-                        e("div", {className: "col col-12"},
-                            e("h1", null, 
-                                "로망[Roman] 장수 선택 툴"
-                            ),
-                        )
-                    ),
-                    e("button", {
-                        "className": "btn btn-danger float-right js_reset", onClick: () => this._reset()
-                    }, "선택 초기화"),
-                    renderedList,
-                ), 
+            )
+    }
+
+    render(){
+        var _self = this;
+        var renderedList = null;
+
+        switch(this.view_mode) {
+            case 1: renderedList = this.renderListByNation(); break;
+            case 2: renderedList = this.renderListBySlot(); break;
+            case 3: renderedList = this.renderListByClass(); break;
+            case 4: renderedList = this.renderListByColor(); break;
+        }
+
+        return e("div", {className: "container-fluid"}, 
+                e("div", {className: "row"}, 
+                    e("div", {className: "col col-12"},
+                        e("h1", null, 
+                            "로망[Roman] 장수 선택 툴"
+                        ),
+                    )
+                ),
+                e("div", {className: "row"}, renderedList),
+                this.renderSubMenuBar()
             )
     }
 
@@ -282,7 +343,7 @@ class Deck extends React.Component{
             type_name_list[item.type] + " / " + 
             country_name_list[item.country] + " / " + 
             "기력 " + item.skill_point + " / " + 
-            "사거리 " + item.distance + "(" + item.target + ")" +
+            "사거리 " + item.distance + " (" + item.target + ")" +
             "]";
 
 

@@ -9,6 +9,11 @@ var ToggleButton = rbs.ToggleButton;
 var Button = rbs.Button;
 var ButtonToolbar = rbs.ButtonToolbar;
 
+let color_code_list = {"적": "red", "청": "blue", "황": "yellow"};
+let color_name_list = {"적": "적속성", "황": "황속성", "청": "청속성"};
+let type_name_list = {"검": "검병", "창": "창병", "책": "책략병", "특": "특수병"};
+let country_name_list = {"위": "위나라", "촉": "촉나라", "오": "오나라", "군": "군웅"};
+
 class Deck extends React.Component{
     load_data(){
         let _self = this;
@@ -75,8 +80,6 @@ class Deck extends React.Component{
     renderCheckBox(item, list_code, index){
         let _self = this;
 
-        let color_code_list = {"적": "red", "청": "blue", "황": "yellow"};
-        let type_name_list = {"검": "검병", "창": "창병", "책": "책략병", "특": "특수병"};
 
         let color_code = color_code_list[item.color];
         let input_id = list_code + "_" + index;
@@ -271,7 +274,17 @@ class Deck extends React.Component{
 
     _add_member(item){
         let _name = item.name;
-        let _info = item.info;
+        // let _info = item.info;
+        // [1슬롯 / 청속성 / 책략병 / 위나라 / 가장 먼 적 / 사거리 : 34]
+        let _info = "[" + 
+            item.slot + "슬롯 / " + 
+            color_name_list[item.color] + " / " + 
+            type_name_list[item.type] + " / " + 
+            country_name_list[item.country] + " / " + 
+            "기력 " + item.skill_point + " / " + 
+            "사거리 " + item.distance + "(" + item.target + ")" +
+            "]";
+
 
         let _skill = item.skill;
         let _skill_p = item.point;

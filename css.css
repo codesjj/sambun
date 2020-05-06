@@ -27,7 +27,7 @@ ul, li{list-style: none}
 .total ul li.yellow{border:2px solid rgb(228, 228, 40)}
 .total ul li{margin:10px}
 .total ul li input{position:absolute;top:0;left:0;width:0;height:0;opacity:0}
-.total ul li label{display:block;padding:10px 0px;box-sizing:border-box;color:#777;font-size:13px;margin:0;}
+.total ul li label{display:block;padding:10px 0px;box-sizing:border-box;font-size:12px;margin:0;}
 .total ul li label span{display:block;font-size:15px;color:#000;font-weight:bold}
 .total ul li.red input:checked + label{background:red;color:#fff}
 .total ul li.red input:checked + label span{color:#fff}

@@ -127,7 +127,7 @@ class Deck extends React.Component{
                         onChange: (e) => _self._select_Event(item, e),
                         checked: item.selected
                     }),
-                    e("label", {htmlFor: input_id},
+                    e("label", {htmlFor: input_id, className: "text-muted"},
                         e("span", null, item.name),
                         _self.order_spec(item),
                         item.slot + "슬롯/" + type_name_list[item.type]

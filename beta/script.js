@@ -15,7 +15,7 @@ var a = check_url.href.indexOf("?");
 
 if(a != -1){
     var b = check_url.href.substring(a+1, stringLength)
-    arr = b.split(",");
+    var arr = b.split(",");
     console.log(arr);
 
 }else{

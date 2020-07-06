@@ -13,6 +13,8 @@ var check_url = document.location;
 var stringLength = check_url.href.length;
 var a = check_url.href.indexOf("?");
 
+console.log(check_url);
+
 if(a != -1){
     var b = check_url.href.substring(a+1, stringLength)
     var arr = b.split(",");

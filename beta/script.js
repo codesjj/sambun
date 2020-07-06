@@ -215,6 +215,7 @@ class Deck extends React.Component{
             e("button", {
                 "className": "btn btn_save", onClick: () => this._save()
             }, "선택 저장"),
+        )
     }
 
     renderSubMenuBar(){

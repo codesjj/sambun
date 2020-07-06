@@ -209,6 +209,14 @@ class Deck extends React.Component{
             );
     }
 
+    renderSaveBar(){
+        var _self = this;
+        return e("div", {className: "clearfix"}, 
+            e("button", {
+                "className": "btn btn_save", onClick: () => this._save()
+            }, "선택 저장"),
+    }
+
     renderSubMenuBar(){
         var _self = this;
         return e("div", {className: "clearfix"}, 
@@ -296,6 +304,7 @@ class Deck extends React.Component{
                         e("h1", null, 
                             "로망[Roman] 장수 선택 툴"
                         ),
+                        this.renderSaveBar()
                     )
                 ),
                 e("div", {className: "row"}, renderedList),
@@ -718,6 +727,10 @@ class Deck extends React.Component{
         }else{
             //console.log('없음 - 추가조건 아님');
         }
+    }
+
+    _save(){
+        console.log('test');
     }
 
     _reset(){                

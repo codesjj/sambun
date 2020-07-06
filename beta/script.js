@@ -786,4 +786,4 @@ $(function(){
         $('input[data-value='+arr[i]).next().trigger();
         console.log(arr[i]);
     }
-})
+}())

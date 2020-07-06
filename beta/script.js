@@ -8,6 +8,7 @@ var ToggleButtonGroup = rbs.ToggleButtonGroup;
 var ToggleButton = rbs.ToggleButton;
 var Button = rbs.Button;
 var ButtonToolbar = rbs.ButtonToolbar;
+var url = document.location + "?"; // 추가
 
 console.log('test page');
 
@@ -15,6 +16,8 @@ let color_code_list = {"적": "red", "청": "blue", "황": "yellow"};
 let color_name_list = {"적": "적속성", "황": "황속성", "청": "청속성"};
 let type_name_list = {"검": "검병", "창": "창병", "책": "책략병", "특": "특수병"};
 let country_name_list = {"위": "위나라", "촉": "촉나라", "오": "오나라", "군": "군웅"};
+
+
 
 function sort_by_key(data, eval_func){
     return data.sort(function(a,b) {
@@ -209,15 +212,6 @@ class Deck extends React.Component{
             );
     }
 
-    renderSaveBar(){
-        var _self = this;
-        return e("div", {className: "clearfix"}, 
-            e("button", {
-                "className": "btn btn_save", onClick: () => this._save()
-            }, "선택 저장"),
-        )
-    }
-
     renderSubMenuBar(){
         var _self = this;
         return e("div", {className: "clearfix"}, 
@@ -304,8 +298,7 @@ class Deck extends React.Component{
                     e("div", {className: "col col-12"},
                         e("h1", null, 
                             "로망[Roman] 장수 선택 툴"
-                        ),
-                        this.renderSaveBar()
+                        )
                     )
                 ),
                 e("div", {className: "row"}, renderedList),
@@ -335,6 +328,8 @@ class Deck extends React.Component{
         this._add_country_check(item);
         this._add_type_check(item);
         this._add_love_check(item);
+
+        window.history.pushState( 'page2', '선택된 장수', url + this.select_member);
     }
 
     _del_Event(item){
@@ -728,10 +723,6 @@ class Deck extends React.Component{
         }else{
             //console.log('없음 - 추가조건 아님');
         }
-    }
-
-    _save(){
-        console.log('test');
     }
 
     _reset(){                

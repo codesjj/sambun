@@ -319,6 +319,8 @@ class Deck extends React.Component{
             item.selected = false;
             this._del_Event(item);
         }
+
+        window.history.pushState( 'page2', '선택된 장수', url + this.select_member);
         this.setState({});
     }
 
@@ -328,8 +330,6 @@ class Deck extends React.Component{
         this._add_country_check(item);
         this._add_type_check(item);
         this._add_love_check(item);
-
-        window.history.pushState( 'page2', '선택된 장수', url + this.select_member);
     }
 
     _del_Event(item){

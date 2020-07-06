@@ -8,7 +8,19 @@ var ToggleButtonGroup = rbs.ToggleButtonGroup;
 var ToggleButton = rbs.ToggleButton;
 var Button = rbs.Button;
 var ButtonToolbar = rbs.ButtonToolbar;
-var url = document.location + "?"; // 추가
+
+var check_url = document.location;
+var stringLength = check_url.href.length;
+var a = check_url.href.indexOf("?");
+
+if(a != -1){
+    var b = check_url.href.substring(a+1, stringLength)
+    arr = b.split(",");
+    console.log(arr);
+
+}else{
+    window.history.pushState( 'page2', '선택된 장수', check_url + "?");
+}
 
 console.log('test page');
 

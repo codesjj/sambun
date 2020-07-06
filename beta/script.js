@@ -9,19 +9,24 @@ var ToggleButton = rbs.ToggleButton;
 var Button = rbs.Button;
 var ButtonToolbar = rbs.ButtonToolbar;
 
-var check_url = document.location;
-var stringLength = check_url.href.length;
-var a = check_url.href.indexOf("?");
+var check_url = decodeURI(document.location);
+var stringLength = check_url.length;
+var a = check_url.indexOf("?");
 
 console.log(check_url);
 
 if(a != -1){
-    var b = check_url.href.substring(a+1, stringLength)
+    var b = check_url.substring(a+1, stringLength)
     var arr = b.split(",");
     console.log(arr);
 
+    var current_url = check_url.substring(0, a+1);
+
+    console.log(current_url);
+
 }else{
     window.history.pushState( 'page2', '선택된 장수', check_url + "?");
+    var current_url = document.location.href;
 }
 
 console.log('test page');
@@ -334,7 +339,7 @@ class Deck extends React.Component{
             this._del_Event(item);
         }
 
-        window.history.pushState( 'page2', '선택된 장수', url + this.select_member);
+        window.history.pushState( 'page2', '선택된 장수', current_url + encodeURI(this.select_member));
         this.setState({});
     }
 

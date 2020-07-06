@@ -784,6 +784,6 @@ ReactDOM.render(
 $(function(){
     for(var i = 0; i > arr.length; i++){
         $('input[data-value='+arr[i]).next().trigger();
-        
+        console.log(arr[i]);
     }
 })

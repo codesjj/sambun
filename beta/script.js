@@ -781,6 +781,9 @@ ReactDOM.render(
     document.getElementById('root')
 );
 
-// $(function(){
-    // new Deck().mount()
-// })
+$(function(){
+    for(var i = 0; i > arr.length; i++){
+        $('input[data-value='+arr[i]).next().trigger();
+        
+    }
+})

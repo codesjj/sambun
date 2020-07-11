@@ -83,7 +83,8 @@ class Deck extends React.Component{
         this.result_organization_txt = $('.type2');
         this.result_member_skill_txt = $('.type3');
 
-        this.select_id = [];
+        this.select_id = arr;
+        console.log(this.select_id);
         this.select_member = [];
         this.select_organization = [];
 

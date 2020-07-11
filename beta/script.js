@@ -110,10 +110,6 @@ class Deck extends React.Component{
         this.state = {
             member_info: this.default_member_info
         }
-        
-        $('.js_reset').click(function(){
-            _self._reset();
-        });
     }
 
     order_spec(item) {
@@ -126,10 +122,6 @@ class Deck extends React.Component{
                     case "가장 먼 적": return e("span", {className: "text-danger"}, "사거리 " + item.distance)
                 }
         }
-    }
-
-    loadUrlDate(){
-        console.log(this.select_id);
     }
 
     renderCheckBox(item, list_code, index){
@@ -163,8 +155,7 @@ class Deck extends React.Component{
                         item.slot + "슬롯/" + type_name_list[item.type]
                     )
                 )
-            ),
-            this.loadUrlDate();
+            )
     }
 
     renderList(list, list_name, list_code, list_class="col col-3"){

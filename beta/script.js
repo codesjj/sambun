@@ -84,7 +84,7 @@ class Deck extends React.Component{
         this.result_member_skill_txt = $('.type3');
 
         this.select_id = arr;
-        console.log(this.select_id);
+        //console.log(this.select_id);
         this.select_member = [];
         this.select_organization = [];
 
@@ -131,7 +131,6 @@ class Deck extends React.Component{
     renderCheckBox(item, list_code, index){
         let _self = this;
 
-
         let color_code = color_code_list[item.color];
         let input_id = list_code + "_" + index;
 
@@ -150,9 +149,9 @@ class Deck extends React.Component{
                 },
                 e("li", {className: color_code + " text-center"},
                     e("input", {
-                        type: "checkbox", name:"s", id:input_id, "data-name":item.name,
+                        type: "checkbox", name:"s", id:input_id, "data-name":item.name, "data-id":item.id,
                         onChange: (e) => _self._select_Event(item, e),
-                        checked: item.selected
+                        checked: 'checked'
                     }),
                     e("label", {htmlFor: input_id, className: "text-muted"},
                         e("span", null, item.name),
@@ -343,7 +342,6 @@ class Deck extends React.Component{
             item.selected = false;
             this._del_Event(item);
         }
-
         
         window.history.pushState( 'page2', '선택된 장수', current_url + this.select_id);
         this.setState({});
@@ -386,7 +384,9 @@ class Deck extends React.Component{
         let _skill_a = item.skill_a;
         let _skill_s = item.skill_s;
 
-        this.select_id.push(_id);
+        if(this.select_id.indexOf(_id) == -1){
+            this.select_id.push(_id);
+        }
         this.select_member.push(_name);
 
         let _a = $("<li></li>");

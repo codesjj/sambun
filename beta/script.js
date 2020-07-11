@@ -128,6 +128,12 @@ class Deck extends React.Component{
         }
     }
 
+    loadCheck(){
+        var a = this.select_id;
+
+        return a;
+    }
+
     renderCheckBox(item, list_code, index){
         let _self = this;
 
@@ -161,12 +167,6 @@ class Deck extends React.Component{
                 ),
                 this.loadCheck()
             )
-    }
-
-    loadCheck(){
-        var a = this.select_id;
-
-        return a;
     }
 
     renderList(list, list_name, list_code, list_class="col col-3"){

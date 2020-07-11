@@ -128,12 +128,6 @@ class Deck extends React.Component{
         }
     }
 
-    loadCheck(){
-        var a = this.select_id;
-
-        return a;
-    }
-
     renderCheckBox(item, list_code, index){
         let _self = this;
 
@@ -164,8 +158,7 @@ class Deck extends React.Component{
                         _self.order_spec(item),
                         item.slot + "슬롯/" + type_name_list[item.type]
                     )
-                ),
-                this.loadCheck()
+                )
             )
     }
 

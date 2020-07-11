@@ -164,7 +164,9 @@ class Deck extends React.Component{
     }
 
     loadCheck(){
-        console.log(this.select_id);
+        var a = this.select_id;
+
+        return a;
     }
 
     renderList(list, list_name, list_code, list_class="col col-3"){

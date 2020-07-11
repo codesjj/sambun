@@ -9,23 +9,23 @@ var ToggleButton = rbs.ToggleButton;
 var Button = rbs.Button;
 var ButtonToolbar = rbs.ButtonToolbar;
 
-var check_url = decodeURI(document.location);
+var check_url = document.location;
 var stringLength = check_url.length;
-var a = check_url.indexOf("?");
-
 console.log(check_url);
 
+var a = check_url.href.indexOf("?");
+
 if(a != -1){
-    var b = check_url.substring(a+1, stringLength)
+    var b = check_url.href.substring(a+1, stringLength)
     var arr = b.split(",");
     console.log(arr);
 
-    var current_url = check_url.substring(0, a+1);
+    var current_url = check_url.href.substring(0, a+1);
 
     console.log(current_url);
 
 }else{
-    window.history.pushState( 'page2', '선택된 장수', check_url + "?");
+    window.history.pushState( 'select_id', 'select_id', check_url.href + "?");
     var current_url = document.location.href;
 }
 
@@ -83,6 +83,7 @@ class Deck extends React.Component{
         this.result_organization_txt = $('.type2');
         this.result_member_skill_txt = $('.type3');
 
+        this.select_id = [];
         this.select_member = [];
         this.select_organization = [];
 
@@ -316,7 +317,7 @@ class Deck extends React.Component{
                 e("div", {className: "row"}, 
                     e("div", {className: "col col-12"},
                         e("h1", null, 
-                            "로망[Roman] 장수 선택 툴"
+                            "로망[Roman] 군단 장수 선택 툴"
                         )
                     )
                 ),
@@ -326,6 +327,8 @@ class Deck extends React.Component{
     }
 
     _select_Event(item, e) {
+        console.log(item)
+
         if(!item.selected) { 
             if(this.select_member.length <= 5){
                 item.selected = true;
@@ -339,7 +342,8 @@ class Deck extends React.Component{
             this._del_Event(item);
         }
 
-        window.history.pushState( 'page2', '선택된 장수', current_url + encodeURI(this.select_member));
+        
+        window.history.pushState( 'page2', '선택된 장수', current_url + this.select_id);
         this.setState({});
     }
 
@@ -360,6 +364,7 @@ class Deck extends React.Component{
     }
 
     _add_member(item){
+        let _id = item.id;
         let _name = item.name;
         // let _info = item.info;
         // [1슬롯 / 청속성 / 책략병 / 위나라 / 가장 먼 적 / 사거리 : 34]
@@ -379,6 +384,7 @@ class Deck extends React.Component{
         let _skill_a = item.skill_a;
         let _skill_s = item.skill_s;
 
+        this.select_id.push(_id);
         this.select_member.push(_name);
 
         let _a = $("<li></li>");
@@ -393,9 +399,14 @@ class Deck extends React.Component{
     }
 
     _del_member(item){
+        let _id = item.id;
         let _name = item.name;
-        let _idx = this.select_member.findIndex(function(item) {return item.name === _name});
-        this.select_member.splice(_idx, 1);
+
+        let _idx = this.select_id.indexOf(_id);
+        this.select_id.splice(_idx, 1);
+        
+        let _idx2 = this.select_member.findIndex(function(item) {return item.name === _name});
+        this.select_member.splice(_idx2, 1);
 
         $.each(this.result_member_txt.children('li'),function(idx, _e){
             if(_e.childNodes[0].textContent == _name){
@@ -745,6 +756,7 @@ class Deck extends React.Component{
     }
 
     _reset(){                
+        this.select_id = [];
         this.select_member = [];
         this.select_organization = [];
         this.type_add_love = [];
@@ -780,10 +792,3 @@ ReactDOM.render(
     e(Deck, null),
     document.getElementById('root')
 );
-
-$(function(){
-    for(var i = 0; i < arr.length; i++){
-        $('input[data-value='+arr[i]).next().trigger();
-        console.log(arr[i]);
-    }
-}())

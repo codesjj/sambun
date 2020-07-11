@@ -128,6 +128,10 @@ class Deck extends React.Component{
         }
     }
 
+    loadUrlDate(){
+        console.log(this.select_id);
+    }
+
     renderCheckBox(item, list_code, index){
         let _self = this;
 
@@ -159,7 +163,8 @@ class Deck extends React.Component{
                         item.slot + "슬롯/" + type_name_list[item.type]
                     )
                 )
-            )
+            ),
+            this.loadUrlDate();
     }
 
     renderList(list, list_name, list_code, list_class="col col-3"){

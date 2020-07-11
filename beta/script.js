@@ -158,8 +158,13 @@ class Deck extends React.Component{
                         _self.order_spec(item),
                         item.slot + "슬롯/" + type_name_list[item.type]
                     )
-                )
+                ),
+                this.loadCheck()
             )
+    }
+
+    loadCheck(){
+        console.log(this.select_id);
     }
 
     renderList(list, list_name, list_code, list_class="col col-3"){

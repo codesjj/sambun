@@ -18,11 +18,11 @@ var a = check_url.href.indexOf("?");
 if(a != -1){
     var b = check_url.href.substring(a+1, stringLength)
     var arr = b.split(",");
-    console.log(arr);
+    //console.log(arr);
 
     var current_url = check_url.href.substring(0, a+1);
 
-    console.log(current_url);
+    //console.log(current_url);
 
 }else{
     window.history.pushState( 'select_id', 'select_id', check_url.href + "?");
@@ -109,6 +109,7 @@ class Deck extends React.Component{
         this.state = {
             member_info: this.default_member_info
         }
+        
         $('.js_reset').click(function(){
             _self._reset();
         });

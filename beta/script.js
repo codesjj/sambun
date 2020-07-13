@@ -148,7 +148,6 @@ class Deck extends React.Component{
                     e("input", {
                         type: "checkbox", name:"s", id:input_id, "data-name":item.name, "data-id":item.id,
                         onChange: (e) => _self._select_Event(item, e),
-                        // checked: item.selected
                         checked : (function(e){
                             if(_self.select_id.indexOf(item.id) == -1){
                                 var y = false;

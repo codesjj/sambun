@@ -149,13 +149,12 @@ class Deck extends React.Component{
                         type: "checkbox", name:"s", id:input_id, "data-name":item.name, "data-id":item.id,
                         onChange: (e) => _self._select_Event(item, e),
                         // checked: item.selected
-                        checked : (e) => {
+                        checked : (function(e){
                             var y = _self.select_id.indexOf(item.id) == -1 ? false : true;
 
                             _self._select_Event(item, e);
-
                             return y
-                        }
+                        }())
                     }),
                     e("label", {htmlFor: input_id, className: "text-muted"},
                         e("span", null, item.name),

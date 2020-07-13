@@ -148,7 +148,7 @@ class Deck extends React.Component{
                                 var y = false;
                             }else{
                                 var y = true;
-                                _self._add_Event(item);
+                                console.log("t" + item);
                             }
                             return y
                         }())

@@ -150,16 +150,8 @@ class Deck extends React.Component{
                         onChange: (e) => _self._select_Event(item, e),
                         // checked: item.selected
                         checked : (function(e){
-                            if(_self.select_id.indexOf(item.id) == -1){
-                                console.log(1);
-                                var y = false;
-                            }else{
-                                console.log(2);
-                                var y = true;
-                                _self._select_Event(item, e);
-                            }
-                        
-                            return y;
+                            var y = _self.select_id.indexOf(item.id) == -1 ? false : true;
+                            return y
                         }())
                     }),
                     e("label", {htmlFor: input_id, className: "text-muted"},
@@ -337,7 +329,7 @@ class Deck extends React.Component{
     }
 
     _select_Event(item, e) {
-        console.log(item);
+        console.log(item)
 
         if(!item.selected) { 
             if(this.select_member.length <= 5){

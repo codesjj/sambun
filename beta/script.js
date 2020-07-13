@@ -150,9 +150,7 @@ class Deck extends React.Component{
                         onChange: (e) => _self._select_Event(item, e),
                         // checked: item.selected
                         checked : (function(){
-                            console.log(item.id);
-                            console.log(_self.select_id);
-                            var y = _self.select_id.indexOf(item.id) == -1 ? true : false;
+                            var y = _self.select_id.indexOf(item.id) == -1 ? false : true;
                             return y
                         }())
                     }),

@@ -151,6 +151,7 @@ class Deck extends React.Component{
                         // checked: item.selected
                         checked : (function(){
                             console.log(item.id);
+                            console.log(_self.select_id);
                             y = _self.select_id.indexOf(item.id) == -1 ? true : false;
                             return y
                         }())

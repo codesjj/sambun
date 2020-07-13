@@ -9,7 +9,7 @@ var ToggleButton = rbs.ToggleButton;
 var Button = rbs.Button;
 var ButtonToolbar = rbs.ButtonToolbar;
 
-alert('베타 테스트');
+alert('테스트페이지 입니다');
 
 let color_code_list = {"적": "red", "청": "blue", "황": "yellow"};
 let color_name_list = {"적": "적속성", "황": "황속성", "청": "청속성"};

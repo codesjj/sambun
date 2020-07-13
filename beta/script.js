@@ -152,7 +152,9 @@ class Deck extends React.Component{
                             if(_self.select_id.indexOf(item.id) == -1){
                                 var y = false;
                             }else{
+                                console.log(1);
                                 var y = true;
+                                _self._select_Event(item, e);
                             }
                             return y
                         }())

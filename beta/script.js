@@ -793,5 +793,8 @@ class Deck extends React.Component{
 
 ReactDOM.render(   
     e(Deck, null),
-    document.getElementById('root')
+    document.getElementById('root'),
+    function(){
+        console.log('finish')
+    }
 );

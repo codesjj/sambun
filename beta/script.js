@@ -148,7 +148,6 @@ class Deck extends React.Component{
                                 var y = false;
                             }else{
                                 var y = true;
-                                //console.log(item);
                                 console.log(item);
                                 item.selected = true;
                                 _self._add_Event(item);
@@ -331,8 +330,6 @@ class Deck extends React.Component{
     }
 
     _select_Event(item, e) {
-        console.log(item)
-
         if(!item.selected) { 
             if(this.select_member.length <= 5){
                 item.selected = true;

@@ -150,11 +150,11 @@ class Deck extends React.Component{
                         onChange: (e) => _self._select_Event(item, e),
                         // checked: item.selected
                         checked : (function(e){
-                            //var y = _self.select_id.indexOf(item.id) == -1 ? false : true;
                             console.log(1);
                             _self._select_Event(item, e);
                             console.log(2);
-                            return y
+                            var y = _self.select_id.indexOf(item.id) == -1 ? false : true;
+                            return y;
                         }())
                     }),
                     e("label", {htmlFor: input_id, className: "text-muted"},

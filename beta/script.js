@@ -9,22 +9,6 @@ var ToggleButton = rbs.ToggleButton;
 var Button = rbs.Button;
 var ButtonToolbar = rbs.ButtonToolbar;
 
-var check_url = document.location;
-var stringLength = check_url.length;
-console.log(check_url);
-
-var a = check_url.href.indexOf("?");
-
-if(a != -1){
-    var b = check_url.href.substring(a+1, stringLength)
-    var arr = b.split(",");
-    var current_url = check_url.href.substring(0, a+1);
-}else{
-    window.history.pushState( 'select_id', 'select_id', check_url.href + "?");
-    var current_url = document.location.href;
-    var arr = [];
-}
-
 alert('베타 테스트');
 alert('선택된 id값 : '+ arr);
 
@@ -66,12 +50,33 @@ class Deck extends React.Component{
         })
     }
     
+    urlCheck(){
+        let _self = this;
+
+        let check_url = document.location;
+        let stringLength = check_url.length;
+        console.log(check_url);
+        
+        let a = check_url.href.indexOf("?");
+        
+        if(a != -1){
+            let b = check_url.href.substring(a+1, stringLength)
+            _self.select_id = b.split(",");
+            _self.current_url = check_url.href.substring(0, a+1);
+        }else{
+            window.history.pushState( 'select_id', 'select_id', check_url.href + "?");
+            _self.current_url = document.location.href;
+            _self.select_id = [];
+        }
+    }
+
     constructor(){
         super();
 
         let _self = this;
 
         this.load_data();
+        this.urlCheck();
 
         this.default_member_info = [];
 
@@ -79,7 +84,8 @@ class Deck extends React.Component{
         this.result_organization_txt = $('.type2');
         this.result_member_skill_txt = $('.type3');
 
-        this.select_id = arr;
+        // this.select_id = arr;
+        // this.current_url = "";
         //console.log(this.select_id);
         this.select_member = [];
         this.select_organization = [];
@@ -143,17 +149,7 @@ class Deck extends React.Component{
                     e("input", {
                         type: "checkbox", name:"s", id:input_id, "data-name":item.name, "data-id":item.id,
                         onChange: (e) => _self._select_Event(item, e),
-                        checked : (function(e){
-                            if(_self.select_id.indexOf(item.id) == -1){
-                                var y = false;
-                            }else{
-                                var y = true;
-                                console.log(item);
-                                item.selected = true;
-                                _self._add_Event(item);
-                            }
-                            return y
-                        }())
+                        checked : item.selected
                     }),
                     e("label", {htmlFor: input_id, className: "text-muted"},
                         e("span", null, item.name),
@@ -330,6 +326,8 @@ class Deck extends React.Component{
     }
 
     _select_Event(item, e) {
+        console.log(item)
+
         if(!item.selected) { 
             if(this.select_member.length <= 5){
                 item.selected = true;
@@ -343,7 +341,7 @@ class Deck extends React.Component{
             this._del_Event(item);
         }
         
-        window.history.pushState( 'page2', '선택된 장수', current_url + this.select_id);
+        window.history.pushState( 'page2', '선택된 장수', this.current_url + this.select_id);
         this.setState({});
     }
 

@@ -150,9 +150,10 @@ class Deck extends React.Component{
                         onChange: (e) => _self._select_Event(item, e),
                         checked : (function(e){
                             if(_self.select_id.indexOf(item.id) == -1){
+                                console.log(1);
                                 var y = false;
                             }else{
-                                console.log(1);
+                                console.log(2);
                                 var y = true;
                                 _self._add_Event(item);
                             }

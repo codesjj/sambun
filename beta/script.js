@@ -148,6 +148,7 @@ class Deck extends React.Component{
                                 var y = false;
                             }else{
                                 var y = true;
+                                //console.log(item);
                                 console.log(item);
                             }
                             return y

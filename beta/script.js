@@ -151,8 +151,9 @@ class Deck extends React.Component{
                         // checked: item.selected
                         checked : (function(e){
                             var y = _self.select_id.indexOf(item.id) == -1 ? false : true;
-
+                            console.log(1);
                             _self._select_Event(item, e);
+                            console.log(2);
                             return y
                         }())
                     }),
@@ -331,7 +332,7 @@ class Deck extends React.Component{
     }
 
     _select_Event(item, e) {
-        console.log(item)
+        console.log(item);
 
         if(!item.selected) { 
             if(this.select_member.length <= 5){

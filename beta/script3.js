@@ -49,7 +49,6 @@ class Deck extends React.Component{
                 dataType: "json",
                 success: function(data) {
                     _self.default_member_info = data;
-                    _self.setState({});
                 }
             });
         }
@@ -74,26 +73,9 @@ class Deck extends React.Component{
             });
         }
         
-        $.when(ajax1(), ajax2(), ajax3(), ajax4()).done(function(a1, a2, a3, a4){
+        $.when(ajax1(), ajax2(), ajax3(), ajax4(), _self.setState({})).done(function(a1, a2, a3, a4){
             console.log("ajax호출")
         });
-
-        // $.getJSON("../organization_info.json", function(data){
-        //     _self.default_organiztion_txt = data;
-        // })
-
-        // $.getJSON("../member_info.json", function(data){
-        //     _self.default_member_info = data;
-        //     _self.setState({});
-        // })
-
-        // $.getJSON("../love_cnt_info.json", function(data){
-        //     _self.default_love_cnt_info = data;
-        // })
-
-        // $.getJSON("../love_info.json", function(data){
-        //     _self.default_love_info = data;
-        // })
     }
     
     urlCheck(){

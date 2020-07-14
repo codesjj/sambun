@@ -29,6 +29,37 @@ function sort_by_key(data, eval_func){
 }
 
 class Deck extends React.Component{
+    
+        
+    componentWillMount() {
+        console.log('componentWillMount');
+    }
+
+    componentDidMount() {
+        console.log('componentDidMount');
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log('componentWillReceiveProps');
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log('shouldComponentUpdate');
+        return true / false;
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        console.log('componentWillUpdate');
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log('componentDidUpdate');
+    }
+
+    componentWillUnmount() {
+        console.log('componentWillUnmount');
+    }
+    
     load_data(){
         let _self = this;
         $.getJSON("../organization_info.json", function(data){
@@ -790,36 +821,6 @@ class Deck extends React.Component{
             _e.selected=false;
         })
     }
-        
-    componentWillMount() {
-        console.log('componentWillMount');
-    }
-
-    componentDidMount() {
-        console.log('componentDidMount');
-    }
-
-    componentWillReceiveProps(nextProps) {
-        console.log('componentWillReceiveProps');
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        console.log('shouldComponentUpdate');
-        return true / false;
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-        console.log('componentWillUpdate');
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        console.log('componentDidUpdate');
-    }
-
-    componentWillUnmount() {
-        console.log('componentWillUnmount');
-    }
-    
 }
 
 ReactDOM.render(   

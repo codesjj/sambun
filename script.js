@@ -9,10 +9,13 @@ var ToggleButton = rbs.ToggleButton;
 var Button = rbs.Button;
 var ButtonToolbar = rbs.ButtonToolbar;
 
+alert('테스트페이지 입니다');
+
 let color_code_list = {"적": "red", "청": "blue", "황": "yellow"};
 let color_name_list = {"적": "적속성", "황": "황속성", "청": "청속성"};
 let type_name_list = {"검": "검병", "창": "창병", "책": "책략병", "특": "특수병"};
 let country_name_list = {"위": "위나라", "촉": "촉나라", "오": "오나라", "군": "군웅"};
+
 
 function sort_by_key(data, eval_func){
     return data.sort(function(a,b) {
@@ -26,32 +29,97 @@ function sort_by_key(data, eval_func){
 }
 
 class Deck extends React.Component{
+
     load_data(){
         let _self = this;
-        $.getJSON("organization_info.json", function(data){
-            _self.default_organiztion_txt = data;
-        })
 
-        $.getJSON("member_info.json", function(data){
-            _self.default_member_info = data;
+        function ajax1() {
+            return $.ajax({
+                url: "./organization_info.json",
+                dataType: "json",
+                success: function(data) {
+                    _self.default_organiztion_txt = data;
+                }
+            });
+        }
+        
+        function ajax2() {
+            return $.ajax({
+                url: "./member_info.json",
+                dataType: "json",
+                success: function(data) {
+                    _self.default_member_info = data;
+                }
+            });
+        }
+        
+        function ajax3() {
+            return $.ajax({
+                url: "./love_cnt_info.json",
+                dataType: "json",
+                success: function(data) {
+                    _self.default_love_cnt_info = data;
+                }
+            });
+        }
+        
+        function ajax4() {
+            return $.ajax({
+                url: "./love_info.json",
+                dataType: "json",
+                success: function(data) {
+                    _self.default_love_info = data;
+                }
+            });
+        }
+        
+        $.when(ajax1(), ajax2(), ajax3(), ajax4()).done(function(a1, a2, a3, a4){
+            //console.log("ajax호출")
             _self.setState({});
-        })
-
-        $.getJSON("love_cnt_info.json", function(data){
-            _self.default_love_cnt_info = data;
-        })
-
-        $.getJSON("love_info.json", function(data){
-            _self.default_love_info = data;
-        })
+            //console.log(_self.select_id.length);
+            _self.select_id.forEach(function(element){
+                //console.log(element);
+                let item = _self.default_member_info.filter((item, index) => item.id==element)
+                _self._select_Event(item[0])
+            });
+        });
     }
     
+    urlCheck(){
+        let _self = this;
+
+        let check_url = document.location;
+        let stringLength = check_url.length;
+        //console.log(check_url);
+        
+
+        let a = check_url.href.indexOf("?");
+        
+        if(a != -1){
+            let b = check_url.href.substring(a+1, stringLength)
+            _self.select_id = b.split(",");
+            if(_self.select_id[0] == 0){
+                _self.current_url = document.location.href;
+                _self.select_id = [];
+            }else{
+                _self.current_url = check_url.href.substring(0, a+1);
+            }        
+        }else{
+            window.history.pushState( 'select_id', 'select_id', check_url.href + "?");
+            _self.current_url = document.location.href;
+            _self.select_id = [];
+        }
+
+        alert('선택된 id값 : '+ _self.select_id);
+    }
+
     constructor(){
         super();
 
         let _self = this;
 
         this.load_data();
+        this.urlCheck();
 
         this.default_member_info = [];
 
@@ -59,6 +127,9 @@ class Deck extends React.Component{
         this.result_organization_txt = $('.type2');
         this.result_member_skill_txt = $('.type3');
 
+        // this.select_id = arr;
+        // this.current_url = "";
+        //console.log(this.select_id);
         this.select_member = [];
         this.select_organization = [];
 
@@ -84,9 +155,6 @@ class Deck extends React.Component{
         this.state = {
             member_info: this.default_member_info
         }
-        $('.js_reset').click(function(){
-            _self._reset();
-        });
     }
 
     order_spec(item) {
@@ -104,10 +172,9 @@ class Deck extends React.Component{
     renderCheckBox(item, list_code, index){
         let _self = this;
 
-
         let color_code = color_code_list[item.color];
         let input_id = list_code + "_" + index;
-
+        //console.log('장수 호출');
         return e(OverlayTrigger, {
                     placement: "bottom-start",
                     overlay: e(
@@ -123,9 +190,9 @@ class Deck extends React.Component{
                 },
                 e("li", {className: color_code + " text-center"},
                     e("input", {
-                        type: "checkbox", name:"s", id:input_id, "data-name":item.name,
+                        type: "checkbox", name:"s", id:input_id, "data-name":item.name, "data-id":item.id,
                         onChange: (e) => _self._select_Event(item, e),
-                        checked: item.selected
+                        checked : item.selected
                     }),
                     e("label", {htmlFor: input_id, className: "text-muted"},
                         e("span", null, item.name),
@@ -208,6 +275,7 @@ class Deck extends React.Component{
     }
 
     renderSubMenuBar(){
+        //console.log("서브메뉴 호출");
         var _self = this;
         return e("div", {className: "clearfix"}, 
                 e(ButtonToolbar, {
@@ -287,13 +355,14 @@ class Deck extends React.Component{
             case 3: renderedList = this.renderListByClass(); break;
             case 4: renderedList = this.renderListByColor(); break;
         }
+        //console.log("장수 선택툴 시작");
 
         return e("div", {className: "container-fluid"}, 
                 e("div", {className: "row"}, 
                     e("div", {className: "col col-12"},
                         e("h1", null, 
-                            "로망[Roman] 장수 선택 툴"
-                        ),
+                            "로망[Roman] 군단 장수 선택 툴"
+                        )
                     )
                 ),
                 e("div", {className: "row"}, renderedList),
@@ -302,6 +371,9 @@ class Deck extends React.Component{
     }
 
     _select_Event(item, e) {
+        //console.log("장수 선택")
+        //console.log(item);
+
         if(!item.selected) { 
             if(this.select_member.length <= 5){
                 item.selected = true;
@@ -314,6 +386,8 @@ class Deck extends React.Component{
             item.selected = false;
             this._del_Event(item);
         }
+        
+        window.history.pushState( 'page2', '선택된 장수', this.current_url + this.select_id);
         this.setState({});
     }
 
@@ -334,6 +408,7 @@ class Deck extends React.Component{
     }
 
     _add_member(item){
+        let _id = item.id;
         let _name = item.name;
         // let _info = item.info;
         // [1슬롯 / 청속성 / 책략병 / 위나라 / 가장 먼 적 / 사거리 : 34]
@@ -353,6 +428,9 @@ class Deck extends React.Component{
         let _skill_a = item.skill_a;
         let _skill_s = item.skill_s;
 
+        if(this.select_id.indexOf(_id) == -1){
+            this.select_id.push(_id);
+        }
         this.select_member.push(_name);
 
         let _a = $("<li></li>");
@@ -367,9 +445,14 @@ class Deck extends React.Component{
     }
 
     _del_member(item){
+        let _id = item.id;
         let _name = item.name;
-        let _idx = this.select_member.findIndex(function(item) {return item.name === _name});
-        this.select_member.splice(_idx, 1);
+
+        let _idx = this.select_id.indexOf(_id);
+        this.select_id.splice(_idx, 1);
+        
+        let _idx2 = this.select_member.findIndex(function(item) {return item.name === _name});
+        this.select_member.splice(_idx2, 1);
 
         $.each(this.result_member_txt.children('li'),function(idx, _e){
             if(_e.childNodes[0].textContent == _name){
@@ -719,6 +802,7 @@ class Deck extends React.Component{
     }
 
     _reset(){                
+        this.select_id = [];
         this.select_member = [];
         this.select_organization = [];
         this.type_add_love = [];
@@ -754,7 +838,3 @@ ReactDOM.render(
     e(Deck, null),
     document.getElementById('root')
 );
-
-// $(function(){
-    // new Deck().mount()
-// })

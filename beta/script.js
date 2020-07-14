@@ -26,7 +26,6 @@ function sort_by_key(data, eval_func){
 }
 
 class Deck extends React.Component{
-
     load_data(){
         let _self = this;
 

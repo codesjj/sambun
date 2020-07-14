@@ -96,7 +96,12 @@ class Deck extends React.Component{
         if(a != -1){
             let b = check_url.href.substring(a+1, stringLength)
             _self.select_id = b.split(",");
-            _self.current_url = check_url.href.substring(0, a+1);
+            if(_self.select_id[0] == 0){
+                _self.current_url = document.location.href;
+                _self.select_id = [];
+            }else{
+                _self.current_url = check_url.href.substring(0, a+1);
+            }        
         }else{
             window.history.pushState( 'select_id', 'select_id', check_url.href + "?");
             _self.current_url = document.location.href;

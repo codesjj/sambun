@@ -76,9 +76,9 @@ class Deck extends React.Component{
         $.when(ajax1(), ajax2(), ajax3(), ajax4()).done(function(a1, a2, a3, a4){
             //console.log("ajax호출")
             _self.setState({});
-            console.log(_self.select_id.length);
+            //console.log(_self.select_id.length);
             _self.select_id.forEach(function(element){
-                console.log(element);
+                //console.log(element);
                 let item = _self.default_member_info.filter((item, index) => item.id==element)
                 _self._select_Event(item[0])
             });
@@ -372,7 +372,7 @@ class Deck extends React.Component{
 
     _select_Event(item, e) {
         //console.log("장수 선택")
-        console.log(item);
+        //console.log(item);
 
         if(!item.selected) { 
             if(this.select_member.length <= 5){

@@ -29,7 +29,9 @@ function sort_by_key(data, eval_func){
 }
 
 class Deck extends React.Component{
-    
+    test(){
+        console.log('test');
+    }
         
     componentWillMount() {
         console.log('componentWillMount');
@@ -39,6 +41,10 @@ class Deck extends React.Component{
         console.log('componentDidMount');
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        console.log('componentDidUpdate');
+    }
+    
     componentWillReceiveProps(nextProps) {
         console.log('componentWillReceiveProps');
     }
@@ -52,14 +58,11 @@ class Deck extends React.Component{
         console.log('componentWillUpdate');
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        console.log('componentDidUpdate');
-    }
 
     componentWillUnmount() {
         console.log('componentWillUnmount');
     }
-    
+
     load_data(){
         let _self = this;
         $.getJSON("../organization_info.json", function(data){

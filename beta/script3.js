@@ -29,39 +29,6 @@ function sort_by_key(data, eval_func){
 }
 
 class Deck extends React.Component{
-    test(){
-        console.log('test');
-    }
-        
-    componentWillMount() {
-        console.log('componentWillMount');
-    }
-
-    componentDidMount() {
-        console.log('componentDidMount');
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        console.log('componentDidUpdate');
-    }
-    
-    componentWillReceiveProps(nextProps) {
-        console.log('componentWillReceiveProps');
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        console.log('shouldComponentUpdate');
-        return true / false;
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-        console.log('componentWillUpdate');
-    }
-
-
-    componentWillUnmount() {
-        console.log('componentWillUnmount');
-    }
 
     load_data(){
         let _self = this;
@@ -150,6 +117,40 @@ class Deck extends React.Component{
         }
     }
 
+    test(){
+        console.log('test');
+    }
+        
+    componentWillMount() {
+        console.log('componentWillMount');
+    }
+
+    componentDidMount() {
+        console.log('componentDidMount');
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log('componentDidUpdate');
+    }
+    
+    componentWillReceiveProps(nextProps) {
+        console.log('componentWillReceiveProps');
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log('shouldComponentUpdate');
+        return true / false;
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        console.log('componentWillUpdate');
+    }
+
+
+    componentWillUnmount() {
+        console.log('componentWillUnmount');
+    }
+    
     order_spec(item) {
         switch(this.order_mode) {
             case 1: return e("span", null, item.slot + "슬롯")

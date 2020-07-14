@@ -54,8 +54,7 @@ class Deck extends React.Component{
 
         let check_url = document.location;
         let stringLength = check_url.length;
-        console.log(check_url);
-        
+        //console.log(check_url);
 
         let a = check_url.href.indexOf("?");
         
@@ -70,6 +69,10 @@ class Deck extends React.Component{
         }
 
         alert('선택된 id값 : '+ _self.select_id);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        //console.log('componentDidUpdate');
     }
 
     constructor(){
@@ -328,7 +331,7 @@ class Deck extends React.Component{
     }
 
     _select_Event(item, e) {
-        console.log(item)
+        //console.log(item)
 
         if(!item.selected) { 
             if(this.select_member.length <= 5){
@@ -792,8 +795,5 @@ class Deck extends React.Component{
 
 ReactDOM.render(   
     e(Deck, null),
-    document.getElementById('root'),
-    function(){
-        console.log('finish')
-    }
+    document.getElementById('root')
 );

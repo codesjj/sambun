@@ -29,25 +29,71 @@ function sort_by_key(data, eval_func){
 }
 
 class Deck extends React.Component{
-
     load_data(){
         let _self = this;
-        $.getJSON("../organization_info.json", function(data){
-            _self.default_organiztion_txt = data;
-        })
 
-        $.getJSON("../member_info.json", function(data){
-            _self.default_member_info = data;
-            _self.setState({});
-        })
+        function ajax1() {
+            return $.ajax({
+                url: "../organization_info.json",
+                dataType: "json",
+                success: function(data) {
+                    _self.default_organiztion_txt = data;
+                }
+            });
+        }
+        
+        function ajax2() {
+            return $.ajax({
+                url: "../member_info.json",
+                dataType: "json",
+                success: function(data) {
+                    _self.default_member_info = data;
+                    _self.setState({});
+                }
+            });
+        }
+        
+        function ajax3() {
+            return $.ajax({
+                url: "../love_cnt_info.json",
+                dataType: "json",
+                success: function(data) {
+                    _self.default_love_cnt_info = data;
+                }
+            });
+        }
+        
+        function ajax4() {
+            return $.ajax({
+                url: "../love_info.json",
+                dataType: "json",
+                success: function(data) {
+                    _self.default_love_info = data;
+                }
+            });
+        }
+        
+        $.when(ajax1(), ajax2(), ajax3(), ajax4()).done(function(a1, a2, a3, a4){
+            console.log(1)
+        });
+        
 
-        $.getJSON("../love_cnt_info.json", function(data){
-            _self.default_love_cnt_info = data;
-        })
+        // $.getJSON("../organization_info.json", function(data){
+        //     _self.default_organiztion_txt = data;
+        // })
 
-        $.getJSON("../love_info.json", function(data){
-            _self.default_love_info = data;
-        })
+        // $.getJSON("../member_info.json", function(data){
+        //     _self.default_member_info = data;
+        //     _self.setState({});
+        // })
+
+        // $.getJSON("../love_cnt_info.json", function(data){
+        //     _self.default_love_cnt_info = data;
+        // })
+
+        // $.getJSON("../love_info.json", function(data){
+        //     _self.default_love_info = data;
+        // })
     }
     
     urlCheck(){
@@ -55,8 +101,7 @@ class Deck extends React.Component{
 
         let check_url = document.location;
         let stringLength = check_url.length;
-        console.log(check_url);
-        
+        //console.log(check_url);
 
         let a = check_url.href.indexOf("?");
         
@@ -71,6 +116,10 @@ class Deck extends React.Component{
         }
 
         alert('선택된 id값 : '+ _self.select_id);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        //console.log('componentDidUpdate');
     }
 
     constructor(){
@@ -117,39 +166,6 @@ class Deck extends React.Component{
         }
     }
 
-    test(){
-        console.log('test');
-    }
-        
-    componentWillMount() {
-        console.log('componentWillMount');
-    }
-
-    componentDidMount() {
-        console.log('componentDidMount');
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        console.log('componentDidUpdate');
-    }
-    
-    componentWillReceiveProps(nextProps) {
-        console.log('componentWillReceiveProps');
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        console.log('shouldComponentUpdate');
-        return true / false;
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-        console.log('componentWillUpdate');
-    }
-    
-    componentWillUnmount() {
-        console.log('componentWillUnmount');
-    }
-    
     order_spec(item) {
         switch(this.order_mode) {
             case 1: return e("span", null, item.slot + "슬롯")
@@ -167,7 +183,7 @@ class Deck extends React.Component{
 
         let color_code = color_code_list[item.color];
         let input_id = list_code + "_" + index;
-        console.log(2);
+
         return e(OverlayTrigger, {
                     placement: "bottom-start",
                     overlay: e(
@@ -268,7 +284,6 @@ class Deck extends React.Component{
     }
 
     renderSubMenuBar(){
-        console.log(3);
         var _self = this;
         return e("div", {className: "clearfix"}, 
                 e(ButtonToolbar, {
@@ -348,7 +363,6 @@ class Deck extends React.Component{
             case 3: renderedList = this.renderListByClass(); break;
             case 4: renderedList = this.renderListByColor(); break;
         }
-        console.log(1);
 
         return e("div", {className: "container-fluid"}, 
                 e("div", {className: "row"}, 
@@ -364,7 +378,7 @@ class Deck extends React.Component{
     }
 
     _select_Event(item, e) {
-        console.log(item)
+        //console.log(item)
 
         if(!item.selected) { 
             if(this.select_member.length <= 5){
@@ -828,8 +842,5 @@ class Deck extends React.Component{
 
 ReactDOM.render(   
     e(Deck, null),
-    document.getElementById('root'),
-    function(){
-        console.log('finish')
-    }
+    document.getElementById('root')
 );

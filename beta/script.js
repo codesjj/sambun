@@ -80,9 +80,9 @@ class Deck extends React.Component{
             _self.select_id.forEach(function(element){
                 console.log(element);
 
-                var a = _self.default_member_info.filter((item, index) => item.id==element)
-                
-                console.log(a[0]);
+                let item = _self.default_member_info.filter((item, index) => item.id==element)
+
+                _self._select_Event(item[0]),
             });
         });
     }

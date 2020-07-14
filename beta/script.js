@@ -76,11 +76,9 @@ class Deck extends React.Component{
         $.when(ajax1(), ajax2(), ajax3(), ajax4(), _self.setState({})).done(function(a1, a2, a3, a4){
             //console.log("ajax호출")
             console.log(_self.select_id.length);
-            if(_self.select_id.length != 0){
-                _self.select_id.each(function(idx){
-                    console.log(_self.select_id[idx]);
-                })
-            }
+            _self.select_id.forEach(function(element){
+                console.log(element);
+            });
         });
     }
     

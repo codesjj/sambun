@@ -32,22 +32,68 @@ class Deck extends React.Component{
 
     load_data(){
         let _self = this;
-        $.getJSON("../organization_info.json", function(data){
-            _self.default_organiztion_txt = data;
-        })
 
-        $.getJSON("../member_info.json", function(data){
-            _self.default_member_info = data;
-            _self.setState({});
-        })
+        function ajax1() {
+            return $.ajax({
+                url: "../organization_info.json",
+                dataType: "json",
+                success: function(data) {
+                    _self.default_organiztion_txt = data;
+                }
+            });
+        }
+        
+        function ajax2() {
+            return $.ajax({
+                url: "../member_info.json",
+                dataType: "json",
+                success: function(data) {
+                    _self.default_member_info = data;
+                    _self.setState({});
+                }
+            });
+        }
+        
+        function ajax3() {
+            return $.ajax({
+                url: "../love_cnt_info.json",
+                dataType: "json",
+                success: function(data) {
+                    _self.default_love_cnt_info = data;
+                }
+            });
+        }
+        
+        function ajax4() {
+            return $.ajax({
+                url: "../love_info.json",
+                dataType: "json",
+                success: function(data) {
+                    _self.default_love_info = data;
+                }
+            });
+        }
+        
+        $.when(ajax1(), ajax2(), ajax3(), ajax4()).done(function(a1, a2, a3, a4){
+            console.log("ajax호출")
+        });
 
-        $.getJSON("../love_cnt_info.json", function(data){
-            _self.default_love_cnt_info = data;
-        })
+        // $.getJSON("../organization_info.json", function(data){
+        //     _self.default_organiztion_txt = data;
+        // })
 
-        $.getJSON("../love_info.json", function(data){
-            _self.default_love_info = data;
-        })
+        // $.getJSON("../member_info.json", function(data){
+        //     _self.default_member_info = data;
+        //     _self.setState({});
+        // })
+
+        // $.getJSON("../love_cnt_info.json", function(data){
+        //     _self.default_love_cnt_info = data;
+        // })
+
+        // $.getJSON("../love_info.json", function(data){
+        //     _self.default_love_info = data;
+        // })
     }
     
     urlCheck(){
@@ -116,10 +162,6 @@ class Deck extends React.Component{
             member_info: this.default_member_info
         }
     }
-
-    test(){
-        console.log('test');
-    }
         
     componentWillMount() {
         console.log('componentWillMount');
@@ -167,7 +209,7 @@ class Deck extends React.Component{
 
         let color_code = color_code_list[item.color];
         let input_id = list_code + "_" + index;
-        console.log(2);
+        console.log('장수 호출');
         return e(OverlayTrigger, {
                     placement: "bottom-start",
                     overlay: e(
@@ -268,7 +310,7 @@ class Deck extends React.Component{
     }
 
     renderSubMenuBar(){
-        console.log(3);
+        console.log("서브메뉴 호출");
         var _self = this;
         return e("div", {className: "clearfix"}, 
                 e(ButtonToolbar, {
@@ -348,7 +390,7 @@ class Deck extends React.Component{
             case 3: renderedList = this.renderListByClass(); break;
             case 4: renderedList = this.renderListByColor(); break;
         }
-        console.log(1);
+        console.log("장수 선택툴 시작");
 
         return e("div", {className: "container-fluid"}, 
                 e("div", {className: "row"}, 
@@ -364,7 +406,7 @@ class Deck extends React.Component{
     }
 
     _select_Event(item, e) {
-        console.log(item)
+        console.log("장수 선택")
 
         if(!item.selected) { 
             if(this.select_member.length <= 5){

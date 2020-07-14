@@ -14,7 +14,6 @@ let color_name_list = {"적": "적속성", "황": "황속성", "청": "청속성
 let type_name_list = {"검": "검병", "창": "창병", "책": "책략병", "특": "특수병"};
 let country_name_list = {"위": "위나라", "촉": "촉나라", "오": "오나라", "군": "군웅"};
 
-
 function sort_by_key(data, eval_func){
     return data.sort(function(a,b) {
         if(eval_func(a) < eval_func(b))

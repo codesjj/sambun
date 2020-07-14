@@ -9,8 +9,6 @@ var ToggleButton = rbs.ToggleButton;
 var Button = rbs.Button;
 var ButtonToolbar = rbs.ButtonToolbar;
 
-alert('테스트페이지 입니다');
-
 let color_code_list = {"적": "red", "청": "blue", "황": "yellow"};
 let color_name_list = {"적": "적속성", "황": "황속성", "청": "청속성"};
 let type_name_list = {"검": "검병", "창": "창병", "책": "책략병", "특": "특수병"};
@@ -109,8 +107,6 @@ class Deck extends React.Component{
             _self.current_url = document.location.href;
             _self.select_id = [];
         }
-
-        alert('선택된 id값 : '+ _self.select_id);
     }
 
     constructor(){

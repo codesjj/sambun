@@ -200,8 +200,12 @@ class Deck extends React.Component{
     }
 
     renderList(list, list_name, list_code, list_class="col col-3"){
+        let num_selected = list.filter((item, index) => item.selected).length
         return e("li", {className: list_class},
-                e("h2", null, list_name),
+                e("h2", null, 
+                    list_name, " ",
+                    e("span", {className: "float-right badge badge-secondary badge-pill badge-circle"}, num_selected),
+                ),
                 e("ul", null, 
                     list.map((item, index) => this.renderCheckBox(item, list_code, index))
                 )

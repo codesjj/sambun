@@ -103,7 +103,7 @@ class Deck extends React.Component{
                 _self.current_url = check_url.href.substring(0, a+1);
             }        
         }else{
-            window.history.pushState( 'select_id', 'select_id', check_url.href + "?");
+            window.history.replaceState( 'select_id', 'select_id', check_url.href + "?");
             _self.current_url = document.location.href;
             _self.select_id = [];
         }
@@ -186,22 +186,26 @@ class Deck extends React.Component{
                 },
                 e("li", {className: color_code + " text-center"},
                     e("input", {
-                        type: "checkbox", name:"s", id:input_id, "data-name":item.name, "data-id":item.id,
+                        type: "checkbox", name:item.name, id:input_id, "data-name":item.name, "data-id":item.id,
                         onChange: (e) => _self._select_Event(item, e),
-                        checked : item.selected
+                        checked : item.selected,
                     }),
                     e("label", {htmlFor: input_id, className: "text-muted"},
                         e("span", null, item.name),
                         _self.order_spec(item),
-                        item.slot + "슬롯/" + type_name_list[item.type]
+                        item.slot + "슬롯/" + type_name_list[item.type],
                     )
                 )
             )
     }
 
     renderList(list, list_name, list_code, list_class="col col-3"){
+        let num_selected = list.filter((item, index) => item.selected).length
         return e("li", {className: list_class},
-                e("h2", null, list_name),
+                e("h2", null, 
+                    list_name, " ",
+                    e("span", {className: "float-right badge badge-secondary badge-pill badge-circle"}, num_selected),
+                ),
                 e("ul", null, 
                     list.map((item, index) => this.renderCheckBox(item, list_code, index))
                 )
@@ -383,7 +387,7 @@ class Deck extends React.Component{
             this._del_Event(item);
         }
         
-        window.history.pushState( 'page2', '선택된 장수', this.current_url + this.select_id);
+        window.history.replaceState( item, '선택: ' + item.name, this.current_url + this.select_id);
         this.setState({});
     }
 
@@ -827,6 +831,8 @@ class Deck extends React.Component{
         $.each(this.default_member_info, function(idx, _e){
             _e.selected=false;
         })
+        window.history.pushState( null, null, this.current_url + this.select_id);
+        //popstate시 URLcheck 수행해야함
     }
 }
 

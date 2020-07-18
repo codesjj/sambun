@@ -103,7 +103,7 @@ class Deck extends React.Component{
                 _self.current_url = check_url.href.substring(0, a+1);
             }        
         }else{
-            window.history.pushState( 'select_id', 'select_id', check_url.href + "?");
+            window.history.replaceState( 'select_id', 'select_id', check_url.href + "?");
             _self.current_url = document.location.href;
             _self.select_id = [];
         }
@@ -383,7 +383,7 @@ class Deck extends React.Component{
             this._del_Event(item);
         }
         
-        window.history.pushState( 'page2', '선택된 장수', this.current_url + this.select_id);
+        window.history.replaceState( 'page2', '선택된 장수', this.current_url + this.select_id);
         this.setState({});
     }
 

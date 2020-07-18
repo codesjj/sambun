@@ -186,14 +186,14 @@ class Deck extends React.Component{
                 },
                 e("li", {className: color_code + " text-center"},
                     e("input", {
-                        type: "checkbox", name:"s", id:input_id, "data-name":item.name, "data-id":item.id,
+                        type: "checkbox", name:item.name, id:input_id, "data-name":item.name, "data-id":item.id,
                         onChange: (e) => _self._select_Event(item, e),
-                        checked : item.selected
+                        checked : item.selected,
                     }),
                     e("label", {htmlFor: input_id, className: "text-muted"},
                         e("span", null, item.name),
                         _self.order_spec(item),
-                        item.slot + "슬롯/" + type_name_list[item.type]
+                        item.slot + "슬롯/" + type_name_list[item.type],
                     )
                 )
             )
@@ -387,7 +387,7 @@ class Deck extends React.Component{
             this._del_Event(item);
         }
         
-        window.history.replaceState( 'page2', '선택된 장수', this.current_url + this.select_id);
+        window.history.replaceState( item, '선택: ' + item.name, this.current_url + this.select_id);
         this.setState({});
     }
 
@@ -831,6 +831,8 @@ class Deck extends React.Component{
         $.each(this.default_member_info, function(idx, _e){
             _e.selected=false;
         })
+        window.history.pushState( null, null, this.current_url + this.select_id);
+        //popstate시 URLcheck 수행해야함
     }
 }
 

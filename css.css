@@ -1,7 +1,7 @@
 *{padding:0;margin:0}
 ul, li{list-style: none}
 
-.info{padding:20px;overflow:hidden}
+.info{margin-top:40px;padding:20px;overflow:hidden}
 .info h1,
 .info p,
 .info span{font-size:12px}

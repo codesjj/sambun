@@ -361,7 +361,7 @@ class Deck extends React.Component{
                 e("div", {className: "row"}, 
                     e("div", {className: "col col-12"},
                         e("h1", null, 
-                            "장수 선택 툴"
+                            "로망[Roman] 군단 장수 선택 툴"
                         )
                     )
                 ),

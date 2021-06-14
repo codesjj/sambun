@@ -9,8 +9,8 @@ var ToggleButton = rbs.ToggleButton;
 var Button = rbs.Button;
 var ButtonToolbar = rbs.ButtonToolbar;
 
-let color_code_list = {"적": "red", "청": "blue", "황": "yellow"};
-let color_name_list = {"적": "적속성", "황": "황속성", "청": "청속성"};
+let color_code_list = {"적": "red", "청": "blue", "황": "yellow", "녹" : "green"};
+let color_name_list = {"적": "적속성", "황": "황속성", "청": "청속성", "녹" : "녹속성"};
 let type_name_list = {"검": "검병", "창": "창병", "책": "책략병", "특": "특수병"};
 let country_name_list = {"위": "위나라", "촉": "촉나라", "오": "오나라", "군": "군웅"};
 

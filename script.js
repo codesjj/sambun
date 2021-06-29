@@ -271,6 +271,9 @@ class Deck extends React.Component{
                 this.renderList(
                     this.default_member_info.filter((item, index) => item.color=="청"), "청색", "blue", "col col-4"
                 ),
+                this.renderList(
+                    this.default_member_info.filter((item, index) => item.color=="녹"), "녹색", "green", "col col-4"
+                )
             );
     }
 

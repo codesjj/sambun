@@ -25,6 +25,7 @@ ul, li{list-style: none}
 .total ul li.red{border:2px solid red}
 .total ul li.blue{border:2px solid blue}
 .total ul li.yellow{border:2px solid rgb(228, 228, 40)}
+.total ul li.green{border:2px solid green}
 .total ul li{margin:10px}
 .total ul li input{position:absolute;top:0;left:0;width:0;height:0;opacity:0}
 .total ul li label{display:block;padding:10px 0px;box-sizing:border-box;font-size:12px;margin:0;}
@@ -34,6 +35,8 @@ ul, li{list-style: none}
 .total ul li.blue input:checked + label{background:blue;color:#fff}
 .total ul li.blue input:checked + label span{color:#fff}
 .total ul li.yellow input:checked + label{background:rgb(228, 228, 40);color:#000}
+.total ul li.green input:checked + label{background:green;color:#fff}
+.total ul li.green input:checked + label span{color:#fff}
 
 .result{padding:20px;overflow:hidden}
 .result .left{float:left;width:50%;padding-right:30px;box-sizing:border-box}
